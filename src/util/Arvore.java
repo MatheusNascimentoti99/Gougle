@@ -12,14 +12,21 @@ import model.Palavra;
  * @author Matheus Nascimento
  */
 public class Arvore {
-
-  protected No raiz;
+  private No raiz;
 
 	public void inserir(Comparable date) {
 		No n = new No(date);
 		inserirAVL(this.raiz, n);
 	}
 
+    public No getRaiz() {
+        return raiz;
+    }
+
+    public void setRaiz(No raiz) {
+        this.raiz = raiz;
+    }
+        
 	public void inserirAVL(No aComparar, No aInserir) {
 
 		if (aComparar == null) {
@@ -53,6 +60,7 @@ public class Arvore {
 				// O nó já existe
 			}
 		}
+                
 	}
 
 	public void verificarBalanceamento(No atual) {
@@ -87,6 +95,7 @@ public class Arvore {
 
 	public void remover(String palavra) {
 		removerAVL(this.raiz, palavra);
+                
 	}
 
 	public void removerAVL(No atual, String palavra) {

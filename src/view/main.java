@@ -5,6 +5,7 @@
  */
 package view;
 
+import java.util.Random;
 import model.Palavra;
 import util.Arvore;
 import util.No;
@@ -17,14 +18,11 @@ public class main {
     
     public static void main(String[] args){
         Arvore a = new Arvore();
-        Palavra p = new Palavra("A");
-        Palavra p2 = new Palavra("B");
-        Palavra p3 = new Palavra("C");
-        Palavra p4 = new Palavra("D");
-        a.inserir(p3);
-        a.inserir(p);
-        a.inserir(p4);
-        a.inserir(p2);
+        Random r = new Random();
+        for(int i = 0; i < 1000; i++){
+            a.inserir(new Palavra("A" +r.nextInt(100)));
+        }
+        System.out.println(((Palavra)a.getRaiz().getDate()).getPalavra());
        // System.out.println(a.getPalavra());
        Palavra b = new Palavra("oi");
 //       test.setA(aa);
