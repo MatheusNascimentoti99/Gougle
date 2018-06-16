@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -12,7 +13,7 @@ import java.util.LinkedList;
  *
  * @author Matheus Nascimento
  */
-public class Palavra implements Comparable{
+public class Palavra implements Comparable, Comparator{
 
     private LinkedList paginas;
     private String palavra;
@@ -25,20 +26,32 @@ public class Palavra implements Comparable{
     }
     public int getSearch(){
         return search;
+       
     }
+    @Override
+    public int compare(Object o1, Object o2) {
+        Pagina p1 = (Pagina) o1;
+        Pagina p2 = (Pagina) o2;
+        return p1.compareTo(p2);
+    }
+
     public void moreSearch(){
         search++;
+         paginas.sort(this);
     }
     @Override
     public String toString() {
-        return ("Palavra:" + palavra + " - Arquivos" + imprimirArquivos());
+        return ("Palavra:" + palavra + " - Arquivos: " + imprimirArquivos());
     }
 
-    private String imprimirArquivos() {
+    public String imprimirArquivos() {
         Iterator temp = paginas.iterator();
         String nomePaginas = "";
-        while (!temp.hasNext()) {
-            nomePaginas = nomePaginas.concat(" - " + ((Pagina) temp.next()).getNome());
+        Pagina aux = (Pagina) temp.next();
+        nomePaginas = nomePaginas + "[" + aux.getNome() +", Quantidade de repetições " +aux.getRepeticao()+"]";
+        while (temp.hasNext()) {
+            aux = (Pagina) temp.next();
+            nomePaginas = nomePaginas + ", [" + aux.getNome() +", Quantidade de repetições " +aux.getRepeticao()+"]";   
         }
         return nomePaginas;
     }

@@ -5,11 +5,13 @@
  */
 package model;
 
+import java.util.Comparator;
+
 /**
  *
  * @author Matheus Nascimento
  */
-public class Pagina {
+public class Pagina implements  Comparable {
     private String nome;
     private int repeticao;
 
@@ -33,6 +35,14 @@ public class Pagina {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    
+    @Override
+    public int compareTo(Object o) {
+        Pagina outro = (Pagina) o;
+        return this.repeticao - outro.repeticao;
+    }
+    
     
     
 }

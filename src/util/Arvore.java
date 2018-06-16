@@ -308,7 +308,6 @@ public class Arvore {
             }
             else{
                 ((Palavra)atual.getDate()).moreSearch();
-                System.out.println("Vezes buscadas: " +((Palavra)atual.getDate()).getSearch());
                 return atual.getDate();
             }
         }

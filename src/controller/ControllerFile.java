@@ -74,6 +74,7 @@ public class ControllerFile {
             Pagina pagina = new Pagina(nomePagina);
             Palavra nova = new Palavra(palavra, pagina);
             palavraBuscada = palavraBuscada.toUpperCase();
+            System.out.println(palavra);
             if(palavraBuscada.compareTo(palavra) == 0){
                 arvore.inserir(nova);
                 existe = true;
