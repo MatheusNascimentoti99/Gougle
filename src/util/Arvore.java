@@ -70,7 +70,8 @@ public class Arvore {
 
     }
 
-    private boolean FileToo(No aComparar, No aInserir) {
+    private void FileToo(No aComparar, No aInserir) {
+        boolean equal = false;
         Palavra compara = (Palavra) aComparar.getDate();
         Palavra nova = (Palavra) aInserir.getDate();
         Iterator it = compara.getPaginas().iterator();
@@ -78,12 +79,13 @@ public class Arvore {
             Pagina pagina = (Pagina) it.next();
             if (pagina.getNome().equals(((Pagina) nova.getPaginas().getFirst()).getNome())) {
                 pagina.repetir();
-                return true;
+                equal = true;
             }
 
         }
-        compara.getPaginas().add(nova.getPaginas().getFirst());
-        return false;
+        if(equal == false){
+            compara.getPaginas().add(nova.getPaginas().getFirst());
+        }
     }
 
     public void verificarBalanceamento(No atual) {
