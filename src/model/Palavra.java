@@ -19,6 +19,7 @@ public class Palavra implements Comparable{
 
     public Palavra(String palavra) {
         this.palavra = palavra;
+        paginas = new LinkedList();
     }
 
     @Override

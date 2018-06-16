@@ -5,6 +5,8 @@
  */
 package view;
 
+import controller.ControllerFile;
+import java.io.IOException;
 import java.util.Random;
 import model.Palavra;
 import util.Arvore;
@@ -16,16 +18,10 @@ import util.No;
  */
 public class main {
     
-    public static void main(String[] args){
-        Arvore a = new Arvore();
-        Random r = new Random();
-        for(int i = 0; i < 1000; i++){
-            a.inserir(new Palavra("A" +r.nextInt(100)));
-        }
-        System.out.println(((Palavra)a.getRaiz().getDate()).getPalavra());
-       // System.out.println(a.getPalavra());
-       Palavra b = new Palavra("oi");
-//       test.setA(aa);
-//       Palavra bb = (Palavra) test.getA();
+    public static void main(String[] args) throws IOException{
+        ControllerFile c = new ControllerFile();
+        
+        
+        Arvore a = c.readFiles();
     }
 }
