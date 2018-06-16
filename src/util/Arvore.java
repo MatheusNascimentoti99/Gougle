@@ -295,11 +295,11 @@ public class Arvore {
     public Comparable search(String palavra){
         return search(this.raiz, palavra);
     }
-    public Comparable search(No atual, String palavra) {
-    
+    private Comparable search(No atual, String palavra) {
+        palavra = palavra.toUpperCase();
         if (atual != null) {
        
-            if (atual.getDate().compareTo(palavra)< 0){
+            if (atual.getDate().compareTo(palavra) < 0){
                 search(atual.getDireita(), palavra);
             }
             else if (atual.getDate().compareTo(palavra)> 0){
@@ -311,4 +311,5 @@ public class Arvore {
         }
         return null;
     }
+    
 }

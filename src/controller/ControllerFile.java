@@ -21,38 +21,40 @@ import util.Arvore;
  */
 public class ControllerFile {
 
-    private Arvore arvore;
-
-    public Arvore readFiles() throws IOException {
-        arvore = new Arvore();
+   
+    
+    
+    public boolean readFiles(String palavraBuscada, Arvore arvore) throws IOException {
+        boolean existe = false;
         FileFilter filter = (File pathname) -> pathname.getName().endsWith(".txt");
         File dir = new File("repositorio");
         File[] files = dir.listFiles(filter);
         for (File file : files) {
-            readFile(file);
+            existe = readFile(file, palavraBuscada, arvore);
         }
-        return arvore;
+        return existe;
     }
 
-    private void readFile(File file) throws FileNotFoundException, IOException {
+    private boolean readFile(File file, String palavraBuscada, Arvore arvore) throws FileNotFoundException, IOException {
         FileReader arq = new FileReader("repositorio\\" + file.getName());
         BufferedReader read = new BufferedReader(arq);
         String linha = "";
-        
+        boolean existe = false;
         while (linha != null) {
             linha = read.readLine();
             if (linha != null) {
                 linha = linha.toUpperCase();
-                pegarPalavra(linha, file.getName());
+                existe = pegarPalavra(linha, file.getName(), palavraBuscada, arvore);
             }
             
-            System.out.printf("%s\n", linha);
 
         }
+        return existe;
     }
 
-    private void pegarPalavra(String linha, String nomePagina) {
+    private boolean pegarPalavra(String linha, String nomePagina, String palavraBuscada, Arvore arvore) {
         String[] textoSeparado;
+        boolean existe = false;
         textoSeparado = linha.split(" ");
         for (String palavra : textoSeparado) {
             palavra = palavra.replace(" ", "");
@@ -71,8 +73,12 @@ public class ControllerFile {
             palavra = palavra.replace("?", "");
             Pagina pagina = new Pagina(nomePagina);
             Palavra nova = new Palavra(palavra, pagina);
-            arvore.inserir(nova);
+            palavraBuscada = palavraBuscada.toUpperCase();
+            if(palavraBuscada.compareTo(palavra) == 0){
+                arvore.inserir(nova);
+                existe = true;
+            }   
         }
-
+        return existe;
     }
 }
