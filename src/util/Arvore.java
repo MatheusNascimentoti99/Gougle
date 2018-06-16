@@ -307,6 +307,8 @@ public class Arvore {
                 aux = search(atual.getEsquerda(), palavra);
             }
             else{
+                ((Palavra)atual.getDate()).moreSearch();
+                System.out.println("Vezes buscadas: " +((Palavra)atual.getDate()).getSearch());
                 return atual.getDate();
             }
         }

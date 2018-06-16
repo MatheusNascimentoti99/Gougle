@@ -33,7 +33,8 @@ public class main {
             palavraProcurada = scanner.next();
 
             if(c.getBuscaRapida().search(palavraProcurada) != null){
-                System.out.println("Palavra achada na arvore");
+                System.out.println("Palavra encontrada na arvore");
+                
             }
             else if(c.addPalavra(palavraProcurada) == true){
                 System.out.println("Palavra encontrada entre os arquivos");

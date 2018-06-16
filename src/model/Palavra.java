@@ -16,13 +16,19 @@ public class Palavra implements Comparable{
 
     private LinkedList paginas;
     private String palavra;
-
+    private int search;
     public Palavra(String palavra, Pagina pagina) {
         this.palavra = palavra;
         paginas = new LinkedList();
         paginas.add(pagina);
+        search = 1;
     }
-
+    public int getSearch(){
+        return search;
+    }
+    public void moreSearch(){
+        search++;
+    }
     @Override
     public String toString() {
         return ("Palavra:" + palavra + " - Arquivos" + imprimirArquivos());
