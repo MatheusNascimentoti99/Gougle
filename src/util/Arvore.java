@@ -287,5 +287,28 @@ public class Arvore {
     private void setBalanceamento(No no) {
         no.setBalanceamento(altura(no.getDireita()) - altura(no.getEsquerda()));
     }
-
+    
+        public boolean isEmpty(){
+            return raiz == null;
+        }
+        
+    public Comparable search(String palavra){
+        return search(this.raiz, palavra);
+    }
+    public Comparable search(No atual, String palavra) {
+    
+        if (atual != null) {
+       
+            if (atual.getDate().compareTo(palavra)< 0){
+                search(atual.getDireita(), palavra);
+            }
+            else if (atual.getDate().compareTo(palavra)> 0){
+                search(atual.getEsquerda(), palavra);
+            }
+            else{
+                return atual.getDate();
+            }
+        }
+        return null;
+    }
 }
