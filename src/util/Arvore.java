@@ -295,21 +295,22 @@ public class Arvore {
     public Comparable search(String palavra){
         return search(this.raiz, palavra);
     }
-    private Comparable search(No atual, String palavra) {
+    public Comparable search(No atual, String palavra) {
         palavra = palavra.toUpperCase();
+        Comparable aux = null;
         if (atual != null) {
        
             if (atual.getDate().compareTo(palavra) < 0){
-                search(atual.getDireita(), palavra);
+                aux = search(atual.getDireita(), palavra);
             }
             else if (atual.getDate().compareTo(palavra)> 0){
-                search(atual.getEsquerda(), palavra);
+                aux = search(atual.getEsquerda(), palavra);
             }
             else{
                 return atual.getDate();
             }
         }
-        return null;
+        return aux;
     }
     
 }
