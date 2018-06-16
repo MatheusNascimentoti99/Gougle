@@ -23,5 +23,6 @@ public class main {
         
         
         Arvore a = c.readFiles();
+        System.out.println(":)");
     }
 }

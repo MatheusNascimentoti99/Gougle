@@ -11,7 +11,21 @@ package model;
  */
 public class Pagina {
     private String nome;
+    private int repeticao;
 
+    public Pagina(String nome) {
+        this.nome = nome;
+        this.repeticao = 1;
+    }
+
+    public int getRepeticao() {
+        return repeticao;
+    }
+
+    public void repetir() {
+        this.repeticao = repeticao +1;
+    }
+    
     public String getNome() {
         return nome;
     }

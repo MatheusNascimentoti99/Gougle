@@ -11,6 +11,7 @@ import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import model.Pagina;
 import model.Palavra;
 import util.Arvore;
 
@@ -37,12 +38,12 @@ public class ControllerFile {
         FileReader arq = new FileReader("repositorio\\" + file.getName());
         BufferedReader read = new BufferedReader(arq);
         String linha = "";
-
+        
         while (linha != null) {
             linha = read.readLine();
             if (linha != null) {
                 linha = linha.toUpperCase();
-                pegarPalavra(linha);
+                pegarPalavra(linha, file.getName());
             }
             
             System.out.printf("%s\n", linha);
@@ -50,25 +51,26 @@ public class ControllerFile {
         }
     }
 
-    private void pegarPalavra(String linha) {
+    private void pegarPalavra(String linha, String nomePagina) {
         String[] textoSeparado;
         textoSeparado = linha.split(" ");
-        for (String p : textoSeparado) {
-            p = p.replace(" ", "");
-            p = p.replace(".", "");
-            p = p.replace("/", "");
-            p = p.replace("-", "");
-            p = p.replace("\\", "");
-            p = p.replace("(", "");
-            p = p.replace(")", "");
-            p = p.replace(",", "");
-            p = p.replace("{", "");
-            p = p.replace("}", "");
-            p = p.replace("[", "");
-            p = p.replace("]", "");
-            p = p.replace("!", "");
-            p = p.replace("?", "");
-            Palavra nova = new Palavra(p);
+        for (String palavra : textoSeparado) {
+            palavra = palavra.replace(" ", "");
+            palavra = palavra.replace(".", "");
+            palavra = palavra.replace("/", "");
+            palavra = palavra.replace("-", "");
+            palavra = palavra.replace("\\", "");
+            palavra = palavra.replace("(", "");
+            palavra = palavra.replace(")", "");
+            palavra = palavra.replace(",", "");
+            palavra = palavra.replace("{", "");
+            palavra = palavra.replace("}", "");
+            palavra = palavra.replace("[", "");
+            palavra = palavra.replace("]", "");
+            palavra = palavra.replace("!", "");
+            palavra = palavra.replace("?", "");
+            Pagina pagina = new Pagina(nomePagina);
+            Palavra nova = new Palavra(palavra, pagina);
             arvore.inserir(nova);
         }
 

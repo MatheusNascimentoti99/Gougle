@@ -17,9 +17,10 @@ public class Palavra implements Comparable{
     private LinkedList paginas;
     private String palavra;
 
-    public Palavra(String palavra) {
+    public Palavra(String palavra, Pagina pagina) {
         this.palavra = palavra;
         paginas = new LinkedList();
+        paginas.add(pagina);
     }
 
     @Override
@@ -38,6 +39,14 @@ public class Palavra implements Comparable{
 
     public Object getPalavra() {
         return palavra;
+    }
+
+    public LinkedList getPaginas() {
+        return paginas;
+    }
+
+    public void setPaginas(LinkedList paginas) {
+        this.paginas = paginas;
     }
 
     public void setPalavra(String palavra) {
