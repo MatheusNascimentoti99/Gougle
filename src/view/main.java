@@ -6,12 +6,8 @@
 package view;
 
 import controller.ControllerBusca;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import controller.ControllerSave;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Scanner;
 import model.Palavra;
 
@@ -23,7 +19,6 @@ import model.Palavra;
 public class main {
     
     public static void main(String[] args) throws IOException{
-
         ControllerBusca c = new ControllerBusca();
         Scanner scanner = new Scanner(System.in);
         String palavraProcurada;
@@ -42,50 +37,17 @@ public class main {
                 if(c.getBuscaRapida().search(palavraMultipla) != null){
                     System.out.println(p.toString());
                     System.out.println("Palavra encontrada na arvore");
+
+                }
+                else if(c.addPalavra(palavraMultipla) == true){
+                    System.out.println("Palavra encontrada entre os arquivos");
+                }
+                else{
+                    System.out.println("Palavra não encontrada");
                 }
             }
-        
-
-            File arquivoAserLido = new File("C:\\Users\\Usuário 01\\Documents\\PBL 3 - Google Search\\Gougle\\testeEditar\\teste.txt");
-
-            System.out.println("Ultima alteração no arquivo: "+arquivoAserLido.lastModified());
-
-            long dataModif = arquivoAserLido.lastModified();
-              System.out.println("Nome do arquivo: "+ arquivoAserLido.getName());
-      //      
-      //      FileWriter arq = new FileWriter("C:\\Users\\Usuário 01\\Documents\\PBL 3 - Google Search\\Gougle\\testeEditar\\Salvar.txt");
-      //      PrintWriter gravarArq = new PrintWriter(arq);
-      //      gravarArq.printf(""+dataModif+":"+arquivoAserLido.getName());
-      //      arq.close();
-
-            FileReader arquivo;
-            arquivo = new FileReader("C:\\Users\\Usuário 01\\Documents\\PBL 3 - Google Search\\Gougle\\testeEditar\\Salvar.txt");
-           BufferedReader lerArq = new BufferedReader(arquivo);
-            String linha = lerArq.readLine(); // só leio a primeira linha pq só testei pra um mano 
-
-            String[] ultModif = linha.split(":");
-
-            System.out.println("Ultima alteração registrada no arquivo: "+ ultModif[0]);
-
-              Long verifica = Long.parseLong(ultModif[0]);
-
-              if (verifica == dataModif){
-
-                  System.out.println("Sem alteração no arquivo: "+ultModif[1]);
-                  arquivo.close();
-
-              }
-              else{
-                  // Como houve alteração, ele escreve a nova data e o nome do arquivo
-                  // No arquivo que vai salvar essas modificações dos arquivos
-                  System.out.println("Houve alteração, leia novamente o arquivo: "+ ultModif[1]);
-                  FileWriter arquivo2 = new FileWriter("C:\\Users\\Usuário 01\\Documents\\PBL 3 - Google Search\\Gougle\\testeEditar\\Salvar.txt");
-                  PrintWriter gravarArq = new PrintWriter(arquivo2);
-                  gravarArq.printf(""+dataModif+":"+arquivoAserLido.getName());
-                  arquivo2.close();
-                }
+            ControllerSave save = new ControllerSave();
+            
         }
-        
     }
-    
 }

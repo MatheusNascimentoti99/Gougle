@@ -19,21 +19,20 @@ import util.Arvore;
  *
  * @author Matheus Nascimento
  */
-public class ControllerFile {
+public class ControllerBuscaFile {
 
    
     
     
     public boolean readFiles(String palavraBuscada, Arvore arvore) throws IOException {
         boolean existe = false;
-        boolean flagExiste = false;
+        
         FileFilter filter = (File pathname) -> pathname.getName().endsWith(".txt");
         File dir = new File("repositorio");
         File[] files = dir.listFiles(filter);
         for (File file : files) {
-            flagExiste = readFile(file, palavraBuscada, arvore);
-            if(!existe)
-                existe = flagExiste;
+            if(readFile(file, palavraBuscada, arvore))
+                existe = true;
         }
         return existe;
     }
@@ -47,7 +46,8 @@ public class ControllerFile {
             linha = read.readLine();
             if (linha != null) {
                 linha = linha.toUpperCase();
-                existe = pegarPalavra(linha, file.getName(), palavraBuscada, arvore);
+                if(pegarPalavra(linha, file.getName(), palavraBuscada, arvore))
+                    existe = true;
             }
         }
         return existe;

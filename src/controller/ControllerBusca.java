@@ -14,11 +14,11 @@ import util.Arvore;
  */
 public class ControllerBusca {
 
-    ControllerFile controlRead;
+    ControllerBuscaFile controlRead;
     Arvore buscaRapida;
 
     public ControllerBusca() {
-        controlRead = new ControllerFile();
+        controlRead = new ControllerBuscaFile();
         buscaRapida = new Arvore();
     }
 
@@ -35,11 +35,11 @@ public class ControllerBusca {
         this.buscaRapida = buscaRapida;
     }
 
-    public ControllerFile getControlRead() {
+    public ControllerBuscaFile getControlRead() {
         return controlRead;
     }
 
-    public void setControlRead(ControllerFile controlRead) {
+    public void setControlRead(ControllerBuscaFile controlRead) {
         this.controlRead = controlRead;
     }
 
