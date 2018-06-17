@@ -6,13 +6,10 @@
 package view;
 
 import controller.ControllerBusca;
-import controller.ControllerFile;
 import java.io.IOException;
-import java.util.Random;
 import java.util.Scanner;
 import model.Palavra;
-import util.Arvore;
-import util.No;
+
 
 /**
  *
@@ -39,7 +36,6 @@ public class main {
             for ( String o: palavrasMultiplas){
                 System.out.println(""+ o);
             }
-            
             for ( String palavraMultipla: palavrasMultiplas){
                 Palavra p = (Palavra) c.getBuscaRapida().search(palavraMultipla);
                 if(c.getBuscaRapida().search(palavraMultipla) != null){

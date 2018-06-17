@@ -145,7 +145,6 @@ public class Arvore {
 
             if (aRemover.getPai() == null) {
                 this.raiz = null;
-                aRemover = null;
                 return;
             }
             r = aRemover;
