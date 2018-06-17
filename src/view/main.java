@@ -32,19 +32,28 @@ public class main {
             System.out.println("Digite uma palavra a ser procurada");
             palavraProcurada = scanner.next();
             palavraProcurada = palavraProcurada.toUpperCase();
-            Palavra p = (Palavra) c.getBuscaRapida().search(palavraProcurada);
-            if(c.getBuscaRapida().search(palavraProcurada) != null){
-                System.out.println(p.toString());
-                System.out.println("Palavra encontrada na arvore");
-                
-            }
-            else if(c.addPalavra(palavraProcurada) == true){
-                System.out.println("Palavra encontrada entre os arquivos");
-            }
-            else{
-                System.out.println("Palavra não encontrada");
+            
+            String[] palavrasMultiplas = new String[10];
+            palavrasMultiplas = palavraProcurada.split(" ");
+            
+            for ( String o: palavrasMultiplas){
+                System.out.println(""+ o);
             }
             
+            for ( String palavraMultipla: palavrasMultiplas){
+                Palavra p = (Palavra) c.getBuscaRapida().search(palavraMultipla);
+                if(c.getBuscaRapida().search(palavraMultipla) != null){
+                    System.out.println(p.toString());
+                    System.out.println("Palavra encontrada na arvore");
+
+                }
+                else if(c.addPalavra(palavraMultipla) == true){
+                    System.out.println("Palavra encontrada entre os arquivos");
+                }
+                else{
+                    System.out.println("Palavra não encontrada");
+                }
+            }
         }
     }
 }
