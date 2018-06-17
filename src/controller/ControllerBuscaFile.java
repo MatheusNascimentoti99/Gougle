@@ -14,6 +14,8 @@ import java.io.IOException;
 import model.Pagina;
 import model.Palavra;
 import util.Arvore;
+import util.IQueue;
+import util.Queue;
 
 /**
  *
@@ -22,12 +24,12 @@ import util.Arvore;
 public class ControllerBuscaFile {
 
     private final ControllerSave save;
-    private final Arvore paginas;
+    private final IQueue paginas;
     public final String diretorio = "resources\\";
 
     public ControllerBuscaFile() {
         save = new ControllerSave();
-        paginas = new Arvore();
+        paginas = new Queue();
     }
 
     public void savePaginas() throws Exception {
@@ -57,7 +59,7 @@ public class ControllerBuscaFile {
         BufferedReader read = new BufferedReader(arq);
         String linha = "";
         Pagina pagina = new Pagina(file.getName(), file.lastModified());
-        paginas.inserir(pagina);
+        paginas.add(pagina);
         boolean existe = false;
         while (linha != null) {
             linha = read.readLine();

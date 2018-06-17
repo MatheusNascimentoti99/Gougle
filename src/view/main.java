@@ -9,6 +9,7 @@ import controller.ControllerBusca;
 import controller.ControllerSave;
 import java.io.IOException;
 import java.util.Scanner;
+import model.Pagina;
 import model.Palavra;
 
 
@@ -31,7 +32,7 @@ public class main {
             palavraProcurada = scanner.next();
             palavraProcurada = palavraProcurada.toUpperCase();
             String[] palavrasMultiplas = palavraProcurada.split(" ");
-
+Palavra a = null;
             for ( String palavraMultipla: palavrasMultiplas){
                 Palavra p = (Palavra) c.getBuscaRapida().search(palavraMultipla);
                 if(c.getBuscaRapida().search(palavraMultipla) != null){
@@ -45,9 +46,14 @@ public class main {
                 else{
                     System.out.println("Palavra não encontrada");
                 }
+                a = p;
             }
             ControllerSave save = new ControllerSave();
-            
+            long ca = 1000;
+            Pagina p = new Pagina("oi", 100);
+            if(c.getControlRead().changePagina(ca, p))
+                System.out.println("Eba");
+            System.out.println("O.o");   
         }
     }
 }

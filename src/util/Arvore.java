@@ -37,7 +37,7 @@ public class Arvore {
 
         } else {
 
-            if (aInserir.getDate().compareTo(((Palavra) aComparar.getDate()).getPalavra()) < 0) {
+            if (aInserir.getDate().compareTo(aComparar.getDate()) < 0) {
 
                 if (aComparar.getEsquerda() == null) {
                     aComparar.setEsquerda(aInserir);
@@ -48,7 +48,7 @@ public class Arvore {
                     inserirAVL(aComparar.getEsquerda(), aInserir);
                 }
 
-            } else if (aInserir.getDate().compareTo(((Palavra) aComparar.getDate()).getPalavra()) > 0) {
+            } else if (aInserir.getDate().compareTo(aComparar.getDate()) > 0) {
 
                 if (aComparar.getDireita() == null) {
                     aComparar.setDireita(aInserir);
@@ -60,7 +60,7 @@ public class Arvore {
                 }
 
             } else {
-                if (aInserir.getDate().compareTo(((Palavra) aComparar.getDate()).getPalavra()) == 0) {
+                if (aInserir.getDate().compareTo(aComparar.getDate()) == 0) {
                     FileToo(aComparar, aInserir);
                        
                     
@@ -299,10 +299,10 @@ public class Arvore {
         Comparable aux = null;
         if (atual != null) {
        
-            if (atual.getDate().compareTo(palavra) < 0){
+            if (((Palavra)atual.getDate()).getPalavra().compareTo(palavra) < 0){
                 aux = search(atual.getDireita(), palavra);
             }
-            else if (atual.getDate().compareTo(palavra)> 0){
+            else if (((Palavra)atual.getDate()).getPalavra().compareTo(palavra)> 0){
                 aux = search(atual.getEsquerda(), palavra);
             }
             else{

@@ -63,7 +63,7 @@ public class Palavra implements Comparable, Comparator{
         return nomePaginas;
     }
 
-    public Object getPalavra() {
+    public String getPalavra() {
         return palavra;
     }
 
@@ -80,6 +80,7 @@ public class Palavra implements Comparable, Comparator{
     }
     @Override
     public int compareTo(Object o) {
-        return palavra.compareTo((String) o);
+        Palavra outra = (Palavra) o;
+        return palavra.compareTo( outra.getPalavra());
     }
 }
