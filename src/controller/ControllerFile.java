@@ -49,8 +49,6 @@ public class ControllerFile {
                 linha = linha.toUpperCase();
                 existe = pegarPalavra(linha, file.getName(), palavraBuscada, arvore);
             }
-            
-
         }
         return existe;
     }
