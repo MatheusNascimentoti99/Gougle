@@ -13,10 +13,20 @@ package model;
 public class Pagina implements  Comparable {
     private String nome;
     private int repeticao;
-
-    public Pagina(String nome) {
+    private long change;
+    public Pagina(String nome, long change) {
         this.nome = nome;
         this.repeticao = 1;
+        this.change = change;
+        
+    }
+
+    public long getChange() {
+        return change;
+    }
+
+    public void setChange(long change) {
+        this.change = change;
     }
 
     public int getRepeticao() {

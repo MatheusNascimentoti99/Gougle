@@ -21,7 +21,9 @@ import util.Arvore;
  */
 public class ControllerBuscaFile {
 
-   
+   public boolean changePagina(long change, Pagina pagina){
+       return change != pagina.getChange();            
+   }
     
     
     public boolean readFiles(String palavraBuscada, Arvore arvore) throws IOException {
@@ -41,19 +43,20 @@ public class ControllerBuscaFile {
         FileReader arq = new FileReader("repositorio\\" + file.getName());
         BufferedReader read = new BufferedReader(arq);
         String linha = "";
+        Pagina pagina = new Pagina(file.getName(), file.lastModified());
         boolean existe = false;
         while (linha != null) {
             linha = read.readLine();
             if (linha != null) {
                 linha = linha.toUpperCase();
-                if(pegarPalavra(linha, file.getName(), palavraBuscada, arvore))
+                if(pegarPalavra(linha, pagina, palavraBuscada, arvore))
                     existe = true;
             }
         }
         return existe;
     }
 
-    private boolean pegarPalavra(String linha, String nomePagina, String palavraBuscada, Arvore arvore) {
+    private boolean pegarPalavra(String linha, Pagina pagina, String palavraBuscada, Arvore arvore) {
         String[] textoSeparado;
         boolean existe = false;
         textoSeparado = linha.split(" ");
@@ -71,8 +74,7 @@ public class ControllerBuscaFile {
             palavra = palavra.replace("[", "");
             palavra = palavra.replace("]", "");
             palavra = palavra.replace("!", "");
-            palavra = palavra.replace("?", "");
-            Pagina pagina = new Pagina(nomePagina);
+            palavra = palavra.replace("?", "");         
             Palavra nova = new Palavra(palavra, pagina);
             palavraBuscada = palavraBuscada.toUpperCase();
             if(palavraBuscada.compareTo(palavra) == 0){
