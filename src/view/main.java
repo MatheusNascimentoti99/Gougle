@@ -6,13 +6,10 @@
 package view;
 
 import controller.ControllerBusca;
-import controller.ControllerFile;
 import java.io.IOException;
-import java.util.Random;
 import java.util.Scanner;
 import model.Palavra;
-import util.Arvore;
-import util.No;
+
 
 /**
  *
@@ -34,6 +31,7 @@ public class main {
             palavraProcurada = palavraProcurada.toUpperCase();
             Palavra p = (Palavra) c.getBuscaRapida().search(palavraProcurada);
             if(c.getBuscaRapida().search(palavraProcurada) != null){
+                p.sort();
                 System.out.println(p.toString());
                 System.out.println("Palavra encontrada na arvore");
                 

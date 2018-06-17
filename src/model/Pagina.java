@@ -5,7 +5,6 @@
  */
 package model;
 
-import java.util.Comparator;
 
 /**
  *
@@ -40,7 +39,7 @@ public class Pagina implements  Comparable {
     @Override
     public int compareTo(Object o) {
         Pagina outro = (Pagina) o;
-        return this.repeticao - outro.repeticao;
+        return   this.repeticao - outro.repeticao;
     }
     
     
