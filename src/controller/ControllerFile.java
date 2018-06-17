@@ -26,11 +26,14 @@ public class ControllerFile {
     
     public boolean readFiles(String palavraBuscada, Arvore arvore) throws IOException {
         boolean existe = false;
+        boolean flagExiste = false;
         FileFilter filter = (File pathname) -> pathname.getName().endsWith(".txt");
         File dir = new File("repositorio");
         File[] files = dir.listFiles(filter);
         for (File file : files) {
-            existe = readFile(file, palavraBuscada, arvore);
+            flagExiste = readFile(file, palavraBuscada, arvore);
+            if(!existe)
+                existe = flagExiste;
         }
         return existe;
     }
@@ -74,7 +77,6 @@ public class ControllerFile {
             Pagina pagina = new Pagina(nomePagina);
             Palavra nova = new Palavra(palavra, pagina);
             palavraBuscada = palavraBuscada.toUpperCase();
-            System.out.println(palavra);
             if(palavraBuscada.compareTo(palavra) == 0){
                 arvore.inserir(nova);
                 existe = true;

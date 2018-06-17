@@ -31,6 +31,7 @@ public class main {
         while(true){
             System.out.println("Digite uma palavra a ser procurada");
             palavraProcurada = scanner.next();
+            palavraProcurada = palavraProcurada.toUpperCase();
             Palavra p = (Palavra) c.getBuscaRapida().search(palavraProcurada);
             if(c.getBuscaRapida().search(palavraProcurada) != null){
                 System.out.println(p.toString());

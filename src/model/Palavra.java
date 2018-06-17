@@ -18,6 +18,7 @@ public class Palavra implements Comparable, Comparator{
     private LinkedList paginas;
     private String palavra;
     private int search;
+   
     public Palavra(String palavra, Pagina pagina) {
         this.palavra = palavra;
         paginas = new LinkedList();
