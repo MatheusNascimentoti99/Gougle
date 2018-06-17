@@ -14,7 +14,7 @@ import model.Palavra;
  * @author Matheus Nascimento
  */
 public class Arvore {
-
+    
     private No raiz;
 
     public void inserir(Comparable date) {

@@ -56,7 +56,7 @@ public class ControllerSave {
         return dado;
     }
 
-    private void save(Object dados, String local) throws Exception {
+    protected void save(Object dados, String local) throws Exception {
         try {
             FileOutputStream arquivoGrav;
             arquivoGrav = new FileOutputStream(local);
