@@ -29,13 +29,8 @@ public class main {
             System.out.println("Digite uma palavra a ser procurada");
             palavraProcurada = scanner.next();
             palavraProcurada = palavraProcurada.toUpperCase();
-            
-            String[] palavrasMultiplas = new String[10];
-            palavrasMultiplas = palavraProcurada.split(" ");
-            
-            for ( String o: palavrasMultiplas){
-                System.out.println(""+ o);
-            }
+            String[] palavrasMultiplas = palavraProcurada.split(" ");
+
             for ( String palavraMultipla: palavrasMultiplas){
                 Palavra p = (Palavra) c.getBuscaRapida().search(palavraMultipla);
                 if(c.getBuscaRapida().search(palavraMultipla) != null){

@@ -25,7 +25,7 @@ public class ControllerBusca {
     public Arvore getBuscaRapida() {
         return buscaRapida;
     }
-
+    
     public boolean addPalavra(String palavra) throws IOException {
         return controlRead.readFiles(palavra, buscaRapida);
 
