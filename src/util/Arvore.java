@@ -291,26 +291,6 @@ public class Arvore {
             return raiz == null;
         }
         
-    public Comparable search(String palavra){
-        return search(this.raiz, palavra);
-    }
-    public Comparable search(No atual, String palavra) {
-        palavra = palavra.toUpperCase();
-        Comparable aux = null;
-        if (atual != null) {
-       
-            if (((Palavra)atual.getDate()).getPalavra().compareTo(palavra) < 0){
-                aux = search(atual.getDireita(), palavra);
-            }
-            else if (((Palavra)atual.getDate()).getPalavra().compareTo(palavra)> 0){
-                aux = search(atual.getEsquerda(), palavra);
-            }
-            else{
-                ((Palavra)atual.getDate()).moreSearch();
-                return atual.getDate();
-            }
-        }
-        return aux;
-    }
+   
     
 }

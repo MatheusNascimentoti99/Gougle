@@ -6,6 +6,7 @@
 package view;
 
 import controller.ControllerBusca;
+import controller.ControllerPaginas;
 import controller.ControllerSave;
 import java.io.IOException;
 import java.util.Scanner;
@@ -19,7 +20,7 @@ import model.Palavra;
  */
 public class main {
     
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException, Exception{
         ControllerBusca c = new ControllerBusca();
         Scanner scanner = new Scanner(System.in);
         String palavraProcurada;
@@ -32,10 +33,10 @@ public class main {
             palavraProcurada = scanner.next();
             palavraProcurada = palavraProcurada.toUpperCase();
             String[] palavrasMultiplas = palavraProcurada.split(" ");
-Palavra a = null;
+            Palavra a = null;
             for ( String palavraMultipla: palavrasMultiplas){
-                Palavra p = (Palavra) c.getBuscaRapida().search(palavraMultipla);
-                if(c.getBuscaRapida().search(palavraMultipla) != null){
+                Palavra p = (Palavra) c.search(palavraMultipla);
+                if(c.search(palavraMultipla) != null){
                     System.out.println(p.toString());
                     System.out.println("Palavra encontrada na arvore");
 
@@ -48,12 +49,12 @@ Palavra a = null;
                 }
                 a = p;
             }
-            ControllerSave save = new ControllerSave();
+            ControllerPaginas save = new ControllerPaginas();
+            
             long ca = 1000;
-            Pagina p = new Pagina("oi", 100);
-            if(c.getControlRead().changePagina(ca, p))
-                System.out.println("Eba");
-            System.out.println("O.o");   
+            save.savePaginas();
+            c.saveTree();
+             
         }
     }
 }

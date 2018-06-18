@@ -10,8 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.LinkedList;
-import util.Arvore;
+
 
 /**
  *
@@ -19,29 +18,7 @@ import util.Arvore;
  */
 public class ControllerSave {
 
-    public void saveFiles(LinkedList files) throws Exception {
-        save(files, "resources\\Files.date");
-    }
-
-    public void saveTree(Arvore arvore) throws Exception {
-        save(arvore, "resources\\Tree.date");
-    }
-
-    public LinkedList readFiles() {
-        LinkedList temp = (LinkedList) readDate("resources\\Files.date");
-        return temp;
-    }
-
-    public Arvore readTree() {
-        Arvore temp;
-        temp = (Arvore) readDate("resources\\Tree.date");
-        if (temp == null) {
-            return new Arvore();
-        }
-        return temp;
-    }
-
-    private Object readDate(String local) {
+    Object readDate(String local) {
         Object dado = new Object();
         try {
 
@@ -71,4 +48,6 @@ public class ControllerSave {
         } catch (IOException e) {
         }
     }
+
+
 }

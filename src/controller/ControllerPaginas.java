@@ -11,34 +11,42 @@ import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.LinkedList;
 import model.Pagina;
 import model.Palavra;
 import util.Arvore;
-import util.IQueue;
-import util.Queue;
+
 
 /**
  *
  * @author Matheus Nascimento
  */
-public class ControllerBuscaFile {
+public class ControllerPaginas {
 
     private final ControllerSave save;
-    private final IQueue paginas;
     public final String diretorio = "resources\\";
 
-    public ControllerBuscaFile() {
+    public ControllerPaginas() {
         save = new ControllerSave();
-        paginas = new Queue();
     }
 
     public void savePaginas() throws Exception {
+        LinkedList paginas = getFiles();
         save.save(paginas, diretorio + "paginas.date");
     }
 
-    public boolean changePagina(long change, Pagina pagina) {
-        return change != pagina.getChange();
+    
+    public LinkedList getFiles(){
+        FileFilter filter = (File pathname) -> pathname.getName().endsWith(".txt");
+        File dir = new File("repositorio");
+        File[] files = dir.listFiles(filter);
+        LinkedList temp = new LinkedList();
+        temp.addAll(Arrays.asList(files));
+        return temp;
     }
+    
+
 
     public boolean readFiles(String palavraBuscada, Arvore arvore) throws IOException {
         boolean existe = false;
@@ -54,18 +62,17 @@ public class ControllerBuscaFile {
         return existe;
     }
 
-    private boolean readFile(File file, String palavraBuscada, Arvore arvore) throws FileNotFoundException, IOException {
+    public boolean readFile(File file, String palavraBuscada, Arvore arvore) throws FileNotFoundException, IOException {
         FileReader arq = new FileReader("repositorio\\" + file.getName());
         BufferedReader read = new BufferedReader(arq);
         String linha = "";
         Pagina pagina = new Pagina(file.getName(), file.lastModified());
-        paginas.add(pagina);
         boolean existe = false;
         while (linha != null) {
             linha = read.readLine();
             if (linha != null) {
                 linha = linha.toUpperCase();
-                if (pegarPalavra(linha, pagina, palavraBuscada, arvore)) {
+                if (getFileWord(linha, pagina, palavraBuscada, arvore)) {
                     existe = true;
                 }
             }
@@ -73,7 +80,7 @@ public class ControllerBuscaFile {
         return existe;
     }
 
-    private boolean pegarPalavra(String linha, Pagina pagina, String palavraBuscada, Arvore arvore) {
+    private boolean getFileWord(String linha, Pagina pagina, String palavraBuscada, Arvore arvore) {
         String[] textoSeparado;
         boolean existe = false;
         textoSeparado = linha.split(" ");
@@ -93,6 +100,7 @@ public class ControllerBuscaFile {
             palavra = palavra.replace("!", "");
             palavra = palavra.replace("?", "");
             Palavra nova = new Palavra(palavra, pagina);
+            pagina.setPalavra(nova);
             palavraBuscada = palavraBuscada.toUpperCase();
             if (palavraBuscada.compareTo(palavra) == 0) {
                 arvore.inserir(nova);
@@ -101,4 +109,6 @@ public class ControllerBuscaFile {
         }
         return existe;
     }
+
+
 }

@@ -12,6 +12,7 @@ package model;
  */
 public class Pagina implements  Comparable {
     private String nome;
+    private Palavra palavra;
     private int repeticao;
     private long change;
     public Pagina(String nome, long change) {
@@ -19,6 +20,14 @@ public class Pagina implements  Comparable {
         this.repeticao = 1;
         this.change = change;
         
+    }
+
+    public Palavra getPalavra() {
+        return palavra;
+    }
+
+    public void setPalavra(Palavra palavra) {
+        this.palavra = palavra;
     }
 
     public long getChange() {
