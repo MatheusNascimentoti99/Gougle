@@ -36,7 +36,7 @@ public class main {
             Palavra a = null;
             for ( String palavraMultipla: palavrasMultiplas){
                 Palavra p = (Palavra) c.search(palavraMultipla);
-                if(c.search(palavraMultipla) != null){
+                if(p != null){
                     System.out.println(p.toString());
                     System.out.println("Palavra encontrada na arvore");
 
@@ -52,7 +52,6 @@ public class main {
             ControllerPaginas save = new ControllerPaginas();
             
             long ca = 1000;
-            save.savePaginas();
             c.saveTree();
              
         }

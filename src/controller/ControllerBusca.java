@@ -24,7 +24,7 @@ public class ControllerBusca {
     ControllerPaginas allFiles;
     ControllerSave save;
     Arvore buscaRapida;
-
+    File file;
     public ControllerBusca() {
         allFiles = new ControllerPaginas();
         buscaRapida = new Arvore();
@@ -34,6 +34,7 @@ public class ControllerBusca {
     public Comparable search(String palavra) throws IOException {
         Palavra p = (Palavra) search(buscaRapida.getRaiz(), palavra);
         if (p != null) {
+            
             changePaginas(p.getPaginas(), p);
         }
         return p;
@@ -41,38 +42,39 @@ public class ControllerBusca {
 
     public boolean changePaginas(LinkedList paginas, Palavra palavra) throws IOException {
         Iterator it = paginas.iterator();
+        System.out.println(";)");
         while (it.hasNext()) {
             Pagina p = (Pagina) it.next();
-            File aux = null;
-            int flag = changePagina(p, aux);
+            int flag = changePagina(p);
             switch (flag) {
-                case 0:
-                    return false;
                 case 1:
-                    paginas.remove(p);
-                    allFiles.readFile(aux, palavra.getPalavra(), buscaRapida);
-                    return true;
-                default:
-                    paginas.remove(p);
-                    return true;
+                    it.remove();
+                    System.out.println(file.getName());
+                    allFiles.readFile(file, palavra.getPalavra(), buscaRapida);
+                case -1:
+                    System.out.println("0");
+                    it.remove();
             }
         }
         return true;
     }
 
-    private int changePagina(Pagina oldPag, File temp) {
+    private int changePagina(Pagina oldPag) {
         LinkedList paginas = allFiles.getFiles();
         Iterator it = paginas.iterator();
         while (it.hasNext()) {
-            File file = (File) it.next();
-            if (file.lastModified() == oldPag.getChange()) {
+            File arq = (File) it.next();
+            if (arq.lastModified() == oldPag.getChange()) {
+                System.out.println("3");
                 return 0;
-            } else if (file.getName().compareTo(oldPag.getNome()) == 0) {
-                temp = file;
+            } else if (arq.getName().compareTo(oldPag.getNome()) == 0) {
+                this.file = arq;
+                System.out.println("2");
                 return 1;
             }
 
         }
+        System.out.println("1");
         return -1;
     }
 

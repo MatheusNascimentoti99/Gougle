@@ -31,11 +31,6 @@ public class ControllerPaginas {
         save = new ControllerSave();
     }
 
-    public void savePaginas() throws Exception {
-        LinkedList paginas = getFiles();
-        save.save(paginas, diretorio + "paginas.date");
-    }
-
     
     public LinkedList getFiles(){
         FileFilter filter = (File pathname) -> pathname.getName().endsWith(".txt");
