@@ -41,19 +41,17 @@ public class ControllerBusca {
     }
 
     public boolean changePaginas(LinkedList paginas, Palavra palavra) throws IOException {
-        Iterator it = paginas.iterator();
         System.out.println(";)");
-        while (it.hasNext()) {
-            Pagina p = (Pagina) it.next();
+        for(int i = 0; i < paginas.size(); i++) {
+            Pagina p = (Pagina) paginas.get(i);
             int flag = changePagina(p);
             switch (flag) {
                 case 1:
-                    it.remove();
+                    paginas.remove(i);
                     System.out.println(file.getName());
                     allFiles.readFile(file, palavra.getPalavra(), buscaRapida);
                 case -1:
                     System.out.println("0");
-                    it.remove();
             }
         }
         return true;
