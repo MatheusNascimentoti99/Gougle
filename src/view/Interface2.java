@@ -27,7 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Palavra;
 
-public class Interface extends Application {
+public class Interface2 extends Application {
 
  public static void main(String[] args) throws FileNotFoundException, IOException, Exception {
   launch();

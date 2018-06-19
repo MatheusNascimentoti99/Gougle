@@ -1,6 +1,7 @@
 
 import controller.ControllerBusca;
 import controller.ControllerPaginas;
+import java.awt.FlowLayout;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -26,6 +27,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Palavra;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+
 
 public class Interface extends Application {
 
@@ -80,7 +90,25 @@ public class Interface extends Application {
         VBox raiz = new VBox(10);
         raiz.setTranslateX(10);
         raiz.setTranslateY(20);
-
+//        Janela2 janela = new Janela2(palco);
+//        janela.setVisible(false);
+        Button fechar = new Button("Fechar Aplicação");
+        Button btnSubmeter = new Button("Pesquisar");
+        Button exibiArq = new Button("Exibir Arquivo");
+        exibiArq.setVisible(false);
+         
+        TextField txtArq = new TextField();
+         HBox hbArq = new HBox(10); // 2
+         hbArq.getChildren().addAll(new Label("Hello"), txtArq);
+         txtArq.setVisible(true);
+         txtArq.setOnAction(new EventHandler(){
+            @Override
+            public void handle(Event event) {
+                exibiArq.setVisible(true);
+            }
+         
+         
+         });
         Label lblTitulo = new Label("Digite a palavra para pesquisa");
         lblTitulo.setUnderline(true); // 1
 
@@ -88,16 +116,28 @@ public class Interface extends Application {
         HBox hbNome = new HBox(10); // 2
         hbNome.getChildren().addAll(new Label("Nome"), txtNome);
 
-        Button fechar = new Button("Fechar Aplicação");
-        Button btnSubmeter = new Button("Pesquisar");
+        
+        exibiArq.setOnAction(new EventHandler(){
+            @Override
+            public void handle(Event event) {
+               Janela jn = new Janela(txtArq.getText());
+               Button n = new Button("Porco aranha");
+               jn.setVisible(true);
+            }
+        
+        
+        });
         btnSubmeter.setOnAction(new EventHandler() {
 
             @Override
             public void handle(Event event) {
-
+//                janela.pack();
+//                janela.setVisible(true);
+//                  Botao b = new Botao();
+//                  b.setVisible(true);
                 System.out.println("\t\tResultado da pesquisa para \""
                         + txtNome.getText() + "\"\n");
-                // Podemos não ter um SO selecionado
+                // Podemos não ter um SO selecionado               
                 try {
                     FileWriter arq = new FileWriter("C:\\Users\\Usuário 01\\Documents\\PBL 3 - Google Search\\Gougle\\testeEditar\\texte.txt");
                     PrintWriter gravaArq = new PrintWriter(arq);
@@ -114,15 +154,87 @@ public class Interface extends Application {
         fechar.setOnAction(new EventHandler() {
             @Override
             public void handle(Event event) {
+                
                 Platform.exit();
+                
             }
         });
 
-        raiz.getChildren().addAll(lblTitulo, hbNome, btnSubmeter, fechar);
-
+        raiz.getChildren().addAll(lblTitulo, hbNome, btnSubmeter, exibiArq, txtArq, fechar);
         Scene cena = new Scene(raiz, 450, 250);
         palco.setTitle("GOUGLE SEARCH");
         palco.setScene(cena);
         palco.show();
     }
 }
+class Janela extends JFrame {
+    
+    public Janela(String Diretorio) {
+        super("Visualizador do arquivo");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(250, 250);
+        File file = new File(Diretorio);
+        FileInputStream fis = null;
+        String texto = "";
+
+        try {
+            fis = new FileInputStream(file);
+            int content;
+            while ((content = fis.read()) != -1) {
+                texto += (char) content;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fis != null) {
+                    fis.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        JTextArea textArea = new JTextArea(texto);
+        textArea.setLineWrap(true); //quebra de linha automática
+        add(textArea);
+    }
+}
+
+//class Janela2 extends JFrame{
+//    
+//    public Janela2(Stage palco){
+//        super("Outra Janela");
+//        setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        setSize(250, 250);
+//        Label l = new Label("E Ai galera");
+//        VBox raiz2 = new VBox(10);
+//        raiz2.setTranslateX(10);
+//        raiz2.setTranslateY(20);
+//        JButton b = new JButton("OI");
+//        
+//        add(l);
+//    }
+//
+//    private void add(Label l) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//}
+//class Botao extends JFrame{
+// private Button ok,
+//         cancelar;
+// private Label l;
+// public Botao(){
+//  super("Criando botões");
+//  setLayout( new FlowLayout() );
+//  l = new Label("Eaadfsdfgsfgdfg");
+//  ok = new Button("OK");
+//  cancelar = new Button("Cancelar");
+//       VBox raiz = new VBox(10);
+//        raiz.setTranslateX(10);
+//        raiz.setTranslateY(20);
+//        
+//        raiz.getChildren().add(l);
+//        
+// }
+//}
