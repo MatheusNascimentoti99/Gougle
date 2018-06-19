@@ -40,7 +40,9 @@ public class ControllerPaginas {
         temp.addAll(Arrays.asList(files));
         return temp;
     }
-    
+    public void saveFiles() throws Exception{
+        save.save(getFiles(), diretorio+"Files.date");
+    }
 
 
     public boolean readFiles(String palavraBuscada, Arvore arvore) throws IOException {
