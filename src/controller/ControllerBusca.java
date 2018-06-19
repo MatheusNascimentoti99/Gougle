@@ -33,33 +33,45 @@ public class ControllerBusca {
 
     public Comparable search(String palavra) throws IOException {
         Palavra p = (Palavra) search(buscaRapida.getRaiz(), palavra);
+        boolean flag = true;
         if (p != null) {
             
-            changePaginas(p.getPaginas(), p);
+            flag = changePaginas(p.getPaginas(), p);
+        }
+        if(flag == false){
+            buscaRapida.remover(p);
+            System.out.println("foda");
+            return null;
         }
         return p;
     }
 
     public boolean changePaginas(LinkedList paginas, Palavra palavra) throws IOException {
         System.out.println(";)");
+        boolean existe = false;
         for(int i = 0; i < paginas.size(); i++) {
             Pagina p = (Pagina) paginas.get(i);
             int flag = changePagina(p);
             switch (flag) {
+                case 0:
+                    existe = true;break;
                 case 1:
                     paginas.remove(i);
                     System.out.println(file.getName());
-                    allFiles.readFile(file, palavra.getPalavra(), buscaRapida);
+                    if(!existe)
+                        existe = allFiles.readFile(file, palavra.getPalavra(), buscaRapida);
+                    allFiles.readFile(file, palavra.getPalavra(), buscaRapida);break;
                 case -1:
                     System.out.println("0");
             }
         }
-        return true;
+        return existe;
     }
 
     private int changePagina(Pagina oldPag) {
         LinkedList paginas = allFiles.getFiles();
         Iterator it = paginas.iterator();
+        
         while (it.hasNext()) {
             File arq = (File) it.next();
             if (arq.lastModified() == oldPag.getChange()) {
