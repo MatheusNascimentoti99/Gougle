@@ -33,16 +33,22 @@ public class ControllerBusca {
 
     public Comparable search(String palavra) throws IOException {
         Palavra p = (Palavra) search(buscaRapida.getRaiz(), palavra);
+        
         boolean flag = true;
+        
         if (p != null) {
             
             flag = changePaginas(p.getPaginas(), p);
+            p.moreSearch();
         }
+        
         if(flag == false){
             buscaRapida.remover(p);
             System.out.println("foda");
             return null;
         }
+        
+        
         return p;
     }
 
