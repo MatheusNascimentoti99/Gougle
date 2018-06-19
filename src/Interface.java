@@ -97,7 +97,7 @@ public class Interface extends Application {
         Button exibiArq = new Button("Exibir Arquivo");
         exibiArq.setVisible(false);
          
-        TextField txtArq = new TextField();
+         TextField txtArq = new TextField();
          HBox hbArq = new HBox(10); // 2
          hbArq.getChildren().addAll(new Label("Hello"), txtArq);
          txtArq.setVisible(true);
