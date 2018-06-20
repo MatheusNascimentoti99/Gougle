@@ -5,6 +5,8 @@
  */
 package util;
 
+import java.io.Serializable;
+
 
 
 
@@ -12,7 +14,7 @@ package util;
  *
  * @author Matheus Nascimento
  */
-public final class No{
+public final class No implements Serializable{
     private Comparable date;
     private No esquerda;
     private No direita;

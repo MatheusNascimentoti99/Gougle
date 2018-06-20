@@ -134,11 +134,11 @@ public class ControllerPaginas {
         return paginas;
     }
 
-    public LinkedList sort(LinkedList paginas) {
+    public LinkedList sort(LinkedList paginas, Palavra p) {
         Queue fila = new LinkedList();
         fila = passListToQueue(paginas, fila);
         QuickSort sort = new QuickSort();
-        sort.quickSort(fila);
+        sort.quickSort(fila, p);
         return passQueueToList(fila, paginas);
     }
 

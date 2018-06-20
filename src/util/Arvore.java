@@ -5,6 +5,7 @@
  */
 package util;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import model.Pagina;
 import model.Palavra;
@@ -13,7 +14,7 @@ import model.Palavra;
  *
  * @author Matheus Nascimento
  */
-public class Arvore {
+public class Arvore implements Serializable{
     
     protected No raiz;
 

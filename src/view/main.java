@@ -6,7 +6,6 @@
 package view;
 
 import controller.ControllerBusca;
-import controller.ControllerPaginas;
 import java.io.IOException;
 import java.util.Scanner;
 import model.Palavra;
@@ -46,12 +45,7 @@ public class main {
                     System.out.println("Palavra não encontrada");
                 }
                 a = p;
-            }
-            ControllerPaginas save = new ControllerPaginas();
-            
-            long ca = 1000;
-            c.saveTree();
-             
+            }            
         }
     }
 }

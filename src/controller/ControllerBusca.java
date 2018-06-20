@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -27,11 +28,12 @@ public class ControllerBusca {
     File file;
     public ControllerBusca() {
         allFiles = new ControllerPaginas();
-        buscaRapida = new Arvore();
         save = new ControllerSave();
     }
 
-    public Comparable search(String palavra) throws IOException {
+    public Comparable search(String palavra) throws IOException, Exception {
+        if(buscaRapida == null)
+            buscaRapida = readTree();
         Palavra p = (Palavra) search(buscaRapida.getRaiz(), palavra);
         
         boolean flag = true;
@@ -40,7 +42,7 @@ public class ControllerBusca {
             
             flag = therePages(p.getPaginas(), p);
             p.moreSearch();
-            p.setPaginas(allFiles.sort(p.getPaginas()));
+            p.setPaginas(allFiles.sort(p.getPaginas(), p));
 
         }
         
@@ -48,10 +50,10 @@ public class ControllerBusca {
             buscaRapida.remover(p);
             return null;
         }
-        
+        saveTree();
         return p;
     }
-    public LinkedList multiSearch(String[] palavrasChaves) throws IOException{
+    public LinkedList multiSearch(String[] palavrasChaves) throws IOException, Exception{
         LinkedList palavras;
         palavras = new LinkedList();
         for(String palavra : palavrasChaves){
@@ -61,11 +63,7 @@ public class ControllerBusca {
         }
         return palavras;
     }
-    private boolean equalPages(LinkedList palavras){
-           
 
-        return false;  
-    }
     public boolean therePages(LinkedList paginas, Palavra palavra) throws IOException {
         boolean existe = false;
         for(int i = 0; i < paginas.size(); i++) {
@@ -112,7 +110,6 @@ public class ControllerBusca {
             } else if (((Palavra) atual.getDate()).getPalavra().compareTo(palavra) > 0) {
                 aux = search(atual.getEsquerda(), palavra);
             } else {
-                ((Palavra) atual.getDate()).moreSearch();
                 return atual.getDate();
             }
         }
@@ -144,9 +141,13 @@ public class ControllerBusca {
         save.save(buscaRapida, "resources\\Tree.date");
     }
 
-    public Arvore readTree() {
+    public Arvore readTree() throws FileNotFoundException {
         Arvore temp;
-        temp = (Arvore) save.readDate("resources\\Tree.date");
+        try{
+            temp = (Arvore) save.readDate("resources\\Tree.date");
+        }catch(FileNotFoundException e){
+            temp = null;
+        }
         if (temp == null) {
             return new Arvore();
         }

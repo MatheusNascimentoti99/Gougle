@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,17 +19,20 @@ import java.io.ObjectOutputStream;
  */
 public class ControllerSave {
 
-    Object readDate(String local) {
-        Object dado = new Object();
+    Object readDate(String local) throws FileNotFoundException {
+        Object dado = null;
         try {
 
             try (
                     FileInputStream arquivoLeitura = new FileInputStream(local); ObjectInputStream objLeitura = new ObjectInputStream(arquivoLeitura)) {
 
                 dado = objLeitura.readObject();
+                if(dado == null)
+                   throw new FileNotFoundException();
             }
 
         } catch (IOException | ClassNotFoundException e) {
+            
         }
         return dado;
     }

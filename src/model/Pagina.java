@@ -5,12 +5,14 @@
  */
 package model;
 
+import java.io.Serializable;
+
 
 /**
  *
  * @author Matheus Nascimento
  */
-public class Pagina implements  Comparable {
+public class Pagina implements  Comparable, Serializable {
     private String nome;
     private Palavra palavra;
     private int relevancia;
@@ -21,6 +23,7 @@ public class Pagina implements  Comparable {
         this.change = change;
         
     }
+
 
     public Palavra getPalavra() {
         return palavra;

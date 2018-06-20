@@ -5,6 +5,7 @@
  */
 package util;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -14,7 +15,7 @@ import java.util.Queue;
  */
 public class QuickSort {
 
-    public void quickSort(Queue fila) {
+    public void quickSort(Queue fila, Comparator compare) {
         if (fila.size() > 1) {
             Comparable pivot = (Comparable) fila.peek();
             Queue left = new LinkedList();
@@ -22,19 +23,20 @@ public class QuickSort {
             Queue right = new LinkedList();
             while (!fila.isEmpty()) {
                 Comparable next = (Comparable) fila.remove();
-                if (next.compareTo(pivot) < 0) {
+                if (compare.compare(next, pivot) < 0) {
                     left.add(next);
-                } else if (next.compareTo(pivot) > 0) {
+                } else if (compare.compare(next, pivot) > 0) {
                     right.add(next);
                 } else {
                     equal.add(next);
                 }
             }
-            quickSort(left);
-            quickSort(right);
-            fila.addAll(right); 
-            fila.addAll(equal);
+            quickSort(left, compare);
+            quickSort(right, compare);
             fila.addAll(left);
+            fila.addAll(equal);
+            fila.addAll(right); 
+            
             
         }
     }
