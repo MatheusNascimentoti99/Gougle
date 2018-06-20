@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import model.Pagina;
 import model.Palavra;
 import util.Arvore;
+import util.Crescente;
 import util.QuickSort;
 import view.Interface;
 
@@ -138,7 +139,7 @@ public class ControllerPaginas {
         Queue fila = new LinkedList();
         fila = passListToQueue(paginas, fila);
         QuickSort sort = new QuickSort();
-        sort.quickSort(fila, p);
+        sort.quickSort(fila, new Crescente());
         return passQueueToList(fila, paginas);
     }
 

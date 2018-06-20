@@ -14,7 +14,7 @@ import java.util.LinkedList;
  *
  * @author Matheus Nascimento
  */
-public class Palavra implements Comparable, Comparator, Serializable{
+public class Palavra implements Comparable, Serializable{
 
     private LinkedList paginas;
     private String palavra;
@@ -30,20 +30,7 @@ public class Palavra implements Comparable, Comparator, Serializable{
         return search;
        
     }
-    @Override
-    public int compare(Object o1, Object o2) {
-        if(o1 instanceof Pagina && o2 instanceof Pagina) {
-            Pagina p1 = (Pagina) o1;
-            Pagina p2 = (Pagina) o2;
-            return -p1.compareTo(p2);
-        }
-        else if(o1 instanceof Palavra && o2 instanceof Palavra){
-            Palavra p1 = (Palavra) o1;
-            Palavra p2 = (Palavra) o2;
-            return -p1.compareTo(p2);
-        }
-        return 0;
-    }
+    
 
 
     public void moreSearch(){

@@ -29,10 +29,11 @@ public class ControllerBusca {
     public ControllerBusca() {
         allFiles = new ControllerPaginas();
         save = new ControllerSave();
+        buscaRapida = new Arvore();
     }
 
     public Comparable search(String palavra) throws IOException, Exception {
-        if(buscaRapida == null)
+        if(buscaRapida.getRaiz() == null)
             buscaRapida = readTree();
         Palavra p = (Palavra) search(buscaRapida.getRaiz(), palavra);
         
@@ -64,22 +65,27 @@ public class ControllerBusca {
         return palavras;
     }
 
-    public boolean therePages(LinkedList paginas, Palavra palavra) throws IOException {
+    public boolean therePages(LinkedList paginas, Palavra palavra) throws IOException, Exception {
         boolean existe = false;
         for(int i = 0; i < paginas.size(); i++) {
             Pagina p = (Pagina) paginas.get(i);
             int flag = changePagina(p);
             switch (flag) {
                 case 0:
-                    existe = true;break;
+                    existe = true;
+                    break;
                 case 1:
                     paginas.remove(i);
                     if(!existe)
                         existe = allFiles.readFile(file, palavra.getPalavra(), buscaRapida);
-                    allFiles.readFile(file, palavra.getPalavra(), buscaRapida);break;
+                    allFiles.readFile(file, palavra.getPalavra(), buscaRapida);
+                    saveTree();
+                    break;
+                    
                 case -1:
             }
         }
+        
         return existe;
     }
 
