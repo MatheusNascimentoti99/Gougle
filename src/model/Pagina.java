@@ -17,13 +17,34 @@ public class Pagina implements  Comparable, Serializable {
     private Palavra palavra;
     private int relevancia;
     private long change;
+    private int visit;
     public Pagina(String nome, long change) {
         this.nome = nome;
-        this.relevancia = 1;
+        relevancia = 1;
         this.change = change;
+        visit = 0;
         
     }
 
+    public int getRelevancia() {
+        return relevancia;
+    }
+
+    public void setRelevancia(int relevancia) {
+        this.relevancia = relevancia;
+    }
+
+    public int getVisit() {
+        return visit;
+    }
+
+    public void setVisit(int visit) {
+        this.visit = visit;
+    }
+    
+    public void visited(){
+        visit++;
+    }
 
     public Palavra getPalavra() {
         return palavra;

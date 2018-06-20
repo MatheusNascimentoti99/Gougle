@@ -7,7 +7,9 @@ package view;
 
 import controller.ControllerBusca;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Scanner;
+import model.Pagina;
 import model.Palavra;
 
 
@@ -35,6 +37,11 @@ public class main {
                 Palavra p = (Palavra) c.search(palavraMultipla);
                 if(p != null){
                     System.out.println(p.toString());
+                    Iterator it = p.imprimirArquivos();
+                    while(it.hasNext()){
+                        Pagina pag = (Pagina) it.next();
+                        System.out.println(pag.getNome());
+                    }
                     System.out.println("Palavra encontrada na arvore");
 
                 }

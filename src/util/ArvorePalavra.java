@@ -14,7 +14,8 @@ import model.Palavra;
  * @author Matheus Nascimento
  */
 public class ArvorePalavra extends Arvore{
-     private void FileToo(No aComparar, No aInserir) {
+    
+     private void fileEqual(No aComparar, No aInserir) {
         boolean equal = false;
         Palavra compara = (Palavra) aComparar.getDate();
         Palavra nova = (Palavra) aInserir.getDate();
@@ -31,6 +32,7 @@ public class ArvorePalavra extends Arvore{
             compara.getPaginas().add(nova.getPaginas().getFirst());
         }
     }
+     @Override
          public void inserirAVL(No aComparar, No aInserir) {
 
         if (aComparar == null) {
@@ -62,7 +64,7 @@ public class ArvorePalavra extends Arvore{
 
             } else {
                 if (aInserir.getDate().compareTo(aComparar.getDate()) == 0) {
-                    FileToo(aComparar, aInserir);
+                    fileEqual(aComparar, aInserir);
                        
                     
                 }

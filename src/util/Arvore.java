@@ -6,8 +6,7 @@
 package util;
 
 import java.io.Serializable;
-import java.util.Iterator;
-import model.Pagina;
+
 import model.Palavra;
 
 /**
@@ -74,7 +73,7 @@ public class Arvore implements Serializable{
 
         if (balanceamento == -2) {
 
-            if (altura(atual.getEsquerda().getEsquerda()) >= altura(atual.getEsquerda().getDireita())) {
+            if (altura(atual.getEsquerda().getDireita()) < altura(atual.getEsquerda().getEsquerda())) {
                 atual = rotacaoDireita(atual);
 
             } else {
@@ -83,7 +82,7 @@ public class Arvore implements Serializable{
 
         } else if (balanceamento == 2) {
 
-            if (altura(atual.getDireita().getDireita()) >= altura(atual.getDireita().getEsquerda())) {
+            if (altura(atual.getDireita().getEsquerda()) < altura(atual.getDireita().getDireita())) {
                 atual = rotacaoEsquerda(atual);
 
             } else {
@@ -154,7 +153,6 @@ public class Arvore implements Serializable{
             }
             verificarBalanceamento(r.getPai());
         }
-        r = null;
     }
 
     public No rotacaoEsquerda(No inicial) {

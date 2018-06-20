@@ -19,12 +19,12 @@ public class Crescente implements Comparator{
         if(o1 instanceof Pagina && o2 instanceof Pagina) {
             Pagina p1 = (Pagina) o1;
             Pagina p2 = (Pagina) o2;
-            return -p1.compareTo(p2);
+            return p1.getVisit() > p2.getVisit() ? -1 : p1.getVisit() == p2.getVisit() ? 0 : 1;
         }
         else if(o1 instanceof Palavra && o2 instanceof Palavra){
             Palavra p1 = (Palavra) o1;
             Palavra p2 = (Palavra) o2;
-            return -p1.compareTo(p2);
+            return p1.getSearch() > p2.getSearch() ? -1 : p1.getSearch() == p2.getSearch() ? 0 : 1;
         }
         return 0;
     }
