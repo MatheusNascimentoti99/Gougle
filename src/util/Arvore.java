@@ -60,34 +60,13 @@ public class Arvore implements Serializable{
                     inserirAVL(aComparar.getDireita(), aInserir);
                 }
 
-            } else {
-                if (aInserir.getDate().compareTo(aComparar.getDate()) == 0) {
-                    FileToo(aComparar, aInserir);
-                       
-                    
-                }
-            }
+            } 
+            
         }
 
     }
 
-    private void FileToo(No aComparar, No aInserir) {
-        boolean equal = false;
-        Palavra compara = (Palavra) aComparar.getDate();
-        Palavra nova = (Palavra) aInserir.getDate();
-        Iterator it = compara.getPaginas().iterator();
-        while (it.hasNext()) {
-            Pagina pagina = (Pagina) it.next();
-            if (pagina.getNome().equals(((Pagina) nova.getPaginas().getFirst()).getNome())) {
-                pagina.repetir();
-                equal = true;
-            }
-
-        }
-        if(equal == false){
-            compara.getPaginas().add(nova.getPaginas().getFirst());
-        }
-    }
+   
 
     public void verificarBalanceamento(No atual) {
         setBalanceamento(atual);

@@ -14,6 +14,7 @@ import model.Pagina;
 import model.Palavra;
 
 import util.Arvore;
+import util.ArvorePalavra;
 import util.No;
 
 /**
@@ -24,19 +25,18 @@ public class ControllerBusca {
 
     ControllerPaginas allFiles;
     ControllerFile save;
-    Arvore buscaRapida;
+    ArvorePalavra buscaRapida;
     File file;
     public ControllerBusca() {
         allFiles = new ControllerPaginas();
         save = new ControllerFile();
-        buscaRapida = new Arvore();
+        buscaRapida = new ArvorePalavra();
     }
 
     public Comparable search(String palavra) throws IOException, Exception {
         if(buscaRapida.getRaiz() == null)
             buscaRapida = readTree();
         Palavra p = (Palavra) search(buscaRapida.getRaiz(), palavra);
-        
         boolean flag = true;
         
         if (p != null) {
@@ -131,7 +131,7 @@ public class ControllerBusca {
 
     }
 
-    public void setBuscaRapida(Arvore buscaRapida) {
+    public void setBuscaRapida(ArvorePalavra buscaRapida) {
         this.buscaRapida = buscaRapida;
     }
 
@@ -147,15 +147,15 @@ public class ControllerBusca {
         save.save(buscaRapida, "resources\\Tree.date");
     }
 
-    public Arvore readTree() throws FileNotFoundException {
-        Arvore temp;
+    public ArvorePalavra readTree() throws FileNotFoundException {
+        ArvorePalavra temp;
         try{
-            temp = (Arvore) save.readDate("resources\\Tree.date");
+            temp = (ArvorePalavra) save.readDate("resources\\Tree.date");
         }catch(FileNotFoundException e){
             temp = null;
         }
         if (temp == null) {
-            return new Arvore();
+            return new ArvorePalavra();
         }
         return temp;
     }
