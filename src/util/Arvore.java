@@ -15,7 +15,7 @@ import model.Palavra;
  */
 public class Arvore {
     
-    private No raiz;
+    protected No raiz;
 
     public void inserir(Comparable date) {
         No n = new No(date);

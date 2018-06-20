@@ -38,22 +38,35 @@ public class ControllerBusca {
         
         if (p != null) {
             
-            flag = changePaginas(p.getPaginas(), p);
+            flag = therePages(p.getPaginas(), p);
             p.moreSearch();
+            p.setPaginas(allFiles.sort(p.getPaginas()));
+
         }
         
         if(flag == false){
             buscaRapida.remover(p);
-            System.out.println("foda");
             return null;
         }
         
-        
         return p;
     }
+    public LinkedList multiSearch(String[] palavrasChaves) throws IOException{
+        LinkedList palavras;
+        palavras = new LinkedList();
+        for(String palavra : palavrasChaves){
+            Palavra p = (Palavra) search(palavra);
+            if(p != null)
+                palavras.add(p);
+        }
+        return palavras;
+    }
+    private boolean equalPages(LinkedList palavras){
+           
 
-    public boolean changePaginas(LinkedList paginas, Palavra palavra) throws IOException {
-        System.out.println(";)");
+        return false;  
+    }
+    public boolean therePages(LinkedList paginas, Palavra palavra) throws IOException {
         boolean existe = false;
         for(int i = 0; i < paginas.size(); i++) {
             Pagina p = (Pagina) paginas.get(i);
@@ -63,12 +76,10 @@ public class ControllerBusca {
                     existe = true;break;
                 case 1:
                     paginas.remove(i);
-                    System.out.println(file.getName());
                     if(!existe)
                         existe = allFiles.readFile(file, palavra.getPalavra(), buscaRapida);
                     allFiles.readFile(file, palavra.getPalavra(), buscaRapida);break;
                 case -1:
-                    System.out.println("0");
             }
         }
         return existe;
@@ -81,16 +92,13 @@ public class ControllerBusca {
         while (it.hasNext()) {
             File arq = (File) it.next();
             if (arq.lastModified() == oldPag.getChange()) {
-                System.out.println("3");
                 return 0;
             } else if (arq.getName().compareTo(oldPag.getNome()) == 0) {
                 this.file = arq;
-                System.out.println("2");
                 return 1;
             }
 
         }
-        System.out.println("1");
         return -1;
     }
 

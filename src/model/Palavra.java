@@ -13,7 +13,7 @@ import java.util.LinkedList;
  *
  * @author Matheus Nascimento
  */
-public class Palavra implements Comparable, Comparator{
+public class Palavra implements Comparable{
 
     private LinkedList paginas;
     private String palavra;
@@ -30,37 +30,18 @@ public class Palavra implements Comparable, Comparator{
        
     }
     
-    public void sort(){
-        paginas.sort(this);
-    }
 
-    
-    @Override
-    public int compare(Object o1, Object o2) {
-        Pagina p1 = (Pagina) o1;
-        Pagina p2 = (Pagina) o2;
-        return -p1.compareTo(p2);
-    }
 
     public void moreSearch(){
         search++;
-         paginas.sort(this);
     }
     @Override
     public String toString() {
-        return ("Palavra:" + palavra + " - Arquivos: " + imprimirArquivos());
+        return ("Palavra:" + palavra + "Buscas: " + search);
     }
 
-    public String imprimirArquivos() {
-        Iterator temp = paginas.iterator();
-        String nomePaginas = "";
-        Pagina aux = (Pagina) temp.next();
-        nomePaginas = nomePaginas + "[" + aux.getNome() +", Quantidade de repetições " +aux.getRepeticao()+"]";
-        while (temp.hasNext()) {
-            aux = (Pagina) temp.next();
-            nomePaginas = nomePaginas + ", [" + aux.getNome() +", Quantidade de repetições " +aux.getRepeticao()+"]";   
-        }
-        return nomePaginas;
+    public Iterator imprimirArquivos() {        
+        return paginas.iterator();
     }
 
     public String getPalavra() {

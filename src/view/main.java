@@ -7,10 +7,8 @@ package view;
 
 import controller.ControllerBusca;
 import controller.ControllerPaginas;
-import controller.ControllerSave;
 import java.io.IOException;
 import java.util.Scanner;
-import model.Pagina;
 import model.Palavra;
 
 

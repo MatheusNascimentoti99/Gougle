@@ -13,13 +13,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Pagina;
 import model.Palavra;
 import util.Arvore;
+import util.QuickSort;
 import view.Interface;
-
 
 /**
  *
@@ -30,12 +31,12 @@ public class ControllerPaginas {
     private final ControllerSave save;
     public final String pastaRecursos = "resources\\";
     public final String repositorio = "repositorio\\";
+
     public ControllerPaginas() {
         save = new ControllerSave();
     }
 
-    
-    public LinkedList getFiles(){
+    public LinkedList getFiles() {
         FileFilter filter = (File pathname) -> pathname.getName().endsWith(".txt");
         File dir = new File("repositorio");
         File[] files = dir.listFiles(filter);
@@ -43,18 +44,18 @@ public class ControllerPaginas {
         temp.addAll(Arrays.asList(files));
         return temp;
     }
-    public void saveFiles() throws Exception{
-        save.save(getFiles(), pastaRecursos+"Files.date");
-    }
-    
-    public void showFile(Pagina pagina){
-        try {
-          java.awt.Desktop.getDesktop().open(new File(repositorio+pagina.getNome()) );
-      } catch (IOException ex) {
-          Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
-      }
+
+    public void saveFiles() throws Exception {
+        save.save(getFiles(), pastaRecursos + "Files.date");
     }
 
+    public void showFile(Pagina pagina) {
+        try {
+            java.awt.Desktop.getDesktop().open(new File(repositorio + pagina.getNome()));
+        } catch (IOException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public boolean readFiles(String palavraBuscada, Arvore arvore) throws IOException {
         boolean existe = false;
@@ -118,5 +119,27 @@ public class ControllerPaginas {
         return existe;
     }
 
+    private Queue passListToQueue(LinkedList paginas, Queue fila) {
+        while (!paginas.isEmpty()) {
+            fila.add((Pagina) paginas.remove());
+        }
+        return fila;
+    }
+
+    private LinkedList passQueueToList(Queue fila, LinkedList paginas) {
+       while (!fila.isEmpty()) {
+            paginas.add(fila.peek());
+            fila.remove();
+        }
+        return paginas;
+    }
+
+    public LinkedList sort(LinkedList paginas) {
+        Queue fila = new LinkedList();
+        fila = passListToQueue(paginas, fila);
+        QuickSort sort = new QuickSort();
+        sort.quickSort(fila);
+        return passQueueToList(fila, paginas);
+    }
 
 }

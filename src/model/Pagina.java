@@ -13,11 +13,11 @@ package model;
 public class Pagina implements  Comparable {
     private String nome;
     private Palavra palavra;
-    private int repeticao;
+    private int relevancia;
     private long change;
     public Pagina(String nome, long change) {
         this.nome = nome;
-        this.repeticao = 1;
+        this.relevancia = 1;
         this.change = change;
         
     }
@@ -39,11 +39,11 @@ public class Pagina implements  Comparable {
     }
 
     public int getRepeticao() {
-        return repeticao;
+        return relevancia;
     }
 
     public void repetir() {
-        this.repeticao = repeticao +1;
+        this.relevancia = relevancia +1;
     }
     
     public String getNome() {
@@ -58,7 +58,7 @@ public class Pagina implements  Comparable {
     @Override
     public int compareTo(Object o) {
         Pagina outro = (Pagina) o;
-        return   this.repeticao - outro.repeticao;
+        return   this.relevancia - outro.relevancia;
     }
     
     
