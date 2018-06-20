@@ -23,12 +23,12 @@ import util.No;
 public class ControllerBusca {
 
     ControllerPaginas allFiles;
-    ControllerSave save;
+    ControllerFile save;
     Arvore buscaRapida;
     File file;
     public ControllerBusca() {
         allFiles = new ControllerPaginas();
-        save = new ControllerSave();
+        save = new ControllerFile();
         buscaRapida = new Arvore();
     }
 

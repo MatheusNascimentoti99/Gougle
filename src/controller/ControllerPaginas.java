@@ -29,12 +29,12 @@ import view.Interface;
  */
 public class ControllerPaginas {
 
-    private final ControllerSave save;
+    private final ControllerFile save;
     public final String pastaRecursos = "resources\\";
     public final String repositorio = "repositorio\\";
 
     public ControllerPaginas() {
-        save = new ControllerSave();
+        save = new ControllerFile();
     }
 
     public LinkedList getFiles() {

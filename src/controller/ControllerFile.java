@@ -17,7 +17,7 @@ import java.io.ObjectOutputStream;
  *
  * @author Matheus Nascimento
  */
-public class ControllerSave {
+public class ControllerFile {
 
     Object readDate(String local) throws FileNotFoundException {
         Object dado = null;
