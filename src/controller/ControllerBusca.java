@@ -19,58 +19,75 @@ import util.ArvorePalavra;
 import util.Crescente;
 import util.No;
 
+/*
+*
+*Arvore não tá verificando se houve remoção ao iniciar o programa
+*
+*
+*
+*/
 /**
  *
  * @author Matheus Nascimento
  */
-public class ControllerBusca implements Comparator{
+public class ControllerBusca implements Comparator {
 
     ControllerPaginas allFiles;
     ControllerFile save;
     ArvorePalavra buscaRapida;
     File file;
+
     public ControllerBusca() {
         allFiles = new ControllerPaginas();
         save = new ControllerFile();
         buscaRapida = new ArvorePalavra();
     }
-    
 
-    public Comparable search(String palavra) throws IOException, Exception  {
-        if(buscaRapida.getRaiz() == null)
+    public Comparable search(String palavra) throws IOException, Exception {
+        if (buscaRapida.getRaiz() == null ) {
             buscaRapida = readTree();
+        }
+        if(allFiles.modificedFiles()){
+            this.getControlRead().readFilesWords(palavra, buscaRapida);
+        }
         Palavra p = (Palavra) search(buscaRapida.getRaiz(), palavra);
-        boolean flag = true;   
+        boolean flag = true;
         if (p != null) {
-            
+
             flag = therePages(p.getPaginas(), p);
             p.moreSearch();
             p.setPaginas(allFiles.sort(p.getPaginas(), new Crescente()));
 
         }
         
-        if(flag == false){
+        if (flag == false) {
             buscaRapida.remover(p);
+            allFiles.saveTreePage();
+            saveTree();
+
             return null;
         }
         saveTree();
         allFiles.saveTreePage();
+        allFiles.saveListFiles();
         return p;
     }
-    public LinkedList multiSearch(String[] palavrasChaves) throws IOException, Exception{
+
+    public LinkedList multiSearch(String[] palavrasChaves) throws IOException, Exception {
         LinkedList palavras;
         palavras = new LinkedList();
-        for(String palavra : palavrasChaves){
+        for (String palavra : palavrasChaves) {
             Palavra p = (Palavra) search(palavra);
-            if(p != null)
+            if (p != null) {
                 palavras.add(p);
+            }
         }
         return palavras;
     }
 
     public boolean therePages(LinkedList paginas, Palavra palavra) throws IOException, Exception {
         boolean existe = false;
-        for(int i = 0; i < paginas.size(); i++) {
+        for (int i = 0; i < paginas.size(); i++) {
             Pagina p = (Pagina) paginas.get(i);
             int flag = changePagina(p);
             switch (flag) {
@@ -79,23 +96,24 @@ public class ControllerBusca implements Comparator{
                     break;
                 case 1:
                     paginas.remove(i);
-                    if(!existe)
+                    if (!existe) {
                         existe = allFiles.readFileWord(file, palavra.getPalavra(), buscaRapida);
+                    }
                     allFiles.readFileWord(file, palavra.getPalavra(), buscaRapida);
                     saveTree();
                     break;
-                    
+
                 case -1:
             }
         }
-        
+
         return existe;
     }
 
     private int changePagina(Pagina oldPag) {
         LinkedList paginas = allFiles.getFiles();
         Iterator it = paginas.iterator();
-        
+
         while (it.hasNext()) {
             File arq = (File) it.next();
             if (arq.lastModified() == oldPag.getChange()) {
@@ -129,9 +147,11 @@ public class ControllerBusca implements Comparator{
         return buscaRapida;
     }
 
-    public boolean addPalavra(String palavra) throws IOException {
-        return allFiles.readFilesWords(palavra, buscaRapida);
+    public boolean addPalavra(String palavra) throws IOException, Exception {
+        boolean flag = allFiles.readFilesWords(palavra, buscaRapida);
+        saveTree();
 
+        return flag;
     }
 
     public void setBuscaRapida(ArvorePalavra buscaRapida) {
@@ -152,9 +172,9 @@ public class ControllerBusca implements Comparator{
 
     public ArvorePalavra readTree() throws FileNotFoundException {
         ArvorePalavra temp;
-        try{
+        try {
             temp = (ArvorePalavra) save.readDate("resources\\Tree.date");
-        }catch(FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             temp = null;
         }
         if (temp == null) {
@@ -163,14 +183,13 @@ public class ControllerBusca implements Comparator{
         return temp;
     }
 
-        @Override
+    @Override
     public int compare(Object o1, Object o2) {
-        if(o1 instanceof Pagina && o2 instanceof Pagina) {
+        if (o1 instanceof Pagina && o2 instanceof Pagina) {
             Pagina p1 = (Pagina) o1;
             Pagina p2 = (Pagina) o2;
             return -p1.compareTo(p2);
-        }
-        else if(o1 instanceof Palavra && o2 instanceof Palavra){
+        } else if (o1 instanceof Palavra && o2 instanceof Palavra) {
             Palavra p1 = (Palavra) o1;
             Palavra p2 = (Palavra) o2;
             return -p1.compareTo(p2);

@@ -42,6 +42,7 @@ public class ControllerPaginas {
     void saveTreePage() throws Exception {
         save.save(allPages, pastaRecursos + "TreePages.date");
     }
+    
 
     public Arvore readTree() throws FileNotFoundException {
         Arvore temp;
@@ -72,11 +73,25 @@ public class ControllerPaginas {
         temp.addAll(Arrays.asList(files));
         return temp;
     }
-
-    public void saveFiles() throws Exception {
-        save.save(getFiles(), pastaRecursos + "Files.date");
+    public LinkedList readListFiles() throws FileNotFoundException{
+        LinkedList lista = (LinkedList) save.readDate(pastaRecursos + "Files.date");
+        return lista != null ? lista : null;
     }
-
+    void saveListFiles() throws Exception {
+        File file = new File(pastaRecursos + "Files.date");
+        if(!file.exists())
+            save.save(getFiles(), pastaRecursos + "Files.date");
+    }
+    public boolean modificedFiles() throws FileNotFoundException{
+        LinkedList oldFiles = readListFiles();
+        LinkedList recentFiles = getFiles();
+        if(oldFiles.size() != recentFiles.size())
+            return true;
+        for(Object temp : recentFiles){
+            
+        }
+        return false;
+    }
     public void showFile(Pagina pagina) throws FileNotFoundException {
         if (allPages.getRaiz() == null) {
             allPages = this.readTree();

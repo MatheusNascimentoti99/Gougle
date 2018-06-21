@@ -5,10 +5,16 @@
  */
 package view;
 
+import controller.ControllerBusca;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,10 +24,13 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.Pagina;
+import model.Palavra;
 
 /**
  *
@@ -34,6 +43,7 @@ public class Interface2 extends Application {
     
     @Override
     public void start(Stage palco) throws Exception {
+        ControllerBusca search = new ControllerBusca();
         VBox subBox = new VBox(5); // 1
         VBox raiz = new VBox(15);
         HBox positionBotoes = new HBox(5);
@@ -46,7 +56,7 @@ public class Interface2 extends Application {
         editar.setAlignment(Pos.CENTER);
         positionBotoes.setAlignment(Pos.CENTER);
         Label rotuloDemo = new Label("Gougle FSA"); // 3
-        
+       
         rotuloDemo.setScaleX(3);
         rotuloDemo.setScaleY(3);
         rotuloDemo.setTranslateY(-30);
@@ -56,9 +66,10 @@ public class Interface2 extends Application {
         TextArea areaTexto = new TextArea(""); // 6
         areaTexto.setTooltip(new Tooltip(
                 "Página selecionada para edição"));
-
-        Separator separadorHorizontal = new Separator(); // 7
         areaTexto.visibleProperty().set(false);
+
+         
+        Separator separadorHorizontal = new Separator(); // 7
         subBox.getChildren().addAll(rotuloDemo, campoTexto);
         subBox.setAlignment(Pos.CENTER);
         positionBotoes.getChildren().addAll(pesquisar, editar);
@@ -67,6 +78,50 @@ public class Interface2 extends Application {
         palco.setTitle("Gougle FSA");
         palco.setScene(cena);
         palco.show();
+        
+        
+        
+        
+        pesquisar.setOnAction(new EventHandler() {
+            
+            @Override
+            public void handle(Event event) {
+                Palavra p = null;
+                try {
+                    p = (Palavra) search.search(campoTexto.getText());
+                } catch (Exception ex) {
+                    Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if(p != null){
+                    VBox paginas = new VBox(5);
+                    
+                    
+                    Iterator it = p.imprimirArquivos();
+                    while(it.hasNext()){
+                        Pagina pag = (Pagina) it.next();
+                        ToggleButton pagina = new ToggleButton(pag.getNome());
+                        paginas.setAlignment(Pos.CENTER);
+                        paginas.setPrefWidth(10);
+                        paginas.getChildren().add(pagina);
+                    }
+                    Scene cena2 = new Scene(paginas,800,400);
+                    palco.setScene(cena2);
+                    palco.show();
+                }
+                else try {
+                    if(search.addPalavra(campoTexto.getText()) == true){
+                        System.out.println("Palavra encontrada entre os arquivos");
+                    }
+                    else{
+                        System.out.println("Palavra não encontrada");
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
 
 }
