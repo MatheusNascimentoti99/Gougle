@@ -65,13 +65,21 @@ public class ControllerPaginas {
     }
 
     public LinkedList getFiles() {
-
         FileFilter filter = (File pathname) -> pathname.getName().endsWith(".txt");
         File dir = new File("repositorio");
         File[] files = dir.listFiles(filter);
         LinkedList temp = new LinkedList();
         temp.addAll(Arrays.asList(files));
         return temp;
+    }
+    public LinkedList getPaginas(){
+        LinkedList paginas = new LinkedList();
+        for(Object aux: getFiles()){
+            File file = (File) aux;
+            Pagina temp = new Pagina(file.getName(), file.lastModified());
+            paginas.add(temp);
+        }
+        return paginas;
     }
     public LinkedList readListFiles() throws FileNotFoundException{
         LinkedList lista = (LinkedList) save.readDate(pastaRecursos + "Files.date");
@@ -82,15 +90,19 @@ public class ControllerPaginas {
         if(!file.exists())
             save.save(getFiles(), pastaRecursos + "Files.date");
     }
-    public boolean modificedFiles() throws FileNotFoundException{
+    public int modificedFiles(LinkedList paginas) throws FileNotFoundException{
         LinkedList oldFiles = readListFiles();
         LinkedList recentFiles = getFiles();
         if(oldFiles.size() != recentFiles.size())
-            return true;
-        for(Object temp : recentFiles){
-            
+            return 1;
+    
+        for(Object temp : paginas){
+            Pagina aux = (Pagina) temp;
+            File file = new File(aux.getNome());
+            if(!file.exists())
+                return 1;
         }
-        return false;
+        return 0;
     }
     public void showFile(Pagina pagina) throws FileNotFoundException {
         if (allPages.getRaiz() == null) {
