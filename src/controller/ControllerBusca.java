@@ -25,7 +25,7 @@ import util.No;
 *
 *
 *
- */
+*/
 /**
  *
  * @author Matheus Nascimento
@@ -43,35 +43,21 @@ public class ControllerBusca implements Comparator {
         buscaRapida = new ArvorePalavra();
     }
 
-    private void removePagina(LinkedList paginas) {
-        for (int i = 0; i < paginas.size(); i++) {
-            Pagina temp = (Pagina) paginas.get(i);
-            File arq = new File(temp.getNome());
-            if (!arq.exists()) {
-                paginas.remove(i);
-            }
-        }
-    }
-
     public Comparable search(String palavra) throws IOException, Exception {
-        allFiles.saveListFiles();
-        if (buscaRapida.getRaiz() == null) {
+        if (buscaRapida.getRaiz() == null ) {
             buscaRapida = readTree();
         }
-        boolean flag = true;
+
         Palavra p = (Palavra) search(buscaRapida.getRaiz(), palavra);
+        boolean flag = true;
         if (p != null) {
-            if (allFiles.modificedFiles(p.getPaginas()) == 1) {
-                removePagina(p.getPaginas());
-                this.getControlRead().readFilesWords(palavra, buscaRapida);
-            }
 
             flag = therePages(p.getPaginas(), p);
             p.moreSearch();
             p.setPaginas(allFiles.sort(p.getPaginas(), new Crescente()));
 
         }
-
+        
         if (flag == false) {
             buscaRapida.remover(p);
             allFiles.saveTreePage();
@@ -116,6 +102,7 @@ public class ControllerBusca implements Comparator {
                     break;
 
                 case -1:
+                    paginas.remove(i);
             }
         }
 
@@ -125,7 +112,9 @@ public class ControllerBusca implements Comparator {
     private int changePagina(Pagina oldPag) {
         LinkedList paginas = allFiles.getFiles();
         Iterator it = paginas.iterator();
-
+        File pag = new File("repositorio\\"+oldPag.getNome());
+        if(!pag.exists())
+            return -1;
         while (it.hasNext()) {
             File arq = (File) it.next();
             if (arq.lastModified() == oldPag.getChange()) {

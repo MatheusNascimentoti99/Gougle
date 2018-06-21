@@ -40,7 +40,8 @@ public class main {
                     Iterator it = p.imprimirArquivos();
                     while(it.hasNext()){
                         Pagina pag = (Pagina) it.next();
-                        System.out.println(pag.getNome());
+                        System.out.println(pag.getNome() + pag.getRelevancia());
+                        
                     }
                     System.out.println("Palavra encontrada na arvore");
 

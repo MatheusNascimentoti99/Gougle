@@ -23,6 +23,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -41,10 +42,13 @@ public class Interface2 extends Application {
     @Override
     public void start(Stage palco) throws Exception {
         ControllerBusca search = new ControllerBusca();
-        VBox subBox = new VBox(5); // 1
-        VBox raiz = new VBox(15);
+        BorderPane raiz = new BorderPane();
+        VBox subBox2 = new VBox(5); // 1
+        VBox subBox1 = new VBox(15);
+        raiz.setTop(subBox1);
+        raiz.setCenter(subBox2);
         HBox positionBotoes = new HBox(5);
-        raiz.setAlignment(Pos.CENTER); // 2
+        subBox1.setAlignment(Pos.CENTER); // 2
         Button pesquisar = new Button("Pesquisar");
         pesquisar.setTooltip(new Tooltip("Pesquisar páginas"));
         Button editar = new Button("Editar");
@@ -60,29 +64,26 @@ public class Interface2 extends Application {
         TextField campoTexto = new TextField(); // 5
         campoTexto.setTooltip(new Tooltip(
                 "Digite uma palavra"));
-        TextArea areaTexto = new TextArea(""); // 6
-        areaTexto.setTooltip(new Tooltip(
-                "Página selecionada para edição"));
-        areaTexto.visibleProperty().set(false);
-
+  
          
         Separator separadorHorizontal = new Separator(); // 7
-        subBox.getChildren().addAll(rotuloDemo, campoTexto);
-        subBox.setAlignment(Pos.CENTER);
+        subBox2.getChildren().addAll(rotuloDemo, campoTexto);
+        subBox2.setAlignment(Pos.CENTER);
         positionBotoes.getChildren().addAll(pesquisar, editar);
-        raiz.getChildren().addAll(subBox, positionBotoes, separadorHorizontal, areaTexto);
+        subBox1.getChildren().addAll(subBox2, positionBotoes, separadorHorizontal);
         Scene cena = new Scene(raiz, 800, 400);
         palco.setTitle("Gougle FSA");
         palco.setScene(cena);
         palco.show();
         
-        
-        
+        VBox paginas = new VBox(5);
+        Scene cena2 = new Scene(paginas,800,400);
         
         pesquisar.setOnAction(new EventHandler() {
             
             @Override
             public void handle(Event event) {
+                
                 Palavra p = null;
                 try {
                     p = (Palavra) search.search(campoTexto.getText());
@@ -90,7 +91,7 @@ public class Interface2 extends Application {
                     Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 if(p != null){
-                    VBox paginas = new VBox(5);
+                    
                     
                     
                     Iterator it = p.imprimirArquivos();
@@ -101,7 +102,7 @@ public class Interface2 extends Application {
                         paginas.setPrefWidth(10);
                         paginas.getChildren().add(pagina);
                     }
-                    Scene cena2 = new Scene(paginas,800,400);
+                    
                     palco.setScene(cena2);
                     palco.show();
                 }
