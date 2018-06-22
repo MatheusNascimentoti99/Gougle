@@ -6,6 +6,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 
 /**
@@ -26,6 +27,14 @@ public class Pagina implements  Comparable, Serializable {
         
     }
 
+
+    @Override
+    public boolean equals(Object obj) {
+
+        final Pagina other = (Pagina) obj;
+        return Objects.equals(this.nome, other.nome);
+    }
+
     public int getRelevancia() {
         return relevancia;
     }
@@ -36,6 +45,10 @@ public class Pagina implements  Comparable, Serializable {
 
     public int getVisit() {
         return visit;
+    }
+    @Override
+    public String toString(){
+        return "Página: "+nome+" Visitas: "+visit;
     }
 
     public void setVisit(int visit) {

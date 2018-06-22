@@ -60,28 +60,18 @@ public class ControllerBusca implements Comparator {
         
         if (flag == false) {
             buscaRapida.remover(p);
-            allFiles.saveTreePage();
+            allFiles.saveListPage();
             saveTree();
 
             return null;
         }
         saveTree();
-        allFiles.saveTreePage();
+        allFiles.saveListPage();
         allFiles.saveListFiles();
         return p;
     }
 
-    public LinkedList multiSearch(String[] palavrasChaves) throws IOException, Exception {
-        LinkedList palavras;
-        palavras = new LinkedList();
-        for (String palavra : palavrasChaves) {
-            Palavra p = (Palavra) search(palavra);
-            if (p != null) {
-                palavras.add(p);
-            }
-        }
-        return palavras;
-    }
+
 
     public boolean therePages(LinkedList paginas, Palavra palavra) throws IOException, Exception {
         boolean existe = false;

@@ -31,37 +31,33 @@ public class ControllerPaginas {
     private final ControllerFile save;
     public final String pastaRecursos = "resources\\";
     public final String repositorio = "repositorio\\";
-    private Arvore allPages;
+    private LinkedList allPages;
 
     public ControllerPaginas() {
         save = new ControllerFile();
-        allPages = new Arvore();
+        allPages = new LinkedList();
     }
 
-    void saveTreePage() throws Exception {
-        save.save(allPages, pastaRecursos + "TreePages.date");
+    void saveListPage() throws Exception {
+        getPaginas();
+        save.save(allPages, pastaRecursos + "ListPages.date");
     }
     
 
-    public Arvore readTree() throws FileNotFoundException {
-        Arvore temp;
+    public LinkedList readListPages() throws FileNotFoundException {
+        LinkedList temp;
         try {
-            temp = (Arvore) save.readDate("resources\\TreePages.date");
+            temp = (LinkedList) save.readDate("resources\\ListPages.date");
         } catch (FileNotFoundException e) {
             temp = null;
         }
         if (temp == null) {
-            return new Arvore();
+            return new LinkedList();
         }
         return temp;
     }
 
-    public void readFiles() {
-        LinkedList paginas = getFiles();
-        paginas.forEach((obj) -> {
-            allPages.inserir((Comparable) obj);
-        });
-    }
+
 
     public LinkedList getFiles() {
         FileFilter filter = (File pathname) -> pathname.getName().endsWith(".txt");
@@ -71,14 +67,14 @@ public class ControllerPaginas {
         temp.addAll(Arrays.asList(files));
         return temp;
     }
-    public LinkedList getPaginas(){
-        LinkedList paginas = new LinkedList();
+    public LinkedList getPaginas() throws FileNotFoundException{
         for(Object aux: getFiles()){
             File file = (File) aux;
             Pagina temp = new Pagina(file.getName(), file.lastModified());
-            paginas.add(temp);
+            if(!allPages.contains(temp))
+                allPages.add(temp);
         }
-        return paginas;
+        return allPages;
     }
     public LinkedList readListFiles() throws FileNotFoundException{
         LinkedList lista = (LinkedList) save.readDate(pastaRecursos + "Files.date");
@@ -89,6 +85,7 @@ public class ControllerPaginas {
         if(!file.exists())
             save.save(getFiles(), pastaRecursos + "Files.date");
     }
+
     public int modificedFiles(LinkedList paginas) throws FileNotFoundException{
         LinkedList oldFiles = readListFiles();
         LinkedList recentFiles = getFiles();
@@ -103,19 +100,28 @@ public class ControllerPaginas {
         }
         return 0;
     }
-    public void showFile(Pagina pagina) throws FileNotFoundException {
-        if (allPages.getRaiz() == null) {
-            allPages = this.readTree();
-        }
+    public void showFile(int index) throws FileNotFoundException, Exception {
+        File file = new File("resources\\ListPages.date");
+        if(!file.exists())
+            saveListPage();
+        allPages = this.readListPages();  
         try {
-            java.awt.Desktop.getDesktop().open(new File(repositorio + pagina.getNome()));
-            pagina.visited();
+            java.awt.Desktop.getDesktop().open(new File(repositorio + ((Pagina)allPages.get(index)).getNome()));
+            ((Pagina)allPages.get(index)).visited();
         } catch (IOException | NullPointerException ex) {
             
         }
+        saveListPage();
+       
 
     }
-
+    public void atualize() throws Exception{
+        File file = new File("resources\\ListPages.date");
+        if(!file.exists())
+            saveListPage();
+        allPages = this.readListPages();  
+        saveListPage();
+    }
     public boolean readFilesWords(String palavraBuscada, Arvore arvore) throws IOException {
         boolean existe = false;
 
