@@ -24,7 +24,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.Separator;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
@@ -43,6 +42,7 @@ import model.Palavra;
 public class Interface2 extends Application {
 
     private final ControllerBusca search = new ControllerBusca();
+    private final ScrollBar sc = new ScrollBar();
 
     public static void main(String[] args) {
         launch();
@@ -100,29 +100,28 @@ public class Interface2 extends Application {
                 Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
             }
             Group root = new Group();
-            Scene cena2 = new Scene(root, 800, 400);
+
             resultados.setLayoutY(0);
             resultados.setAlignment(Pos.CENTER);
-            Slider deslizante = new Slider(); // 9
-            deslizante.setShowTickLabels(true); // 10
-            deslizante.setShowTickMarks(true); // 11
-            deslizante.setOrientation(Orientation.VERTICAL);
             if (p != null) {
-                int height = 0;
+
                 Iterator it = p.imprimirArquivos();
                 while (it.hasNext()) {
-                    height += 5;
                     Pagina pag = (Pagina) it.next();
                     ToggleButton pagina = new ToggleButton(pag.getNome());
                     pagina.setPrefSize(780, 20);
+
                     resultados.setAlignment(Pos.CENTER);
                     resultados.getChildren().add(pagina);
-
                 }
-                resultados.setPrefHeight(height);
-
-                root.getChildren().addAll(resultados, deslizante);
-
+                sc.setLayoutX(resultados.getWidth() - sc.getWidth());
+                sc.setPrefHeight(resultados.getHeight());
+                sc.setOrientation(Orientation.VERTICAL);
+                sc.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+                    resultados.setLayoutY(-new_val.doubleValue());
+                });
+                root.getChildren().addAll(resultados, sc);
+                Scene cena2 = new Scene(root, 800, 400);
                 palco.setScene(cena2);
                 palco.show();
             }
