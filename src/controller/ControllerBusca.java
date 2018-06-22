@@ -25,7 +25,7 @@ import util.No;
 *
 *
 *
-*/
+ */
 /**
  *
  * @author Matheus Nascimento
@@ -44,20 +44,21 @@ public class ControllerBusca implements Comparator {
     }
 
     public Comparable search(String palavra) throws IOException, Exception {
-        if (buscaRapida.getRaiz() == null ) {
+        if (buscaRapida.getRaiz() == null) {
             buscaRapida = readTree();
         }
 
         Palavra p = (Palavra) search(buscaRapida.getRaiz(), palavra);
         boolean flag = true;
         if (p != null) {
-
-            flag = therePages(p.getPaginas(), p);
+            if (allFiles.modificedFiles(p.getPaginas()) == 1) {
+                flag = therePages(p.getPaginas(), p);
+            }
             p.moreSearch();
             p.setPaginas(allFiles.sort(p.getPaginas(), new Crescente()));
 
         }
-        
+
         if (flag == false) {
             buscaRapida.remover(p);
             allFiles.saveTreePage();
@@ -112,9 +113,10 @@ public class ControllerBusca implements Comparator {
     private int changePagina(Pagina oldPag) {
         LinkedList paginas = allFiles.getFiles();
         Iterator it = paginas.iterator();
-        File pag = new File("repositorio\\"+oldPag.getNome());
-        if(!pag.exists())
+        File pag = new File("repositorio\\" + oldPag.getNome());
+        if (!pag.exists()) {
             return -1;
+        }
         while (it.hasNext()) {
             File arq = (File) it.next();
             if (arq.lastModified() == oldPag.getChange()) {
