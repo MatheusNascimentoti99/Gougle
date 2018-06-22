@@ -99,11 +99,10 @@ public class Arvore implements Serializable{
 
     public void remover(Palavra palavra) {
         removerAVL(this.raiz, palavra);
-
     }
 
     public void removerAVL(No atual, Palavra palavra) {
-        if (atual != null) {
+        if (atual != null){
 
             if (atual.getDate().compareTo(palavra) > 0) {
                 removerAVL(atual.getEsquerda(), palavra);

@@ -32,6 +32,31 @@ public class PalavraTest {
      */
     @Test
     public void testBasic() {
-        p.getSearch();
+        
+        assertEquals(1, p.getSearch());
+        p.setSearch(2);
+        assertEquals(2, p.getSearch());
+        p.setSearch(3);
+        assertEquals(3, p.getSearch());
+        p.moreSearch();
+        assertEquals(4, p.getSearch());
+        
+        assertEquals(p.getPalavra(), "José");
+        p.setPalavra("Joao");
+        assertEquals("Joao", p.getPalavra());
+        
+        Pagina page = (Pagina) p.getPaginas().getFirst();
+        assertEquals("pag1", page.getNome());
+        
+        Pagina page2 = new Pagina("pagina2", 1234);
+        p.getPaginas().add(page2);
+        
+        Pagina c = (Pagina) p.getPaginas().getLast();
+        assertEquals("pagina2", c.getNome());
+        
+        Palavra d = new Palavra("Antonio", new Pagina("pag2", 1113));
+        
+        assertFalse(d.equals(p));
+        
     }
 }

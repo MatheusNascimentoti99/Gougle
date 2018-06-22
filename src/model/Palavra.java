@@ -31,8 +31,6 @@ public class Palavra implements Comparable, Serializable{
        
     }
     
-
-
     public void moreSearch(){
         search++;
     }
@@ -56,7 +54,7 @@ public class Palavra implements Comparable, Serializable{
     public void setPaginas(LinkedList paginas) {
         this.paginas = paginas;
     }
-
+    
     public void setPalavra(String palavra) {
         this.palavra = palavra;
     }
@@ -65,4 +63,9 @@ public class Palavra implements Comparable, Serializable{
         Palavra outra = (Palavra) o;
         return palavra.compareTo( outra.getPalavra());
     }
+
+    public void setSearch(int search) {
+        this.search = search;
+    }
+    
 }

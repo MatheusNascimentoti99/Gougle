@@ -94,6 +94,8 @@ public class Interface extends Application {
                    try {
                        p = (Palavra) search.search(palavraProcurada);
                 } catch (IOException ex) {
+                } catch (Exception ex) {
+                    Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 if(p != null)
                     System.out.println(p.toString());
