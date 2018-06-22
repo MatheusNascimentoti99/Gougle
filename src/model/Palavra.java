@@ -14,7 +14,7 @@ import java.util.LinkedList;
  *<b>Palavra</b> Classe utilizada para salvas as informações de uma palavra, contendo o nome, paginas que a palavra existe e a quantidade de vezes pesquisada.
  * @author Matheus Nascimento e Elvis Serafim
  */
-public class Palavra implements Comparable, Serializable{
+public class Palavra implements Comparable, Comparator, Serializable{
 
     private LinkedList paginas;
     private String palavra;
@@ -98,11 +98,18 @@ public class Palavra implements Comparable, Serializable{
     }
 
     /**
-     *Quantidade de vezes que a palavra foi pesquisada. 
+     *Quantidade de vezes que a palavra foi pesquisada.
      * @param search Retorna a quantidade de vezes que a palavra foi pesquisada.
      */
     public void setSearch(int search) {
         this.search = search;
     }
-    
+
+    @Override
+    public int compare(Object o1, Object o2) {
+            Pagina p1 = (Pagina) o1;
+            Pagina p2 = (Pagina) o2;
+            return -p1.compareTo(p2);
+  
+    }
 }

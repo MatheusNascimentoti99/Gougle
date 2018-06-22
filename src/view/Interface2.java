@@ -9,6 +9,7 @@ import controller.ControllerBusca;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -56,7 +57,8 @@ public class Interface2 extends Application {
 
     }
 
-    public void screenMain(Stage palco) throws FileNotFoundException {
+    public void screenMain(Stage palco) throws FileNotFoundException, Exception {
+        search.getControlRead().atualize();
 
         BorderPane raiz = new BorderPane();
         VBox partePesquisa = new VBox(20); // 1
@@ -66,25 +68,31 @@ public class Interface2 extends Application {
         HBox barra = new HBox(5);
 
         TextArea campo = new TextArea();
+
         Button pesquisar = new Button("Pesquisar");
         pesquisar.setTooltip(new Tooltip("Pesquisar páginas"));
+        Button topPaginas = new Button("Top-K Páginas");
+        topPaginas.setTooltip(new Tooltip("Páginas mais e menos pesquisadas"));
         pesquisar.setAlignment(Pos.CENTER);
-        pesquisar.setPrefWidth(100);
+        topPaginas.setAlignment(Pos.CENTER);
         positionBotoes.setAlignment(Pos.CENTER);
-        Label rotuloDemo = new Label("Gougle FSA"); // 3
+
         ListView listaResul = new ListView();
         listaResul.visibleProperty().set(false);
         listaResul.setPrefWidth(subBox.getWidth());
-        rotuloDemo.setScaleX(3);
-        rotuloDemo.setScaleY(3);
+
+        Label titulo = new Label("Gougle FSA"); // 3
+        titulo.setScaleX(3);
+        titulo.setScaleY(3);
+
         TextField campoTexto = new TextField(); // 5
         campoTexto.setTooltip(new Tooltip(
                 "Digite uma palavra"));
         Separator separadorHorizontal = new Separator(); // 7
 
         partePesquisa.setAlignment(Pos.CENTER);
-        positionBotoes.getChildren().add(pesquisar);
-        partePesquisa.getChildren().addAll(rotuloDemo, campoTexto, positionBotoes);
+        positionBotoes.getChildren().addAll(pesquisar, topPaginas);
+        partePesquisa.getChildren().addAll(titulo, campoTexto, positionBotoes);
         partePesquisa.setTranslateY(10);
         subBox.setAlignment(Pos.CENTER); // 2
         barra.getChildren().addAll(listaResul);
@@ -94,6 +102,13 @@ public class Interface2 extends Application {
         palco.setScene(cena);
 
         pesquisar.setOnMouseClicked((Event event) -> {
+            listaResul.getItems().clear();
+            try {
+                search.getControlRead().atualize();
+            } catch (Exception ex) {
+                Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             listaResul.visibleProperty().set(true);
             Palavra p = null;
             try {
@@ -102,16 +117,23 @@ public class Interface2 extends Application {
                 Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
             }
             if (p != null) {
-
-                Iterator it = p.imprimirArquivos();
+                LinkedList temp = search.getControlRead().sort(p.getPaginas(), p);
+                Iterator it = temp.iterator();
                 while (it.hasNext()) {
                     Pagina pag = (Pagina) it.next();
                     ToggleButton pagina = new ToggleButton(pag.getNome());
                     pagina.setPrefWidth(listaResul.getWidth());
                     listaResul.getItems().add(pagina);
                     pagina.setOnMouseClicked(new EventHandler() {
+
                         @Override
                         public void handle(Event event) {
+                            try {
+                                search.getControlRead().atualize();
+                            } catch (Exception ex) {
+                                Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
                             int i = 0;
                             int index = -1;
                             try {
@@ -121,11 +143,12 @@ public class Interface2 extends Application {
                                         break;
                                     }
                                     i++;
-                                    
+
                                 }
                                 System.out.println(pagina);
-                                if(index == -1)
+                                if (index == -1) {
                                     throw new FileNotFoundException();
+                                }
                             } catch (FileNotFoundException ex) {
                                 Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -134,11 +157,66 @@ public class Interface2 extends Application {
                             } catch (Exception ex) {
                                 Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
                             }
+                            
                         }
                     });
                 }
-            }
+            } else {
+                try {
+                    if (search.addPalavra(campoTexto.getText()) == true) {
+                        p = (Palavra) search.search(campoTexto.getText());
+                        if (p != null) {
 
+                            LinkedList temp = search.getControlRead().sort(p.getPaginas(), p);
+                            Iterator it = temp.iterator();
+                            while (it.hasNext()) {
+                                Pagina pag = (Pagina) it.next();
+                                ToggleButton pagina = new ToggleButton(pag.getNome());
+                                pagina.setPrefWidth(listaResul.getWidth());
+                                listaResul.getItems().add(pagina);
+                                pagina.setOnMouseClicked(new EventHandler() {
+
+                                    @Override
+                                    public void handle(Event event) {
+                                        try {
+                                            search.getControlRead().atualize();
+                                        } catch (Exception ex) {
+                                            Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+
+                                        int i = 0;
+                                        int index = -1;
+                                        try {
+                                            for (Object pagina1 : search.getControlRead().getPaginas()) {
+                                                if (pagina.getText().equals(((Pagina) pagina1).getNome())) {
+                                                    index = i;
+                                                    break;
+                                                }
+                                                i++;
+
+                                            }
+                                            System.out.println(pagina);
+                                            if (index == -1) {
+                                                throw new FileNotFoundException();
+                                            }
+                                        } catch (FileNotFoundException ex) {
+                                            Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                        try {
+                                            search.getControlRead().showFile(index);
+                                        } catch (Exception ex) {
+                                            Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
         });
 
         palco.show();

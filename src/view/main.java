@@ -158,8 +158,9 @@ public class main {
         } else if (controleBusca.addPalavra(palavrasMultiplas[0]) == true) {
             p = (Palavra) controleBusca.search(palavrasMultiplas[0]);
             if (p != null) {
+                LinkedList temp = controleBusca.getControlRead().sort(p.getPaginas(), p);
                 System.out.println(p.toString());
-                Iterator it = p.imprimirArquivos();
+                Iterator it = temp.iterator();
                 while (it.hasNext()) {
                     Pagina pag = (Pagina) it.next();
                     System.out.println("Página: "+pag.getNome()+" Relevância: " + pag.getRelevancia());
