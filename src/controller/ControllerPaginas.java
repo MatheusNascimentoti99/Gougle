@@ -174,7 +174,6 @@ public class ControllerPaginas {
             palavra = palavra.replace("!", "");
             palavra = palavra.replace("?", "");
             Palavra nova = new Palavra(palavra, pagina);
-            pagina.setPalavra(nova);
             palavraBuscada = palavraBuscada.toUpperCase();
             if (palavraBuscada.compareTo(palavra) == 0) {
                 arvore.inserir(nova);
