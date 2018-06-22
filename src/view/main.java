@@ -97,9 +97,8 @@ public class main {
                     System.out.println(((Pagina) temp.next()).toString());
                 }
             }
-            
-        }
-        //O algoritmo de ordenação usa uma fila, com isso a ordem é invertida.
+
+        } //O algoritmo de ordenação usa uma fila, com isso a ordem é invertida.
         else if (escolha.equals("2")) {
             LinkedList decres = null;
             try {
@@ -156,15 +155,24 @@ public class main {
                 System.out.println(pag.getNome() + pag.getRelevancia());
 
             }
-            System.out.println("Palavra encontrada na arvore");
-
         } else if (controleBusca.addPalavra(palavrasMultiplas[0]) == true) {
-            System.out.println("Palavra encontrada entre os arquivos");
+            p = (Palavra) controleBusca.search(palavrasMultiplas[0]);
+            if (p != null) {
+                System.out.println(p.toString());
+                Iterator it = p.imprimirArquivos();
+                while (it.hasNext()) {
+                    Pagina pag = (Pagina) it.next();
+                    System.out.println("Página: "+pag.getNome()+" Relevância" + pag.getRelevancia());
+
+                }
+            }
         } else {
             System.out.println("Palavra não encontrada");
         }
-        a = p;
-
+        System.out.println("Digite 2 para acessar uma página");
+        String visitPag = input();
+        if(visitPag.equals("2"))
+            visitPage(controleBusca);
     }
 
     private static String input() {                //Para resumir as entradas do teclado;
