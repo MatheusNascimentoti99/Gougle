@@ -21,7 +21,6 @@ import model.Pagina;
 import model.Palavra;
 import util.Arvore;
 import util.QuickSort;
-import view.Interface;
 
 /**
  *
@@ -112,7 +111,7 @@ public class ControllerPaginas {
             java.awt.Desktop.getDesktop().open(new File(repositorio + pagina.getNome()));
             pagina.visited();
         } catch (IOException | NullPointerException ex) {
-            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
 
     }
