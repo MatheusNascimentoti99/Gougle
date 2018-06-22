@@ -84,7 +84,5 @@ public class Pagina implements  Comparable, Serializable {
         Pagina outro = (Pagina) o;
         return   this.relevancia - outro.relevancia;
     }
-    
-    
-    
+
 }
