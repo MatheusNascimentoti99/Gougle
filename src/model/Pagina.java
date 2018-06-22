@@ -69,6 +69,14 @@ public class Pagina implements  Comparable, Serializable {
         return "Página: "+nome+" Visitas: "+visit;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setVisit(int visit) {
+        this.visit = visit;
+    }
+
 
     
     /**
