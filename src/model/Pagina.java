@@ -69,10 +69,18 @@ public class Pagina implements  Comparable, Serializable {
         return "Página: "+nome+" Visitas: "+visit;
     }
 
+    /**
+     *Altera o nome do arquivo.
+     * @param nome Parâmetro dado para alteração do nome do arquivo.
+     */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
+    /**
+     *Altera a quantidade de visistas.
+     * @param visit
+     */
     public void setVisit(int visit) {
         this.visit = visit;
     }
