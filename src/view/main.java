@@ -162,7 +162,7 @@ public class main {
                 Iterator it = p.imprimirArquivos();
                 while (it.hasNext()) {
                     Pagina pag = (Pagina) it.next();
-                    System.out.println("Página: "+pag.getNome()+" Relevância" + pag.getRelevancia());
+                    System.out.println("Página: "+pag.getNome()+" Relevância: " + pag.getRelevancia());
 
                 }
             }
