@@ -35,13 +35,20 @@ import model.Palavra;
  * @author Matheus Nascimento
  */
 public class Interface2 extends Application {
+    ControllerBusca search = new ControllerBusca();
     public static void main(String[] args) {
         launch();
     }
-    
+
     @Override
     public void start(Stage palco) throws Exception {
-        ControllerBusca search = new ControllerBusca();
+        
+        screenMain(palco);
+        
+
+    }
+
+    public void screenMain(Stage palco) {
         BorderPane raiz = new BorderPane();
         VBox subBox2 = new VBox(5); // 1
         VBox subBox1 = new VBox(15);
@@ -55,19 +62,14 @@ public class Interface2 extends Application {
         editar.setAlignment(Pos.CENTER);
         positionBotoes.setAlignment(Pos.CENTER);
         Label rotuloDemo = new Label("Gougle FSA"); // 3
-       
+
         rotuloDemo.setScaleX(3);
         rotuloDemo.setScaleY(3);
         rotuloDemo.setTranslateY(-30);
         TextField campoTexto = new TextField(); // 5
         campoTexto.setTooltip(new Tooltip(
                 "Digite uma palavra"));
-        TextArea areaTexto = new TextArea(""); // 6
-        areaTexto.setTooltip(new Tooltip(
-                "Página selecionada para edição"));
-        areaTexto.visibleProperty().set(false);
-
-         
+        TextArea areaTexto = new TextArea(""); // 6 
         Separator separadorHorizontal = new Separator(); // 7
         subBox2.getChildren().addAll(rotuloDemo, campoTexto);
         subBox2.setAlignment(Pos.CENTER);
@@ -77,51 +79,30 @@ public class Interface2 extends Application {
         palco.setTitle("Gougle FSA");
         palco.setScene(cena);
         palco.show();
-        
-        VBox paginas = new VBox(5);
-        Scene cena2 = new Scene(paginas,800,400);
-        
-        pesquisar.setOnAction(new EventHandler() {
-            
-            @Override
-            public void handle(Event event) {
-                
-                Palavra p = null;
-                try {
-                    p = (Palavra) search.search(campoTexto.getText());
-                } catch (Exception ex) {
-                    Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                if(p != null){
-                    
-                    
-                    
-                    Iterator it = p.imprimirArquivos();
-                    while(it.hasNext()){
-                        Pagina pag = (Pagina) it.next();
-                        ToggleButton pagina = new ToggleButton(pag.getNome());
-                        paginas.setAlignment(Pos.CENTER);
-                        paginas.setPrefWidth(10);
-                        paginas.getChildren().add(pagina);
-                    }
-                    
-                    palco.setScene(cena2);
-                    palco.show();
-                }
-                else try {
-                    if(search.addPalavra(campoTexto.getText()) == true){
-                        System.out.println("Palavra encontrada entre os arquivos");
-                    }
-                    else{
-                        System.out.println("Palavra não encontrada");
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (Exception ex) {
-                    Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
-                }
+
+        pesquisar.setOnMouseClicked((Event event) -> {
+            Palavra p = null;
+            try {
+                p = (Palavra) search.search(campoTexto.getText());
+            } catch (Exception ex) {
+                Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
             }
+            VBox paginas = new VBox(5);
+            if (p != null) {
+
+                Iterator it = p.imprimirArquivos();
+                while (it.hasNext()) {
+                    Pagina pag = (Pagina) it.next();
+                    ToggleButton pagina = new ToggleButton(pag.getNome());
+                    paginas.setAlignment(Pos.CENTER);
+                    paginas.setPrefWidth(10);
+                    paginas.getChildren().add(pagina);
+                }
+                Scene cena2 = new Scene(paginas, 800, 400);
+                palco.setScene(cena2);
+                palco.show();
+            }
+
         });
     }
-
 }
