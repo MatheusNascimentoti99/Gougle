@@ -73,6 +73,13 @@ public class Interface2 extends Application {
         pesquisar.setTooltip(new Tooltip("Pesquisar páginas"));
         Button topPaginas = new Button("Top-K Páginas");
         topPaginas.setTooltip(new Tooltip("Páginas mais e menos pesquisadas"));
+        TextField kEscolhas = new TextField();
+        kEscolhas.setPrefWidth(75);
+        kEscolhas.visibleProperty().set(false);
+        Button crescente = new Button("Crescente");
+        crescente.visibleProperty().set(false);
+        Button decrescente = new Button("Decrescente");
+        decrescente.visibleProperty().set(false);
         pesquisar.setAlignment(Pos.CENTER);
         topPaginas.setAlignment(Pos.CENTER);
         positionBotoes.setAlignment(Pos.CENTER);
@@ -103,124 +110,142 @@ public class Interface2 extends Application {
 
         pesquisar.setOnMouseClicked((Event event) -> {
             listaResul.getItems().clear();
+            kEscolhas.visibleProperty().set(false);
+            crescente.visibleProperty().set(false);
             try {
                 search.getControlRead().atualize();
             } catch (Exception ex) {
                 Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            listaResul.visibleProperty().set(true);
-            Palavra p = null;
-            try {
-                p = (Palavra) search.search(campoTexto.getText());
-            } catch (Exception ex) {
-                Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if (p != null) {
-                LinkedList temp = search.getControlRead().sort(p.getPaginas(), p);
-                Iterator it = temp.iterator();
-                while (it.hasNext()) {
-                    Pagina pag = (Pagina) it.next();
-                    ToggleButton pagina = new ToggleButton(pag.getNome());
-                    pagina.setPrefWidth(listaResul.getWidth());
-                    listaResul.getItems().add(pagina);
-                    pagina.setOnMouseClicked(new EventHandler() {
-
-                        @Override
-                        public void handle(Event event) {
-                            try {
-                                search.getControlRead().atualize();
-                            } catch (Exception ex) {
-                                Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-
-                            int i = 0;
-                            int index = -1;
-                            try {
-                                for (Object pagina1 : search.getControlRead().getPaginas()) {
-                                    if (pagina.getText().equals(((Pagina) pagina1).getNome())) {
-                                        index = i;
-                                        break;
-                                    }
-                                    i++;
-
-                                }
-                                System.out.println(pagina);
-                                if (index == -1) {
-                                    throw new FileNotFoundException();
-                                }
-                            } catch (FileNotFoundException ex) {
-                                Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                            try {
-                                search.getControlRead().showFile(index);
-                            } catch (Exception ex) {
-                                Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                            
-                        }
-                    });
-                }
-            } else {
+            if (campoTexto.getText().length() > 0) {
+                listaResul.visibleProperty().set(true);
+                Palavra p = null;
                 try {
-                    if (search.addPalavra(campoTexto.getText()) == true) {
-                        p = (Palavra) search.search(campoTexto.getText());
-                        if (p != null) {
-
-                            LinkedList temp = search.getControlRead().sort(p.getPaginas(), p);
-                            Iterator it = temp.iterator();
-                            while (it.hasNext()) {
-                                Pagina pag = (Pagina) it.next();
-                                ToggleButton pagina = new ToggleButton(pag.getNome());
-                                pagina.setPrefWidth(listaResul.getWidth());
-                                listaResul.getItems().add(pagina);
-                                pagina.setOnMouseClicked(new EventHandler() {
-
-                                    @Override
-                                    public void handle(Event event) {
-                                        try {
-                                            search.getControlRead().atualize();
-                                        } catch (Exception ex) {
-                                            Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
-                                        }
-
-                                        int i = 0;
-                                        int index = -1;
-                                        try {
-                                            for (Object pagina1 : search.getControlRead().getPaginas()) {
-                                                if (pagina.getText().equals(((Pagina) pagina1).getNome())) {
-                                                    index = i;
-                                                    break;
-                                                }
-                                                i++;
-
-                                            }
-                                            System.out.println(pagina);
-                                            if (index == -1) {
-                                                throw new FileNotFoundException();
-                                            }
-                                        } catch (FileNotFoundException ex) {
-                                            Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
-                                        }
-                                        try {
-                                            search.getControlRead().showFile(index);
-                                        } catch (Exception ex) {
-                                            Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    }
+                    p = (Palavra) search.search(campoTexto.getText());
                 } catch (Exception ex) {
                     Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-            
-        });
+                if (p != null) {
+                    LinkedList temp = search.getControlRead().sort(p.getPaginas(), p);
+                    Iterator it = temp.iterator();
+                    while (it.hasNext()) {
+                        Pagina pag = (Pagina) it.next();
+                        ToggleButton pagina = new ToggleButton(pag.getNome());
+                        pagina.setPrefWidth(listaResul.getWidth());
+                        listaResul.getItems().add(pagina);
+                        pagina.setOnMouseClicked(new EventHandler() {
 
+                            @Override
+                            public void handle(Event event) {
+                                try {
+                                    search.getControlRead().atualize();
+                                } catch (Exception ex) {
+                                    Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                                int i = 0;
+                                int index = -1;
+                                try {
+                                    for (Object pagina1 : search.getControlRead().getPaginas()) {
+                                        if (pagina.getText().equals(((Pagina) pagina1).getNome())) {
+                                            index = i;
+                                            break;
+                                        }
+                                        i++;
+
+                                    }
+                                    System.out.println(pagina);
+                                    if (index == -1) {
+                                        throw new FileNotFoundException();
+                                    }
+                                } catch (FileNotFoundException ex) {
+                                    Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                try {
+                                    search.getControlRead().showFile(index);
+                                } catch (Exception ex) {
+                                    Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                            }
+                        });
+                    }
+                } else {
+                    try {
+                        if (search.addPalavra(campoTexto.getText()) == true) {
+                            p = (Palavra) search.search(campoTexto.getText());
+                            if (p != null) {
+
+                                LinkedList temp = search.getControlRead().sort(p.getPaginas(), p);
+                                Iterator it = temp.iterator();
+                                while (it.hasNext()) {
+                                    Pagina pag = (Pagina) it.next();
+                                    ToggleButton pagina = new ToggleButton(pag.getNome());
+                                    pagina.setPrefWidth(listaResul.getWidth());
+                                    listaResul.getItems().add(pagina);
+                                    pagina.setOnMouseClicked(new EventHandler() {
+
+                                        @Override
+                                        public void handle(Event event) {
+                                            try {
+                                                search.getControlRead().atualize();
+                                            } catch (Exception ex) {
+                                                Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
+
+                                            int i = 0;
+                                            int index = -1;
+                                            try {
+                                                for (Object pagina1 : search.getControlRead().getPaginas()) {
+                                                    if (pagina.getText().equals(((Pagina) pagina1).getNome())) {
+                                                        index = i;
+                                                        break;
+                                                    }
+                                                    i++;
+
+                                                }
+                                                System.out.println(pagina);
+                                                if (index == -1) {
+                                                    throw new FileNotFoundException();
+                                                }
+                                            } catch (FileNotFoundException ex) {
+                                                Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
+                                            try {
+                                                search.getControlRead().showFile(index);
+                                            } catch (Exception ex) {
+                                                Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    } catch (Exception ex) {
+                        Logger.getLogger(Interface2.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+
+        });
+        botaoTopPag(topPaginas, listaResul, kEscolhas, crescente, decrescente, positionBotoes);
+        
         palco.show();
 
+    }
+    
+    public static void botaoTopPag(Button topPaginas, ListView listaResul, TextField kEscolhas, Button crescente, Button decrescente, HBox positionBotoes) {
+        topPaginas.setOnMouseClicked(new EventHandler() {
+            @Override
+            public void handle(Event event) {
+                listaResul.getItems().clear();
+                listaResul.visibleProperty().set(false);
+                kEscolhas.visibleProperty().set(true);
+                crescente.visibleProperty().set(true);
+                decrescente.visibleProperty().set(true);
+                positionBotoes.getChildren().addAll(kEscolhas, crescente, decrescente);
+            }
+        });
     }
 
 }
