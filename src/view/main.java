@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 import model.Pagina;
 import model.Palavra;
@@ -39,7 +40,8 @@ public class main {
                     relevanciaPag(controleBusca);
                     break;
                 case 3: 
-                    controleBusca.ordenar();break;
+                    relevanciaPala(controleBusca);
+                    break;
                 default:
                     break;
             }
@@ -181,5 +183,40 @@ public class main {
     private static String input() {                //Para resumir as entradas do teclado;
         Scanner opcao = new Scanner(System.in);
         return opcao.nextLine();
+    }
+
+    private static void relevanciaPala(ControllerBusca controleBusca) throws Exception {
+        controleBusca.getControlPages().atualize();
+        System.out.println("Digite 1 para ordenar relevancia por ordem crescente e 2 para decrescente");
+        String escolha = input();
+        System.out.println("Digite o top K dejesado");
+        String topK = input();
+        int k;
+        try {
+            k = Integer.parseInt(topK);
+        } catch (NumberFormatException ex) {
+            k = 0;
+        }
+        Queue fila = controleBusca.filaPalavras();
+        //O algoritmo de ordenação usa uma fila, com isso a ordem é invertida.
+        if (escolha.equals("2")) {
+            LinkedList cresc = null;
+            controleBusca.getSort().quickSort(fila, new Crescente());
+            if (fila != null) {
+                while (!fila.isEmpty()) {
+                    System.out.println(((Palavra) fila.remove()).toString());
+                }
+            }
+
+        } //O algoritmo de ordenação usa uma fila, com isso a ordem é invertida.
+        else if (escolha.equals("1")) {
+            controleBusca.getSort().quickSort(fila, new Decrescente());
+            if (fila != null) {
+                while (!fila.isEmpty()) {
+                    System.out.println(((Palavra) fila.remove()).toString());
+                }
+            }
+
+        }
     }
 }

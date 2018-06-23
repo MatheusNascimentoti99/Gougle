@@ -27,11 +27,11 @@ import util.QuickSort;
  */
 public class ControllerBusca implements Comparator {
 
-    ControllerPaginas allFiles;
-    ControllerFile save;
-    ArvorePalavra buscaRapida;
-    File file;
-
+    private ControllerPaginas allFiles;
+    private final ControllerFile save;
+    private ArvorePalavra buscaRapida;
+    private File file;
+    private QuickSort sort;
     Crescente comparador;
 
     /**
@@ -41,7 +41,7 @@ public class ControllerBusca implements Comparator {
         allFiles = new ControllerPaginas();
         save = new ControllerFile();
         buscaRapida = new ArvorePalavra();
-
+        sort = new QuickSort();
         comparador = new Crescente();
     }
 
@@ -219,6 +219,14 @@ public class ControllerBusca implements Comparator {
         this.allFiles = controlPages;
     }
 
+    public QuickSort getSort() {
+        return sort;
+    }
+
+    public void setSort(QuickSort sort) {
+        this.sort = sort;
+    }
+
     /**
      * Salva a arvore em disco.
      *
@@ -260,25 +268,17 @@ public class ControllerBusca implements Comparator {
         return 0;
     }
 
+
     /**
      *
-     * @throws FileNotFoundException
+     * @return 
+     * @throws java.lang.Exception
      */
-    /**
-     *
-     */
-    public void ordenar() throws Exception {
+    public Queue filaPalavras() throws Exception {
         atualizar();
         Queue fila = buscaRapida.preOrder();
-        if (fila != null) {
-            QuickSort quick = new QuickSort();
-            quick.quickSort(fila, comparador);
 
-            while (!fila.isEmpty()) {
-                Palavra p = (Palavra) fila.remove();
-                System.out.println("" + p.getPalavra() + "" + p.getSearch());
-            }
-        }
+        return fila;
 
     }
 }
