@@ -245,7 +245,6 @@ public class Interface extends Application {
 
     }
 
-
     public static void botaoCresPag(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) throws Exception {
         search.getControlPages().atualize();
         crescente.setOnMouseClicked(new EventHandler() {
@@ -338,13 +337,15 @@ public class Interface extends Application {
                 try {
                     //O algoritmo de ordenação usa uma fila, com isso a ordem é invertida.
                     fila = search.filaPalavras();
+
                 } catch (Exception ex) {
                     Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
-                    pagina = new Label("Paginas não encontradas");
+                    pagina = new Label("Não há palavras.");
                     listaResul.getItems().add(pagina);
                 }
-                search.getSort().quickSort(fila, new Crescente());
+
                 if (fila != null) {
+                    search.getSort().quickSort(fila, new Crescente());
                     while (!fila.isEmpty()) {
                         listaResul.getItems().add(((Palavra) fila.remove()).toString());
                     }
@@ -379,8 +380,8 @@ public class Interface extends Application {
                     pagina = new Label("Paginas não encontradas");
                     listaResul.getItems().add(pagina);
                 }
-                search.getSort().quickSort(fila, new Decrescente());
                 if (fila != null) {
+                    search.getSort().quickSort(fila, new Decrescente());
                     while (!fila.isEmpty()) {
                         listaResul.getItems().add(((Palavra) fila.remove()).toString());
                     }

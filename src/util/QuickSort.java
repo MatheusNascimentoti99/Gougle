@@ -15,7 +15,12 @@ import java.util.Queue;
  */
 public class QuickSort {
 
-    public void quickSort(Queue fila, Comparator compare) {
+    public void quickSort(Queue fila, Comparator compare) throws  NullPointerException{
+        try{
+            fila.isEmpty();
+        }catch(NullPointerException ex){
+             throw new NullPointerException();
+        }
         if (fila.size() > 1) {
             Comparable pivot = (Comparable) fila.peek();
             Queue left = new LinkedList();

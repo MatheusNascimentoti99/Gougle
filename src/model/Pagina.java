@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 public class Pagina implements Comparable, Serializable {
 
-    private String nome;
+    private final String nome;
     private int relevancia;
     private long change;
     private int visit;
@@ -49,10 +49,6 @@ public class Pagina implements Comparable, Serializable {
         return relevancia;
     }
 
-    /**
-     *
-     * @param relevancia Valor dado para alteração da relevancia da página.
-     */
     /**
      * Quantidade de vezes que a página foi visitada.
      *

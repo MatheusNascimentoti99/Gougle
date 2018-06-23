@@ -60,7 +60,7 @@ public class ControllerBusca implements Comparator {
         boolean flag = true;
         if (p != null) {
 
-             flag = therePages(allFiles.readListPages(), p);
+             flag = therePages(p.getPaginas(), p);
             p.moreSearch();
             p.setPaginas(allFiles.sort(p.getPaginas(), new Crescente()));
 
@@ -276,8 +276,14 @@ public class ControllerBusca implements Comparator {
      */
     public Queue filaPalavras() throws Exception {
         atualizar();
-        Queue fila = buscaRapida.preOrder();
-
+        Queue fila = null;
+        try{
+         fila = buscaRapida.preOrder();
+        if(fila == null)
+            throw new NullPointerException();
+        }catch(NullPointerException ex){
+            
+        }
         return fila;
 
     }
