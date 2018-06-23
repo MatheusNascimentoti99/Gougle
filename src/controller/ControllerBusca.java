@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Queue;
 import model.Pagina;
 import model.Palavra;
 
@@ -18,6 +19,7 @@ import util.Arvore;
 import util.ArvorePalavra;
 import util.Crescente;
 import util.No;
+import util.QuickSort;
 
 /*
 *
@@ -36,11 +38,17 @@ public class ControllerBusca implements Comparator {
     ControllerFile save;
     ArvorePalavra buscaRapida;
     File file;
+    Queue fila ;
+    QuickSort quick;
+    Crescente comparador;
 
     public ControllerBusca() {
         allFiles = new ControllerPaginas();
         save = new ControllerFile();
         buscaRapida = new ArvorePalavra();
+        fila = new LinkedList();
+        quick = new QuickSort();
+        comparador = new Crescente();
     }
 
     public Comparable search(String palavra) throws IOException, Exception {
@@ -187,5 +195,26 @@ public class ControllerBusca implements Comparator {
         }
         return 0;
     }
-
+    
+    public void ordenar() throws FileNotFoundException{
+        ArvorePalavra arvore = buscaRapida;
+        ordenar(arvore.getRaiz());
+    }
+        public void ordenar(No atual) {
+            if (atual != null) {
+                Comparable b = atual.getDate();
+                fila.add(b);
+                if (atual.getEsquerda()!= null) {
+                    ordenar(atual.getEsquerda());
+                } else if (atual.getDireita()!= null) {
+                    ordenar(atual.getDireita());
+                }
+            }
+        quick.quickSort(fila, comparador);
+        
+        while(!fila.isEmpty()){
+            Palavra p = (Palavra) fila.remove();
+            System.out.println(""+p.getPalavra()+""+p.getSearch());
+        }
+    }
 }
