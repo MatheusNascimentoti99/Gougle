@@ -54,7 +54,7 @@ public class ControllerBusca implements Comparator {
      * @throws Exception
      */
     public Comparable search(String palavra) throws IOException, Exception {
-        atualize();
+        atualizar();
 
         Palavra p = (Palavra) search(buscaRapida.getRaiz(), palavra);
         boolean flag = true;
@@ -114,11 +114,13 @@ public class ControllerBusca implements Comparator {
 
         return existe;
     }
-    public void atualize() throws Exception{
+
+    public void atualizar() throws Exception {
         File arq = new File("resources\\Tree.date");
-        if(!arq.exists())
+        if (!arq.exists()) {
             this.saveTree();
-        buscaRapida = this.readTree();  
+        }
+        buscaRapida = this.readTree();
         this.saveTree();
     }
 
@@ -261,17 +263,21 @@ public class ControllerBusca implements Comparator {
      *
      * @throws FileNotFoundException
      */
-    public void ordenar() throws FileNotFoundException, Exception {
-        atualize();
-        ArvorePalavra arvore = buscaRapida;
-        ordenar(arvore);
-    }
-
     /**
      *
-     * @param arvore
      */
-    public void ordenar(ArvorePalavra arvore) {
-        arvore.preOrder();
+    public void ordenar() throws Exception {
+        atualizar();
+        Queue fila = buscaRapida.preOrder();
+        if (fila != null) {
+            QuickSort quick = new QuickSort();
+            quick.quickSort(fila, comparador);
+
+            while (!fila.isEmpty()) {
+                Palavra p = (Palavra) fila.remove();
+                System.out.println("" + p.getPalavra() + "" + p.getSearch());
+            }
+        }
+
     }
 }

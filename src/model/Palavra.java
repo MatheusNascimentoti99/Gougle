@@ -29,7 +29,7 @@ public class Palavra implements Comparable, Comparator, Serializable{
         this.palavra = palavra;
         paginas = new LinkedList();
         paginas.add(pagina);
-        search = 1;
+        search = 0;
     }
 
     /**

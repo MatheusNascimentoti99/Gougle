@@ -120,19 +120,21 @@ public class Arvore implements Serializable {
     }
 
     //Código retirado da aula 09 de Estrutura de Dados do Professora João Rocha.
-    public void preOrder() {
-        Queue<No> queue = new LinkedList();
-        queue.add(raiz);
-        while (!queue.isEmpty()) {
-            No n = queue.remove();
-            System.out.println(n.getDate());
+    public Queue preOrder() {
+        Queue fila = new LinkedList();
+        Stack stack = new Stack();
+        stack.push(raiz);
+        while (!stack.isEmpty()) {
+            No n = (No) stack.pop();
+            fila.add(n.getDate());
             if (n.getDireita() != null) {
-                queue.add(n.getDireita());
+                stack.push(n.getDireita());
             }
             if (n.getEsquerda() != null) {
-                queue.add(n.getEsquerda());
+                stack.push(n.getEsquerda());
             }
         }
+        return fila;
     }
 
     public Comparable removerNoEncontrado(No aRemover) {
