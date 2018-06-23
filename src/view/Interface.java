@@ -61,14 +61,12 @@ public class Interface extends Application {
     public void screenMain(Stage palco) throws FileNotFoundException, Exception {
         ControllerBusca search = new ControllerBusca();
         search.getControlPages().atualize();
-
-        BorderPane raiz = new BorderPane();
         VBox partePesquisa = new VBox(20); // 1
         VBox subBox = new VBox(15);
         HBox positionBotoes = new HBox(5);
         Scene cena = new Scene(subBox, 800, 400);
-        HBox barra = new HBox(5);
-
+        HBox campoResul = new HBox(5);
+        campoResul.setAlignment(Pos.CENTER);
         TextArea campo = new TextArea();
 
         Button pesquisar = new Button("Pesquisar");
@@ -93,7 +91,7 @@ public class Interface extends Application {
         ListView listaResul = new ListView();
         listaResul.visibleProperty().set(false);
         listaResul.setPrefWidth(subBox.getWidth());
-
+        listaResul.setTooltip(new Tooltip("Resultados de pesquisas"));
         Label titulo = new Label("Gougle FSA"); // 3
         titulo.setScaleX(3);
         titulo.setScaleY(3);
@@ -108,8 +106,8 @@ public class Interface extends Application {
         partePesquisa.getChildren().addAll(titulo, campoTexto, positionBotoes);
         partePesquisa.setTranslateY(10);
         subBox.setAlignment(Pos.CENTER); // 2
-        barra.getChildren().addAll(listaResul);
-        subBox.getChildren().addAll(partePesquisa, separadorHorizontal, barra);
+        campoResul.getChildren().addAll(listaResul);
+        subBox.getChildren().addAll(partePesquisa, separadorHorizontal, campoResul);
 
         palco.setTitle("Gougle FSA");
         palco.setScene(cena);
