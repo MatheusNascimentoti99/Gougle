@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -73,7 +74,9 @@ public class Interface extends Application {
         Button pesquisar = new Button("Pesquisar");
         pesquisar.setTooltip(new Tooltip("Pesquisar páginas"));
         Button topPaginas = new Button("Top-K Páginas");
-        topPaginas.setTooltip(new Tooltip("Páginas mais e menos pesquisadas"));
+        topPaginas.setTooltip(new Tooltip("Páginas mais ou menos pesquisadas"));
+        Button topPalavras = new Button("Top-K Palavras");
+        topPalavras.setTooltip(new Tooltip("Palavras mais ou menos pesquisadas"));
         TextField kEscolhas = new TextField();
         kEscolhas.setTooltip(new Tooltip(
                 "Digite K quantidades"));
@@ -101,7 +104,7 @@ public class Interface extends Application {
         Separator separadorHorizontal = new Separator(); // 7
 
         partePesquisa.setAlignment(Pos.CENTER);
-        positionBotoes.getChildren().addAll(pesquisar, topPaginas);
+        positionBotoes.getChildren().addAll(pesquisar, topPaginas, topPalavras);
         partePesquisa.getChildren().addAll(titulo, campoTexto, positionBotoes);
         partePesquisa.setTranslateY(10);
         subBox.setAlignment(Pos.CENTER); // 2
@@ -233,14 +236,17 @@ public class Interface extends Application {
             }
 
         });
-        botaoTopPag(topPaginas, listaResul, kEscolhas, crescente, decrescente, positionBotoes);
-        botaoCres(listaResul, crescente, kEscolhas, search);
-        botaoDecres(listaResul, decrescente, kEscolhas, search);
+        botaoTopPag(topPaginas, listaResul, kEscolhas, crescente, decrescente, positionBotoes, search);
+        botaoTopPala(topPalavras, listaResul, kEscolhas, crescente, decrescente, positionBotoes, search);
         palco.show();
 
     }
 
-    public static void botaoCres(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) {
+    public static void botaoCres(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca searc, Queue fila) {
+
+    }
+
+    public static void botaoCresPag(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) {
         crescente.setOnMouseClicked(new EventHandler() {
             Label pagina;
 
@@ -276,7 +282,7 @@ public class Interface extends Application {
 
     }
 
-    public static void botaoDecres(ListView listaResul, Button decrescente, TextField kEscolhas, ControllerBusca search) {
+    public static void botaoDecresPag(ListView listaResul, Button decrescente, TextField kEscolhas, ControllerBusca search) {
         decrescente.setOnMouseClicked(new EventHandler() {
             Label pagina;
 
@@ -312,19 +318,101 @@ public class Interface extends Application {
 
     }
 
-    public static void botaoTopPag(Button topPaginas, ListView listaResul, TextField kEscolhas, Button crescente, Button decrescente, HBox positionBotoes) {
-        topPaginas.setOnMouseClicked(new EventHandler() {
+    public static void botaoCresPala(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) {
+        crescente.setOnMouseClicked(new EventHandler() {
+            Label pagina;
+
             @Override
             public void handle(Event event) {
-
                 listaResul.getItems().clear();
-                listaResul.visibleProperty().set(false);
-                kEscolhas.visibleProperty().set(true);
-                crescente.visibleProperty().set(true);
-                decrescente.visibleProperty().set(true);
-                if (positionBotoes.getChildren().size() < 5) {
-                    positionBotoes.getChildren().addAll(kEscolhas, crescente, decrescente);
+                int k;
+                try {
+                    k = Integer.parseInt(kEscolhas.getText());
+                } catch (NumberFormatException ex) {
+                    k = 0;
                 }
+                Queue fila = null;
+                try {
+                    //O algoritmo de ordenação usa uma fila, com isso a ordem é invertida.
+                    fila = search.filaPalavras();
+                } catch (Exception ex) {
+                    Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+                    pagina = new Label("Paginas não encontradas");
+                    listaResul.getItems().add(pagina);
+                }
+                search.getSort().quickSort(fila, new Crescente());
+                if (fila != null) {
+                    while (!fila.isEmpty()) {
+                        listaResul.getItems().add(((Palavra) fila.remove()).toString());
+                    }
+                }
+                listaResul.visibleProperty().set(true);
+
+            }
+
+        });
+    }
+    public static void botaoDecresPala(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) {
+        crescente.setOnMouseClicked(new EventHandler() {
+            Label pagina;
+
+            @Override
+            public void handle(Event event) {
+                listaResul.getItems().clear();
+                int k;
+                try {
+                    k = Integer.parseInt(kEscolhas.getText());
+                } catch (NumberFormatException ex) {
+                    k = 0;
+                }
+                Queue fila = null;
+                try {
+                    //O algoritmo de ordenação usa uma fila, com isso a ordem é invertida.
+                    fila = search.filaPalavras();
+                } catch (Exception ex) {
+                    Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+                    pagina = new Label("Paginas não encontradas");
+                    listaResul.getItems().add(pagina);
+                }
+                search.getSort().quickSort(fila, new Decrescente());
+                if (fila != null) {
+                    while (!fila.isEmpty()) {
+                        listaResul.getItems().add(((Palavra) fila.remove()).toString());
+                    }
+                }
+                listaResul.visibleProperty().set(true);
+
+            }
+
+        });
+    }
+
+    public static void botaoTopPag(Button topPaginas, ListView listaResul, TextField kEscolhas, Button crescente, Button decrescente, HBox positionBotoes, ControllerBusca search) {
+        botaoCresPag(listaResul, crescente, kEscolhas, search);
+        botaoDecresPag(listaResul, decrescente, kEscolhas, search);
+        topPaginas.setOnMouseClicked((Event event) -> {
+            listaResul.getItems().clear();
+            listaResul.visibleProperty().set(false);
+            kEscolhas.visibleProperty().set(true);
+            crescente.visibleProperty().set(true);
+            decrescente.visibleProperty().set(true);
+            if (positionBotoes.getChildren().size() < 5) {
+                positionBotoes.getChildren().addAll(kEscolhas, crescente, decrescente);
+            }
+        });
+    }
+
+    public static void botaoTopPala(Button topPalavras, ListView listaResul, TextField kEscolhas, Button crescente, Button decrescente, HBox positionBotoes, ControllerBusca search) {
+        botaoCresPala(listaResul, crescente, kEscolhas, search);
+        botaoDecresPala(listaResul, decrescente, kEscolhas, search);
+        topPalavras.setOnMouseClicked((Event event) -> {
+            listaResul.getItems().clear();
+            listaResul.visibleProperty().set(false);
+            kEscolhas.visibleProperty().set(true);
+            crescente.visibleProperty().set(true);
+            decrescente.visibleProperty().set(true);
+            if (positionBotoes.getChildren().size() < 5) {
+                positionBotoes.getChildren().addAll(kEscolhas, crescente, decrescente);
             }
         });
     }

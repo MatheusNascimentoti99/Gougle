@@ -49,7 +49,7 @@ public class Palavra implements Comparable, Comparator, Serializable{
     }
     @Override
     public String toString() {
-        return ("Palavra:" + palavra + "Buscas: " + search);
+        return ("Palavra: " + palavra + "   Buscas: " + search);
     }
 
     /**
