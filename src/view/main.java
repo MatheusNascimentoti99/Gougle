@@ -72,7 +72,7 @@ public class main {
     }
 
     public static void relevanciaPag(ControllerBusca controleBusca) throws FileNotFoundException, Exception {
-        controleBusca.getControlRead().atualize();
+        controleBusca.getControlPages().atualize();
         System.out.println("Digite 1 para ordenar relevancia por ordem crescente e 2 para decrescente");
         String escolha = input();
         System.out.println("Digite o top K dejesado");
@@ -87,7 +87,7 @@ public class main {
         if (escolha.equals("1")) {
             LinkedList cresc = null;
             try {
-                cresc = controleBusca.getControlRead().sort(controleBusca.getControlRead().getPaginas(), new Crescente());
+                cresc = controleBusca.getControlPages().sort(controleBusca.getControlPages().getPaginas(), new Crescente());
             } catch (FileNotFoundException exe) {
                 System.out.println("Paginas não encontradas");
             }
@@ -102,7 +102,7 @@ public class main {
         else if (escolha.equals("2")) {
             LinkedList decres = null;
             try {
-                decres = controleBusca.getControlRead().sort(controleBusca.getControlRead().getPaginas(), new Decrescente());
+                decres = controleBusca.getControlPages().sort(controleBusca.getControlPages().getPaginas(), new Decrescente());
             } catch (FileNotFoundException exe) {
                 System.out.println("Paginas não encontradas");
             }
@@ -121,7 +121,7 @@ public class main {
         String pagina = input();
         int i = 0;
         int index = 0;
-        for (Object pagina1 : controleBusca.getControlRead().getPaginas()) {
+        for (Object pagina1 : controleBusca.getControlPages().getPaginas()) {
             if (pagina.equals(((Pagina) pagina1).getNome())) {
                 index = i;
                 break;
@@ -129,7 +129,7 @@ public class main {
             i++;
 
         }
-        controleBusca.getControlRead().showFile(index);
+        controleBusca.getControlPages().showFile(index);
         System.out.println(":(");
     }
 
@@ -158,7 +158,7 @@ public class main {
         } else if (controleBusca.addPalavra(palavrasMultiplas[0]) == true) {
             p = (Palavra) controleBusca.search(palavrasMultiplas[0]);
             if (p != null) {
-                LinkedList temp = controleBusca.getControlRead().sort(p.getPaginas(), p);
+                LinkedList temp = controleBusca.getControlPages().sort(p.getPaginas(), p);
                 System.out.println(p.toString());
                 Iterator it = temp.iterator();
                 while (it.hasNext()) {
