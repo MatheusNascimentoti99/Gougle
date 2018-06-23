@@ -60,7 +60,7 @@ public class ControllerBusca implements Comparator {
         boolean flag = true;
         if (p != null) {
 
-            flag = therePages(p.getPaginas(), p);
+             flag = therePages(p.getPaginas(), p);
             p.moreSearch();
             p.setPaginas(allFiles.sort(p.getPaginas(), new Crescente()));
 
@@ -102,8 +102,9 @@ public class ControllerBusca implements Comparator {
                     paginas.remove(i);
                     if (!existe) {
                         existe = allFiles.readFileWord(file, palavra.getPalavra(), buscaRapida);
+                    } else {
+                        allFiles.readFileWord(file, palavra.getPalavra(), buscaRapida);
                     }
-                    allFiles.readFileWord(file, palavra.getPalavra(), buscaRapida);
                     saveTree();
                     break;
 
