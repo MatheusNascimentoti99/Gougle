@@ -37,6 +37,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Pagina;
 import model.Palavra;
+import util.Crescente;
+import util.Decrescente;
 
 /**
  *
@@ -44,7 +46,7 @@ import model.Palavra;
  */
 public class Interface2 extends Application {
 
-    private final ControllerBusca search = new ControllerBusca();
+    
 
     public static void main(String[] args) {
         launch();
@@ -58,6 +60,7 @@ public class Interface2 extends Application {
     }
 
     public void screenMain(Stage palco) throws FileNotFoundException, Exception {
+        ControllerBusca search = new ControllerBusca();
         search.getControlRead().atualize();
 
         BorderPane raiz = new BorderPane();
@@ -68,12 +71,14 @@ public class Interface2 extends Application {
         HBox barra = new HBox(5);
 
         TextArea campo = new TextArea();
-
+        
         Button pesquisar = new Button("Pesquisar");
         pesquisar.setTooltip(new Tooltip("Pesquisar páginas"));
         Button topPaginas = new Button("Top-K Páginas");
         topPaginas.setTooltip(new Tooltip("Páginas mais e menos pesquisadas"));
         TextField kEscolhas = new TextField();
+        kEscolhas.setTooltip(new Tooltip(
+                "Digite K quantidades"));
         kEscolhas.setPrefWidth(75);
         kEscolhas.visibleProperty().set(false);
         Button crescente = new Button("Crescente");
@@ -110,8 +115,10 @@ public class Interface2 extends Application {
 
         pesquisar.setOnMouseClicked((Event event) -> {
             listaResul.getItems().clear();
-            kEscolhas.visibleProperty().set(false);
-            crescente.visibleProperty().set(false);
+            positionBotoes.getChildren().remove(kEscolhas);
+            positionBotoes.getChildren().remove(crescente);
+            positionBotoes.getChildren().remove(decrescente);
+
             try {
                 search.getControlRead().atualize();
             } catch (Exception ex) {
@@ -229,21 +236,94 @@ public class Interface2 extends Application {
 
         });
         botaoTopPag(topPaginas, listaResul, kEscolhas, crescente, decrescente, positionBotoes);
-        
+        botaoCres(listaResul, crescente, kEscolhas, search);
+        botaoDecres(listaResul, decrescente, kEscolhas, search);
         palco.show();
 
+    }
+
+    public static void botaoCres(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) {
+        crescente.setOnMouseClicked(new EventHandler() {
+            Label pagina;
+            @Override
+            public void handle(Event event) {
+                listaResul.getItems().clear();
+                int k;
+                try {
+                    k = Integer.parseInt(kEscolhas.getText());
+                } catch (NumberFormatException ex) {
+                    k = 0;
+                }
+                //O algoritmo de ordenação usa uma fila, com isso a ordem é invertida.
+                    LinkedList cresc = null;
+                    try {
+                        cresc = search.getControlRead().sort(search.getControlRead().getPaginas(), new Crescente());
+                    } catch (FileNotFoundException exe) {
+                        pagina = new Label("Paginas não encontradas");
+                        listaResul.getItems().add(pagina);
+                    }
+                    if (cresc != null) {
+                        Iterator temp = cresc.iterator();
+                        for (int i = 0; i < k && temp.hasNext(); i++) {
+                            pagina = new Label((((Pagina) temp.next()).toString()));
+                            listaResul.getItems().add(pagina);
+                        }
+                    }
+                    listaResul.visibleProperty().set(true);
+
+                }
+            
+        });
+        
+    }
+    
+public static void botaoDecres(ListView listaResul, Button decrescente, TextField kEscolhas, ControllerBusca search) {
+        decrescente.setOnMouseClicked(new EventHandler() {
+            Label pagina;
+            @Override
+            public void handle(Event event) {
+                listaResul.getItems().clear();
+                int k;
+                try {
+                    k = Integer.parseInt(kEscolhas.getText());
+                } catch (NumberFormatException ex) {
+                    k = 0;
+                }
+                //O algoritmo de ordenação usa uma fila, com isso a ordem é invertida.
+                    LinkedList decres = null;
+                    try {
+                        decres = search.getControlRead().sort(search.getControlRead().getPaginas(), new Decrescente());
+                    } catch (FileNotFoundException exe) {
+                        pagina = new Label("Paginas não encontradas");
+                        listaResul.getItems().add(pagina);
+                    }
+                    if (decres != null) {
+                        Iterator temp = decres.iterator();
+                        for (int i = 0; i < k && temp.hasNext(); i++) {
+                            pagina = new Label((((Pagina) temp.next()).toString()));
+                            listaResul.getItems().add(pagina);
+                        }
+                    }
+                    listaResul.visibleProperty().set(true);
+
+                }
+            
+        });
+        
     }
     
     public static void botaoTopPag(Button topPaginas, ListView listaResul, TextField kEscolhas, Button crescente, Button decrescente, HBox positionBotoes) {
         topPaginas.setOnMouseClicked(new EventHandler() {
             @Override
             public void handle(Event event) {
+                
                 listaResul.getItems().clear();
                 listaResul.visibleProperty().set(false);
                 kEscolhas.visibleProperty().set(true);
                 crescente.visibleProperty().set(true);
                 decrescente.visibleProperty().set(true);
-                positionBotoes.getChildren().addAll(kEscolhas, crescente, decrescente);
+                if(positionBotoes.getChildren().size() < 5)
+                    positionBotoes.getChildren().addAll(kEscolhas, crescente, decrescente);
             }
         });
     }
