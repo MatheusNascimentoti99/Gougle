@@ -6,6 +6,9 @@
 package util;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 import model.Palavra;
 
@@ -13,8 +16,8 @@ import model.Palavra;
  *
  * @author Matheus Nascimento
  */
-public class Arvore implements Serializable{
-    
+public class Arvore implements Serializable {
+
     protected No raiz;
 
     public void inserir(Comparable date) {
@@ -59,13 +62,11 @@ public class Arvore implements Serializable{
                     inserirAVL(aComparar.getDireita(), aInserir);
                 }
 
-            } 
-            
+            }
+
         }
 
     }
-
-   
 
     public void verificarBalanceamento(No atual) {
         setBalanceamento(atual);
@@ -97,12 +98,13 @@ public class Arvore implements Serializable{
         }
     }
 
-    public void remover(Palavra palavra) {
-        removerAVL(this.raiz, palavra);
+    public Comparable remover(Palavra palavra) {
+        return removerAVL(this.raiz, palavra);
     }
 
-    public void removerAVL(No atual, Palavra palavra) {
-        if (atual != null){
+    private Comparable removerAVL(No atual, Palavra palavra) {
+        Comparable removido = null;
+        if (atual != null) {
 
             if (atual.getDate().compareTo(palavra) > 0) {
                 removerAVL(atual.getEsquerda(), palavra);
@@ -111,19 +113,36 @@ public class Arvore implements Serializable{
                 removerAVL(atual.getDireita(), palavra);
 
             } else if (atual.getDate().compareTo(palavra) == 0) {
-                removerNoEncontrado(atual);
+                removido = removerNoEncontrado(atual);
+            }
+        }
+        return removido;
+    }
+
+    //Código retirado da aula 09 de Estrutura de Dados do Professora João Rocha.
+    public void preOrder() {
+        Queue<No> queue = new LinkedList();
+        queue.add(raiz);
+        while (!queue.isEmpty()) {
+            No n = queue.remove();
+            System.out.println(n.getDate());
+            if (n.getDireita() != null) {
+                queue.add(n.getDireita());
+            }
+            if (n.getEsquerda() != null) {
+                queue.add(n.getEsquerda());
             }
         }
     }
 
-    public void removerNoEncontrado(No aRemover) {
+    public Comparable removerNoEncontrado(No aRemover) {
         No r;
-
+        Comparable temp = aRemover.getDate();
         if (aRemover.getEsquerda() == null || aRemover.getDireita() == null) {
 
             if (aRemover.getPai() == null) {
                 this.raiz = null;
-                return;
+                return temp;
             }
             r = aRemover;
 
@@ -152,6 +171,7 @@ public class Arvore implements Serializable{
             }
             verificarBalanceamento(r.getPai());
         }
+        return temp;
     }
 
     public No rotacaoEsquerda(No inicial) {
@@ -263,11 +283,9 @@ public class Arvore implements Serializable{
     private void setBalanceamento(No no) {
         no.setBalanceamento(altura(no.getDireita()) - altura(no.getEsquerda()));
     }
-    
-        public boolean isEmpty(){
-            return raiz == null;
-        }
-        
-   
-    
+
+    public boolean isEmpty() {
+        return raiz == null;
+    }
+
 }

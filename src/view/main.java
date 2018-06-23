@@ -38,6 +38,8 @@ public class main {
                 case 4:
                     relevanciaPag(controleBusca);
                     break;
+                case 3: 
+                    controleBusca.ordenar();break;
                 default:
                     break;
             }
