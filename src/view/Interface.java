@@ -352,6 +352,7 @@ public class Interface extends Application {
 
         });
     }
+
     public static void botaoDecresPala(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) {
         crescente.setOnMouseClicked(new EventHandler() {
             Label pagina;
@@ -388,9 +389,10 @@ public class Interface extends Application {
     }
 
     public static void botaoTopPag(Button topPaginas, ListView listaResul, TextField kEscolhas, Button crescente, Button decrescente, HBox positionBotoes, ControllerBusca search) {
-        botaoCresPag(listaResul, crescente, kEscolhas, search);
-        botaoDecresPag(listaResul, decrescente, kEscolhas, search);
+
         topPaginas.setOnMouseClicked((Event event) -> {
+            botaoCresPag(listaResul, crescente, kEscolhas, search);
+            botaoDecresPag(listaResul, decrescente, kEscolhas, search);
             listaResul.getItems().clear();
             listaResul.visibleProperty().set(false);
             kEscolhas.visibleProperty().set(true);
@@ -403,9 +405,10 @@ public class Interface extends Application {
     }
 
     public static void botaoTopPala(Button topPalavras, ListView listaResul, TextField kEscolhas, Button crescente, Button decrescente, HBox positionBotoes, ControllerBusca search) {
-        botaoCresPala(listaResul, crescente, kEscolhas, search);
-        botaoDecresPala(listaResul, decrescente, kEscolhas, search);
+
         topPalavras.setOnMouseClicked((Event event) -> {
+            botaoCresPala(listaResul, crescente, kEscolhas, search);
+            botaoDecresPala(listaResul, decrescente, kEscolhas, search);
             listaResul.getItems().clear();
             listaResul.visibleProperty().set(false);
             kEscolhas.visibleProperty().set(true);
