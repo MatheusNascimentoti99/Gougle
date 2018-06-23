@@ -8,13 +8,14 @@ package model;
 import java.io.Serializable;
 import java.util.Objects;
 
-
 /**
  *
  * @author Matheus Nascimento e Elvis Serafim
- * <b>Pagina</b> Classe modelo para salvar o nome e o <i>lastModificed</i> de uma página.
+ * <b>Pagina</b> Classe modelo para salvar o nome e o <i>lastModificed</i> de
+ * uma página.
  */
-public class Pagina implements  Comparable, Serializable {
+public class Pagina implements Comparable, Serializable {
+
     private String nome;
     private int relevancia;
     private long change;
@@ -30,9 +31,8 @@ public class Pagina implements  Comparable, Serializable {
         relevancia = 1;
         this.change = change;
         visit = 0;
-        
-    }
 
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -53,52 +53,30 @@ public class Pagina implements  Comparable, Serializable {
      *
      * @param relevancia Valor dado para alteração da relevancia da página.
      */
-    public void setRelevancia(int relevancia) {
-        this.relevancia = relevancia;
-    }
-
     /**
-     *Quantidade de vezes que a página foi visitada.
+     * Quantidade de vezes que a página foi visitada.
+     *
      * @return Retorna a quantidade de vezes que a página foi exibida.
      */
     public int getVisit() {
         return visit;
     }
+
     @Override
-    public String toString(){
-        return "Página: "+nome+"    Visitas: "+visit;
+    public String toString() {
+        return "Página: " + nome + "    Visitas: " + visit;
     }
 
-    /**
-     *Altera o nome do arquivo.
-     * @param nome Parâmetro dado para alteração do nome do arquivo.
-     */
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    /**
-     *Altera a quantidade de visistas.
-     * @param visit
-     */
-    public void setVisit(int visit) {
-        this.visit = visit;
-    }
-
-
-    
     /**
      * Incrementa mais 1 ao valor de virita.
      */
-    public void visited(){
+    public void visited() {
         visit++;
     }
 
-  
-
     /**
      *
-     * @return  Retorna o valor de modificação da página.
+     * @return Retorna o valor de modificação da página.
      */
     public long getChange() {
         return change;
@@ -114,7 +92,8 @@ public class Pagina implements  Comparable, Serializable {
 
     /**
      *
-     * @return Retorna o valor de relevância da página a uma determinada Palavra que ele pertence.
+     * @return Retorna o valor de relevância da página a uma determinada Palavra
+     * que ele pertence.
      */
     public int getRepeticao() {
         return relevancia;
@@ -124,9 +103,9 @@ public class Pagina implements  Comparable, Serializable {
      * Incrementa mais 1 a cada vez que a palavra se repetir na página.
      */
     public void repetir() {
-        this.relevancia = relevancia +1;
+        this.relevancia = relevancia + 1;
     }
-    
+
     /**
      *
      * @return Retorna o nome da página
@@ -135,12 +114,10 @@ public class Pagina implements  Comparable, Serializable {
         return nome;
     }
 
-
-    
     @Override
     public int compareTo(Object o) {
         Pagina outro = (Pagina) o;
-        return   this.relevancia - outro.relevancia;
+        return this.relevancia - outro.relevancia;
     }
 
 }

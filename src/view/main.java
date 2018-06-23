@@ -28,6 +28,7 @@ public class main {
         System.out.println("--------------------------- Gougle FSA ---------------------------");
         String sair;
         do {
+            controleBusca.getControlPages().atualize();
             int opcao = escolha();
             switch (opcao) {
                 case 1:
@@ -48,6 +49,7 @@ public class main {
             System.out.println("Digite 0 para sair");
             System.out.println("Pressione qualquer outro botão para continuar");
             sair = input();
+            controleBusca.getControlPages().atualize();
         } while (!sair.equalsIgnoreCase("0"));
     }
 

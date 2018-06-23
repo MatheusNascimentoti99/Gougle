@@ -60,7 +60,7 @@ public class ControllerBusca implements Comparator {
         boolean flag = true;
         if (p != null) {
 
-             flag = therePages(p.getPaginas(), p);
+             flag = therePages(allFiles.readListPages(), p);
             p.moreSearch();
             p.setPaginas(allFiles.sort(p.getPaginas(), new Crescente()));
 

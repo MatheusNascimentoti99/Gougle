@@ -34,17 +34,12 @@ public class PaginaTest {
     public void testBasic() {
         
         assertTrue(p.getNome().equals("pagina"));
-        p.setNome("pagina2");
-        assertTrue(p.getNome().equals("pagina2"));
-        assertFalse(p.getNome().equals("pagina"));
+
         
         assertEquals(p.getRelevancia(), 1);
-        p.setRelevancia(2);
-        assertEquals(p.getRelevancia(), 2);
-        p.setRelevancia(0);
-        assertEquals(p.getRelevancia(), 0);
+
         p.repetir();
-        assertEquals(p.getRelevancia(), 1);
+        assertEquals(p.getRelevancia(), 2);
         
         assertEquals(p.getChange(), 1122);
         p.setChange(1112);
@@ -53,10 +48,10 @@ public class PaginaTest {
         assertEquals(p.getChange(), 1111);
         
         assertEquals(p.getVisit(), 0);
-        p.setVisit(2);
-        assertEquals(p.getVisit(), 2);
-        p.setVisit(3);
-        assertEquals(p.getVisit(), 3);
+
+        p.visited();
+        p.visited();
+        p.visited();
         p.visited();
         assertEquals(p.getVisit(), 4);
     }

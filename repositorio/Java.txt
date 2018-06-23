@@ -1,0 +1,10 @@
+O que é a Tecnologia Java e porque preciso dela?
+Java é uma linguagem de programação e plataforma computacional lançada pela primeira vez pela Sun Microsystems em 1995. Existem muitas aplicações e sites que não funcionarão, a menos que você tenha o Java instalado, e mais desses são criados todos os dias. O Java é rápido, seguro e confiável. De laptops a datacenters, consoles de games a supercomputadores científicos, telefones celulares à Internet, o Java está em todos os lugares!
+
+O download do Java é gratuito?
+Sim, o download do Java é gratuito. Obtenha a última versão no site java.com.
+
+Se você estiver criando um dispositivo de consumo ou incorporado e quiser incluir o Java, entre em contato com a Oracle para obter mais informações sobre como incluir o Java no seu dispositivo.
+
+Por que devo fazer upgrade para a versão mais recente do Java?
+A versão mais recente do Java contém aprimoramentos importantes para melhorar o desempenho, a estabilidade e a segurança das aplicações Java executadas na sua máquina. Ao instalar essa atualização gratuita, você garantirá que as suas aplicações Java continuem sendo executadas de forma segura e eficiente.

@@ -33,7 +33,7 @@ public class PalavraTest {
     @Test
     public void testBasic() {
         
-        assertEquals(1, p.getSearch());
+        assertEquals(0, p.getSearch());
         p.setSearch(2);
         assertEquals(2, p.getSearch());
         p.setSearch(3);
@@ -42,8 +42,7 @@ public class PalavraTest {
         assertEquals(4, p.getSearch());
         
         assertEquals(p.getPalavra(), "José");
-        p.setPalavra("Joao");
-        assertEquals("Joao", p.getPalavra());
+
         
         Pagina page = (Pagina) p.getPaginas().getFirst();
         assertEquals("pag1", page.getNome());

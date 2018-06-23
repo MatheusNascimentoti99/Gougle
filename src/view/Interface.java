@@ -113,6 +113,11 @@ public class Interface extends Application {
         palco.setScene(cena);
 
         pesquisar.setOnMouseClicked((Event event) -> {
+            try {
+                search.getControlPages().atualize();
+            } catch (Exception ex) {
+                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+            }
             listaResul.getItems().clear();
             positionBotoes.getChildren().remove(kEscolhas);
             positionBotoes.getChildren().remove(crescente);
@@ -182,7 +187,7 @@ public class Interface extends Application {
                             p = (Palavra) search.search(campoTexto.getText());
                             if (p != null) {
 
-                                LinkedList temp = search.getControlPages().sort(p.getPaginas(), p);
+                                LinkedList temp = search.getControlPages().sort(p.getPaginas(), search);
                                 Iterator it = temp.iterator();
                                 while (it.hasNext()) {
                                     Pagina pag = (Pagina) it.next();
@@ -240,11 +245,9 @@ public class Interface extends Application {
 
     }
 
-    public static void botaoCres(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca searc, Queue fila) {
 
-    }
-
-    public static void botaoCresPag(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) {
+    public static void botaoCresPag(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) throws Exception {
+        search.getControlPages().atualize();
         crescente.setOnMouseClicked(new EventHandler() {
             Label pagina;
 
@@ -280,7 +283,8 @@ public class Interface extends Application {
 
     }
 
-    public static void botaoDecresPag(ListView listaResul, Button decrescente, TextField kEscolhas, ControllerBusca search) {
+    public static void botaoDecresPag(ListView listaResul, Button decrescente, TextField kEscolhas, ControllerBusca search) throws Exception {
+        search.getControlPages().atualize();
         decrescente.setOnMouseClicked(new EventHandler() {
             Label pagina;
 
@@ -316,7 +320,8 @@ public class Interface extends Application {
 
     }
 
-    public static void botaoCresPala(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) {
+    public static void botaoCresPala(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) throws Exception {
+        search.getControlPages().atualize();
         crescente.setOnMouseClicked(new EventHandler() {
             Label pagina;
 
@@ -351,7 +356,8 @@ public class Interface extends Application {
         });
     }
 
-    public static void botaoDecresPala(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) {
+    public static void botaoDecresPala(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) throws Exception {
+        search.getControlPages().atualize();
         crescente.setOnMouseClicked(new EventHandler() {
             Label pagina;
 
@@ -386,11 +392,19 @@ public class Interface extends Application {
         });
     }
 
-    public static void botaoTopPag(Button topPaginas, ListView listaResul, TextField kEscolhas, Button crescente, Button decrescente, HBox positionBotoes, ControllerBusca search) {
-
+    public static void botaoTopPag(Button topPaginas, ListView listaResul, TextField kEscolhas, Button crescente, Button decrescente, HBox positionBotoes, ControllerBusca search) throws Exception {
+        search.getControlPages().atualize();
         topPaginas.setOnMouseClicked((Event event) -> {
-            botaoCresPag(listaResul, crescente, kEscolhas, search);
-            botaoDecresPag(listaResul, decrescente, kEscolhas, search);
+            try {
+                botaoCresPag(listaResul, crescente, kEscolhas, search);
+            } catch (Exception ex) {
+                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                botaoDecresPag(listaResul, decrescente, kEscolhas, search);
+            } catch (Exception ex) {
+                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+            }
             listaResul.getItems().clear();
             listaResul.visibleProperty().set(false);
             kEscolhas.visibleProperty().set(true);
@@ -402,11 +416,19 @@ public class Interface extends Application {
         });
     }
 
-    public static void botaoTopPala(Button topPalavras, ListView listaResul, TextField kEscolhas, Button crescente, Button decrescente, HBox positionBotoes, ControllerBusca search) {
-
+    public static void botaoTopPala(Button topPalavras, ListView listaResul, TextField kEscolhas, Button crescente, Button decrescente, HBox positionBotoes, ControllerBusca search) throws Exception {
+        search.getControlPages().atualize();
         topPalavras.setOnMouseClicked((Event event) -> {
-            botaoCresPala(listaResul, crescente, kEscolhas, search);
-            botaoDecresPala(listaResul, decrescente, kEscolhas, search);
+            try {
+                botaoCresPala(listaResul, crescente, kEscolhas, search);
+            } catch (Exception ex) {
+                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                botaoDecresPala(listaResul, decrescente, kEscolhas, search);
+            } catch (Exception ex) {
+                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+            }
             listaResul.getItems().clear();
             listaResul.visibleProperty().set(false);
             kEscolhas.visibleProperty().set(true);
