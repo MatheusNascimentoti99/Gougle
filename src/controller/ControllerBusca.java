@@ -58,6 +58,9 @@ public class ControllerBusca implements Comparator {
 
         Palavra p = (Palavra) search(buscaRapida.getRaiz(), palavra);
         boolean flag = true;
+        if(allFiles.modificedFiles(allFiles.readListPages())== 1){
+            this.addPalavra(palavra);
+        }
         if (p != null) {
 
              flag = therePages(p.getPaginas(), p);
@@ -65,6 +68,7 @@ public class ControllerBusca implements Comparator {
             p.setPaginas(allFiles.sort(p.getPaginas(), new Crescente()));
 
         }
+        
 
         if (flag == false) {
             buscaRapida.remover(p);
@@ -116,6 +120,10 @@ public class ControllerBusca implements Comparator {
         return existe;
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     public void atualizar() throws Exception {
         File arq = new File("resources\\Tree.date");
         if (!arq.exists()) {
@@ -219,10 +227,18 @@ public class ControllerBusca implements Comparator {
         this.allFiles = controlPages;
     }
 
+    /**
+     *
+     * @return
+     */
     public QuickSort getSort() {
         return sort;
     }
 
+    /**
+     *
+     * @param sort
+     */
     public void setSort(QuickSort sort) {
         this.sort = sort;
     }
