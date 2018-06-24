@@ -55,20 +55,19 @@ public class ControllerBusca implements Comparator {
      */
     public Comparable search(String palavra) throws IOException, Exception {
         atualizar();
-
-        Palavra p = (Palavra) search(buscaRapida.getRaiz(), palavra);
-        boolean flag = true;
-        if(allFiles.modificedFiles(allFiles.readListPages())== 1){
+        Palavra p;
+        if (allFiles.modificedFiles(allFiles.readListPages()) == 1) {
             this.addPalavra(palavra);
         }
+         p = (Palavra) search(buscaRapida.getRaiz(), palavra);
+        boolean flag = true;
         if (p != null) {
 
-             flag = therePages(p.getPaginas(), p);
+            flag = therePages(p.getPaginas(), p);
             p.moreSearch();
             p.setPaginas(allFiles.sort(p.getPaginas(), new Crescente()));
 
         }
-        
 
         if (flag == false) {
             buscaRapida.remover(p);
@@ -284,21 +283,20 @@ public class ControllerBusca implements Comparator {
         return 0;
     }
 
-
     /**
      *
-     * @return 
-     * @throws java.lang.Exception
+     * @return @throws java.lang.Exception
      */
     public Queue filaPalavras() throws Exception {
         atualizar();
         Queue fila = null;
-        try{
-         fila = buscaRapida.preOrder();
-        if(fila == null)
-            throw new NullPointerException();
-        }catch(NullPointerException ex){
-            
+        try {
+            fila = buscaRapida.preOrder();
+            if (fila == null) {
+                throw new NullPointerException();
+            }
+        } catch (NullPointerException ex) {
+
         }
         return fila;
 

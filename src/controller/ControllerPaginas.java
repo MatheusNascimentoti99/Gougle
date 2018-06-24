@@ -89,7 +89,9 @@ public class ControllerPaginas {
     public int modificedFiles(LinkedList paginas) throws FileNotFoundException{
         LinkedList oldFiles = readListFiles();
         LinkedList recentFiles = getFiles();
-        if(oldFiles.size() != recentFiles.size())
+        if(oldFiles == null)
+            return 0;
+        else if(oldFiles.size() != recentFiles.size())
             return 1;
     
         for(Object temp : paginas){
