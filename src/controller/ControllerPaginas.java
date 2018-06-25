@@ -15,24 +15,36 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Pagina;
 import model.Palavra;
 import util.Arvore;
 import util.QuickSort;
 
 /**
+ * A classe <b>ControllerPaginas</b> faz o gerenciamento das Páginas.
  *
- * @author Matheus Nascimento
+ * @author Matheus Nascimento e Elvis Serafim
+ * @since Jul 2018
+ * @version 1.0
  */
 public class ControllerPaginas {
 
     private final ControllerFile save;
+
+    /**
+     *
+     */
     public final String pastaRecursos = "resources\\";
+
+    /**
+     *
+     */
     public final String repositorio = "repositorio\\";
     private LinkedList allPages;
 
+    /**
+     *
+     */
     public ControllerPaginas() {
         save = new ControllerFile();
         allPages = new LinkedList();
@@ -43,7 +55,11 @@ public class ControllerPaginas {
         save.save(allPages, pastaRecursos + "ListPages.date");
     }
     
-
+    /**
+     *
+     * @return
+     * @throws FileNotFoundException
+     */
     public LinkedList readListPages() throws FileNotFoundException {
         LinkedList temp;
         try {
@@ -57,8 +73,10 @@ public class ControllerPaginas {
         return temp;
     }
 
-
-
+    /**
+     *
+     * @return
+     */
     public LinkedList getFiles() {
         FileFilter filter = (File pathname) -> pathname.getName().endsWith(".txt");
         File dir = new File("repositorio");
@@ -67,6 +85,12 @@ public class ControllerPaginas {
         temp.addAll(Arrays.asList(files));
         return temp;
     }
+
+    /**
+     *
+     * @return
+     * @throws FileNotFoundException
+     */
     public LinkedList getPaginas() throws FileNotFoundException{
         for(Object aux: getFiles()){
             File file = (File) aux;
@@ -76,6 +100,12 @@ public class ControllerPaginas {
         }
         return allPages;
     }
+
+    /**
+     *
+     * @return
+     * @throws FileNotFoundException
+     */
     public LinkedList readListFiles() throws FileNotFoundException{
         LinkedList lista = (LinkedList) save.readDate(pastaRecursos + "Files.date");
         return lista != null ? lista : null;
@@ -86,6 +116,12 @@ public class ControllerPaginas {
             save.save(getFiles(), pastaRecursos + "Files.date");
     }
 
+    /**
+     *
+     * @param paginas
+     * @return
+     * @throws FileNotFoundException
+     */
     public int modificedFiles(LinkedList paginas) throws FileNotFoundException{
         LinkedList oldFiles = readListFiles();
         LinkedList recentFiles = getFiles();
@@ -103,7 +139,12 @@ public class ControllerPaginas {
         return 0;
     }
     
-    
+    /**
+     *
+     * @param index
+     * @throws FileNotFoundException
+     * @throws Exception
+     */
     public void showFile(int index) throws FileNotFoundException, Exception {
         File file = new File("resources\\ListPages.date");
         if(!file.exists())
@@ -119,6 +160,11 @@ public class ControllerPaginas {
        
 
     }
+
+    /**
+     *
+     * @throws Exception
+     */
     public void atualize() throws Exception{
         File file = new File("resources\\ListPages.date");
         if(!file.exists())
@@ -126,6 +172,14 @@ public class ControllerPaginas {
         allPages = this.readListPages();  
         saveListPage();
     }
+
+    /**
+     *
+     * @param palavraBuscada
+     * @param arvore
+     * @return
+     * @throws IOException
+     */
     public boolean readFilesWords(String palavraBuscada, Arvore arvore) throws IOException {
         boolean existe = false;
 
@@ -140,6 +194,15 @@ public class ControllerPaginas {
         return existe;
     }
 
+    /**
+     *
+     * @param file
+     * @param palavraBuscada
+     * @param arvore
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public boolean readFileWord(File file, String palavraBuscada, Arvore arvore) throws FileNotFoundException, IOException {
         FileReader arq = new FileReader(repositorio + file.getName());
         BufferedReader read = new BufferedReader(arq);
@@ -202,6 +265,12 @@ public class ControllerPaginas {
         return paginas;
     }
 
+    /**
+     *
+     * @param paginas
+     * @param ordem
+     * @return
+     */
     public LinkedList sort(LinkedList paginas, Comparator ordem) {
         Queue fila = new LinkedList();
         fila = passListToQueue(paginas, fila);

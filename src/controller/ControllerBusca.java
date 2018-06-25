@@ -14,16 +14,17 @@ import java.util.LinkedList;
 import java.util.Queue;
 import model.Pagina;
 import model.Palavra;
-
-import util.Arvore;
 import util.ArvorePalavra;
 import util.Crescente;
 import util.No;
 import util.QuickSort;
 
 /**
+ * A classe <b>ControllerBusca</b> faz o gerenciamento da arvore de busca.
  *
  * @author Matheus Nascimento e Elvis Serafim
+ * @since Jul 2018
+ * @version 1.0
  */
 public class ControllerBusca implements Comparator {
 
@@ -51,15 +52,19 @@ public class ControllerBusca implements Comparator {
      * @param palavra Palavra a ser procurada na arvore.
      * @return Retorna um objeto comparavel que contém a mesma palavra.
      * @throws IOException Abrir arquivo que contém a arvore salva.
-     * @throws Exception
+     *
      */
     public Comparable search(String palavra) throws IOException, Exception {
         atualizar();
         Palavra p;
+        
+        p = (Palavra) search(buscaRapida.getRaiz(), palavra);
         if (allFiles.modificedFiles(allFiles.readListPages()) == 1) {
+            buscaRapida.remover(p);
             this.addPalavra(palavra);
+            p = (Palavra) search(buscaRapida.getRaiz(), palavra);
         }
-         p = (Palavra) search(buscaRapida.getRaiz(), palavra);
+        
         boolean flag = true;
         if (p != null) {
 
@@ -120,8 +125,8 @@ public class ControllerBusca implements Comparator {
     }
 
     /**
-     *
-     * @throws Exception
+     *Método responsavel por atualizar as informações da Arvore de busca em disco.
+     * @throws Exception Exceção ao ler/salvar.
      */
     public void atualizar() throws Exception {
         File arq = new File("resources\\Tree.date");
@@ -132,24 +137,24 @@ public class ControllerBusca implements Comparator {
         this.saveTree();
     }
 
-    private int changePagina(Pagina oldPag) {
+    private int changePagina(Pagina oldPag) {                   //Método responsavel por verificar se o arquivo que a palavra pertence foi editada. 
         LinkedList paginas = allFiles.getFiles();
         Iterator it = paginas.iterator();
         File pag = new File("repositorio\\" + oldPag.getNome());
-        if (!pag.exists()) {
+        if (!pag.exists()) {                                    //Verifica se a página ainda existe.
             return -1;
         }
-        while (it.hasNext()) {
+        while (it.hasNext()) {                                  //Perroce  a lista de páginas verificando se há diferenças.
             File arq = (File) it.next();
-            if (arq.lastModified() == oldPag.getChange()) {
+            if (arq.lastModified() == oldPag.getChange()) {       //Se não tiver alteração, então retorna 0.
                 return 0;
-            } else if (arq.getName().compareTo(oldPag.getNome()) == 0) {
+            } else if (arq.getName().compareTo(oldPag.getNome()) == 0) {        //Se houver alteração, então retorna 1.
                 this.file = arq;
                 return 1;
             }
 
         }
-        return -1;
+        return -1;                                              //Se não existir, então retorna -1.
     }
 
     /**
@@ -157,7 +162,7 @@ public class ControllerBusca implements Comparator {
      *
      * @param atual No atual a ser comparado.
      * @param palavra Valor a ser buscado.
-     * @return
+     * @return  Retorna o objeto que foi encontrado.
      */
     public Comparable search(No atual, String palavra) {
         palavra = palavra.toUpperCase();
@@ -228,19 +233,13 @@ public class ControllerBusca implements Comparator {
 
     /**
      *
-     * @return
+     * @return Retorna o sort do classe.
      */
     public QuickSort getSort() {
         return sort;
     }
 
-    /**
-     *
-     * @param sort
-     */
-    public void setSort(QuickSort sort) {
-        this.sort = sort;
-    }
+
 
     /**
      * Salva a arvore em disco.
@@ -253,7 +252,7 @@ public class ControllerBusca implements Comparator {
     }
 
     /**
-     *
+     *Ler a arvore de busca que está salva em disco.
      * @return @throws FileNotFoundException
      */
     public ArvorePalavra readTree() throws FileNotFoundException {
@@ -284,7 +283,7 @@ public class ControllerBusca implements Comparator {
     }
 
     /**
-     *
+     *Retorna uma fila com as palavras que estão salvas na arvore de busca.
      * @return @throws java.lang.Exception
      */
     public Queue filaPalavras() throws Exception {
