@@ -42,24 +42,24 @@ public class ArvorePalavra extends Arvore{
 
             if (aInserir.getDate().compareTo(aComparar.getDate()) < 0) {
 
-                if (aComparar.getEsquerda() == null) {
-                    aComparar.setEsquerda(aInserir);
+                if (aComparar.getLeft() == null) {
+                    aComparar.setLeft(aInserir);
                     aInserir.setPai(aComparar);
                     verificarBalanceamento(aComparar);
 
                 } else {
-                    inserirAVL(aComparar.getEsquerda(), aInserir);
+                    inserirAVL(aComparar.getLeft(), aInserir);
                 }
 
             } else if (aInserir.getDate().compareTo(aComparar.getDate()) > 0) {
 
-                if (aComparar.getDireita() == null) {
-                    aComparar.setDireita(aInserir);
+                if (aComparar.getRight() == null) {
+                    aComparar.setRight(aInserir);
                     aInserir.setPai(aComparar);
                     verificarBalanceamento(aComparar);
 
                 } else {
-                    inserirAVL(aComparar.getDireita(), aInserir);
+                    inserirAVL(aComparar.getRight(), aInserir);
                 }
 
             } else {

@@ -12,12 +12,11 @@ import model.Palavra;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.BeforeClass;
 import util.ArvorePalavra;
 import util.QuickSort;
-
 
 /**
  *
@@ -30,6 +29,10 @@ public class ControllerBuscaTest {
     Palavra p1;
     Pagina pag1, pag2;
 
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
+
     @Before
     public void setUp() {
         search = new ControllerBusca();
@@ -39,7 +42,16 @@ public class ControllerBuscaTest {
         pag2 = new Pagina("Pagina 2 teste", 654321);
     }
 
+    @After
+    public void tearDown() throws Exception {
+        File file = new File("resources\\Tree.date");
+        file.delete();
+        File file2 = new File("resources\\Files.date");
+        file2.delete();
+        File file3 = new File("resources\\ListPages.date");
+        file3.delete();
 
+    }
 
     @Test
     public void testAtualizar() throws Exception {
@@ -48,7 +60,6 @@ public class ControllerBuscaTest {
         search.atualizar();
         assertEquals(true, file.exists());
     }
-
 
     @Test
     public void testGetBuscaRapida() {
@@ -103,7 +114,6 @@ public class ControllerBuscaTest {
     @Test
     public void testReadTree() throws Exception {
     }
-
 
     @Test
     public void testFilaPalavras() throws Exception {

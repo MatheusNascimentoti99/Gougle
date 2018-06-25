@@ -24,7 +24,7 @@ public final class No implements Serializable{
 
     public No(Comparable date) {
         this.date = date;
-        setEsquerda(setDireita(setPai(null)));
+        setLeft(setRight(setPai(null)));
         setBalanceamento(0);
         
     }
@@ -59,20 +59,20 @@ public final class No implements Serializable{
         return pai;
     }
 
-    public No getDireita() {
+    public No getRight() {
         return direita;
     }
 
-    public No setDireita(No direita) {
+    public No setRight(No direita) {
         this.direita = direita;
         return direita;
     }
 
-    public No getEsquerda() {
+    public No getLeft() {
         return esquerda;
     }
 
-    public void setEsquerda(No esquerda) {
+    public void setLeft(No esquerda) {
         this.esquerda = esquerda;
     }
 

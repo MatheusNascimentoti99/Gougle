@@ -173,9 +173,9 @@ public class ControllerBusca implements Comparator {
         if (atual != null) {
 
             if (((Palavra) atual.getDate()).getPalavra().compareTo(palavra) < 0) {
-                aux = search(atual.getDireita(), palavra);
+                aux = search(atual.getRight(), palavra);
             } else if (((Palavra) atual.getDate()).getPalavra().compareTo(palavra) > 0) {
-                aux = search(atual.getEsquerda(), palavra);
+                aux = search(atual.getLeft(), palavra);
             } else {
                 return atual.getDate();
             }

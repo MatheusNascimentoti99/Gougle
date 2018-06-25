@@ -42,24 +42,24 @@ public class Arvore implements Serializable {
 
             if (aInserir.getDate().compareTo(aComparar.getDate()) < 0) {
 
-                if (aComparar.getEsquerda() == null) {
-                    aComparar.setEsquerda(aInserir);
+                if (aComparar.getLeft() == null) {
+                    aComparar.setLeft(aInserir);
                     aInserir.setPai(aComparar);
                     verificarBalanceamento(aComparar);
 
                 } else {
-                    inserirAVL(aComparar.getEsquerda(), aInserir);
+                    inserirAVL(aComparar.getLeft(), aInserir);
                 }
 
             } else if (aInserir.getDate().compareTo(aComparar.getDate()) > 0) {
 
-                if (aComparar.getDireita() == null) {
-                    aComparar.setDireita(aInserir);
+                if (aComparar.getRight() == null) {
+                    aComparar.setRight(aInserir);
                     aInserir.setPai(aComparar);
                     verificarBalanceamento(aComparar);
 
                 } else {
-                    inserirAVL(aComparar.getDireita(), aInserir);
+                    inserirAVL(aComparar.getRight(), aInserir);
                 }
 
             }
@@ -74,7 +74,7 @@ public class Arvore implements Serializable {
 
         if (balanceamento == -2) {
 
-            if (altura(atual.getEsquerda().getDireita()) < altura(atual.getEsquerda().getEsquerda())) {
+            if (altura(atual.getLeft().getRight()) < altura(atual.getLeft().getLeft())) {
                 atual = rotacaoDireita(atual);
 
             } else {
@@ -83,7 +83,7 @@ public class Arvore implements Serializable {
 
         } else if (balanceamento == 2) {
 
-            if (altura(atual.getDireita().getEsquerda()) < altura(atual.getDireita().getDireita())) {
+            if (altura(atual.getRight().getLeft()) < altura(atual.getRight().getRight())) {
                 atual = rotacaoEsquerda(atual);
 
             } else {
@@ -107,10 +107,10 @@ public class Arvore implements Serializable {
         if (atual != null) {
 
             if (atual.getDate().compareTo(palavra) > 0) {
-                removerAVL(atual.getEsquerda(), palavra);
+                removerAVL(atual.getLeft(), palavra);
 
             } else if (atual.getDate().compareTo(palavra) < 0) {
-                removerAVL(atual.getDireita(), palavra);
+                removerAVL(atual.getRight(), palavra);
 
             } else if (atual.getDate().compareTo(palavra) == 0) {
                 removido = removerNoEncontrado(atual);
@@ -127,139 +127,139 @@ public class Arvore implements Serializable {
         while (!stack.isEmpty()) {
             No n = (No) stack.pop();
             fila.add(n.getDate());
-            if (n.getDireita() != null) {
-                stack.push(n.getDireita());
+            if (n.getRight() != null) {
+                stack.push(n.getRight());
             }
-            if (n.getEsquerda() != null) {
-                stack.push(n.getEsquerda());
+            if (n.getLeft() != null) {
+                stack.push(n.getLeft());
             }
         }
         return fila;
     }
 
     public Comparable removerNoEncontrado(No aRemover) {
-        No r;
+        No children;
         Comparable temp = aRemover.getDate();
-        if (aRemover.getEsquerda() == null || aRemover.getDireita() == null) {
+        if (aRemover.getLeft() == null || aRemover.getRight() == null) {
 
             if (aRemover.getPai() == null) {
                 this.raiz = null;
                 return temp;
             }
-            r = aRemover;
+            children = aRemover;
 
         } else {
-            r = sucessor(aRemover);
+            children = sucessor(aRemover);
         }
 
-        No p;
-        if (r.getEsquerda() != null) {
-            p = r.getEsquerda();
+        No remov;
+        if (children.getLeft() != null) {
+            remov = children.getLeft();
         } else {
-            p = r.getDireita();
+            remov = children.getRight();
         }
 
-        if (p != null) {
-            p.setPai(r.getPai());
+        if (remov != null) {
+            remov.setPai(children.getPai());
         }
 
-        if (r.getPai() == null) {
-            this.raiz = p;
+        if (children.getPai() == null) {
+            this.raiz = remov;
         } else {
-            if (r == r.getPai().getEsquerda()) {
-                r.getPai().setEsquerda(p);
+            if (children == children.getPai().getLeft()) {
+                children.getPai().setLeft(remov);
             } else {
-                r.getPai().setDireita(p);
+                children.getPai().setRight(remov);
             }
-            verificarBalanceamento(r.getPai());
+            verificarBalanceamento(children.getPai());
         }
         return temp;
     }
 
     public No rotacaoEsquerda(No inicial) {
 
-        No direita = inicial.getDireita();
-        direita.setPai(inicial.getPai());
+        No right = inicial.getRight();
+        right.setPai(inicial.getPai());
 
-        inicial.setDireita(direita.getEsquerda());
+        inicial.setRight(right.getLeft());
 
-        if (inicial.getDireita() != null) {
-            inicial.getDireita().setPai(inicial);
+        if (inicial.getRight() != null) {
+            inicial.getRight().setPai(inicial);
         }
 
-        direita.setEsquerda(inicial);
-        inicial.setPai(direita);
+        right.setLeft(inicial);
+        inicial.setPai(right);
 
-        if (direita.getPai() != null) {
+        if (right.getPai() != null) {
 
-            if (direita.getPai().getDireita() == inicial) {
-                direita.getPai().setDireita(direita);
+            if (right.getPai().getRight() == inicial) {
+                right.getPai().setRight(right);
 
-            } else if (direita.getPai().getEsquerda() == inicial) {
-                direita.getPai().setEsquerda(direita);
+            } else if (right.getPai().getLeft() == inicial) {
+                right.getPai().setLeft(right);
             }
         }
 
         setBalanceamento(inicial);
-        setBalanceamento(direita);
+        setBalanceamento(right);
 
-        return direita;
+        return right;
     }
 
     public No rotacaoDireita(No inicial) {
 
-        No esquerda = inicial.getEsquerda();
-        esquerda.setPai(inicial.getPai());
+        No left = inicial.getLeft();
+        left.setPai(inicial.getPai());
 
-        inicial.setEsquerda(esquerda.getDireita());
+        inicial.setLeft(left.getRight());
 
-        if (inicial.getEsquerda() != null) {
-            inicial.getEsquerda().setPai(inicial);
+        if (inicial.getLeft() != null) {
+            inicial.getLeft().setPai(inicial);
         }
 
-        esquerda.setDireita(inicial);
-        inicial.setPai(esquerda);
+        left.setRight(inicial);
+        inicial.setPai(left);
 
-        if (esquerda.getPai() != null) {
+        if (left.getPai() != null) {
 
-            if (esquerda.getPai().getDireita() == inicial) {
-                esquerda.getPai().setDireita(esquerda);
+            if (left.getPai().getRight() == inicial) {
+                left.getPai().setRight(left);
 
-            } else if (esquerda.getPai().getEsquerda() == inicial) {
-                esquerda.getPai().setEsquerda(esquerda);
+            } else if (left.getPai().getLeft() == inicial) {
+                left.getPai().setLeft(left);
             }
         }
 
         setBalanceamento(inicial);
-        setBalanceamento(esquerda);
+        setBalanceamento(left);
 
-        return esquerda;
+        return left;
     }
 
     public No duplaRotacaoEsquerdaDireita(No inicial) {
-        inicial.setEsquerda(rotacaoEsquerda(inicial.getEsquerda()));
+        inicial.setLeft(rotacaoEsquerda(inicial.getLeft()));
         return rotacaoDireita(inicial);
     }
 
     public No duplaRotacaoDireitaEsquerda(No inicial) {
-        inicial.setDireita(rotacaoDireita(inicial.getDireita()));
+        inicial.setRight(rotacaoDireita(inicial.getRight()));
         return rotacaoEsquerda(inicial);
     }
 
-    public No sucessor(No q) {
-        if (q.getDireita() != null) {
-            No r = q.getDireita();
-            while (r.getEsquerda() != null) {
-                r = r.getEsquerda();
+    public No sucessor(No aux) {
+        if (aux.getRight() != null) {
+            No r = aux.getRight();
+            while (r.getLeft() != null) {
+                r = r.getLeft();
             }
             return r;
         } else {
-            No p = q.getPai();
-            while (p != null && q == p.getDireita()) {
-                q = p;
-                p = q.getPai();
+            No suscessor = aux.getPai();
+            while (suscessor != null && aux == suscessor.getRight()) {
+                aux = suscessor;
+                suscessor = aux.getPai();
             }
-            return p;
+            return suscessor;
         }
     }
 
@@ -268,22 +268,22 @@ public class Arvore implements Serializable {
             return -1;
         }
 
-        if (atual.getEsquerda() == null && atual.getDireita() == null) {
+        if (atual.getLeft() == null && atual.getRight() == null) {
             return 0;
 
-        } else if (atual.getEsquerda() == null) {
-            return 1 + altura(atual.getDireita());
+        } else if (atual.getLeft() == null) {
+            return 1 + altura(atual.getRight());
 
-        } else if (atual.getDireita() == null) {
-            return 1 + altura(atual.getEsquerda());
+        } else if (atual.getRight() == null) {
+            return 1 + altura(atual.getLeft());
 
         } else {
-            return 1 + Math.max(altura(atual.getEsquerda()), altura(atual.getDireita()));
+            return 1 + Math.max(altura(atual.getLeft()), altura(atual.getRight()));
         }
     }
 
     private void setBalanceamento(No no) {
-        no.setBalanceamento(altura(no.getDireita()) - altura(no.getEsquerda()));
+        no.setBalanceamento(altura(no.getRight()) - altura(no.getLeft()));
     }
 
     public boolean isEmpty() {

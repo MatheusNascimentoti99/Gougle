@@ -66,9 +66,9 @@ public class ArvoreTest {
         arvore.inserir(b3);
         
         arvore.remover(p3);
-        assertEquals(arvore.getRaiz().getDireita(), null);
+        assertEquals(arvore.getRaiz().getRight(), null);
         arvore.remover(p2);
-        assertEquals(arvore.getRaiz().getEsquerda(), null);
+        assertEquals(arvore.getRaiz().getLeft(), null);
         arvore.remover(p);
         assertEquals(arvore.getRaiz(), null);
         assertEquals(arvore.isEmpty(), true);
