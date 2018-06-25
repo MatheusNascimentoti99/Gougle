@@ -32,8 +32,8 @@ public class ControllerBusca implements Comparator {
     private final ControllerFile save;
     private ArvorePalavra buscaRapida;
     private File file;
-    private QuickSort sort;
-    Crescente comparador;
+    private final QuickSort sort;
+    private final Crescente comparador;
 
     /**
      *
@@ -57,17 +57,18 @@ public class ControllerBusca implements Comparator {
     public Comparable search(String palavra) throws IOException, Exception {
         atualizar();
         Palavra p;
-        
+
         p = (Palavra) search(buscaRapida.getRaiz(), palavra);
-        if (allFiles.modificedFiles(allFiles.readListPages()) == 1) {
-            buscaRapida.remover(p);
-            this.addPalavra(palavra);
-            p = (Palavra) search(buscaRapida.getRaiz(), palavra);
-        }
-        
+
         boolean flag = true;
         if (p != null) {
-
+            if (allFiles.modificedFiles(allFiles.readListPages())) {
+                int tempBuscas = p.getSearch();
+                buscaRapida.remover(p);
+                this.addPalavra(palavra);
+                p = (Palavra) search(buscaRapida.getRaiz(), palavra);
+                p.setSearch(tempBuscas);
+            }
             flag = therePages(p.getPaginas(), p);
             p.moreSearch();
             p.setPaginas(allFiles.sort(p.getPaginas(), new Crescente()));
@@ -125,7 +126,9 @@ public class ControllerBusca implements Comparator {
     }
 
     /**
-     *Método responsavel por atualizar as informações da Arvore de busca em disco.
+     * Método responsavel por atualizar as informações da Arvore de busca em
+     * disco.
+     *
      * @throws Exception Exceção ao ler/salvar.
      */
     public void atualizar() throws Exception {
@@ -162,7 +165,7 @@ public class ControllerBusca implements Comparator {
      *
      * @param atual No atual a ser comparado.
      * @param palavra Valor a ser buscado.
-     * @return  Retorna o objeto que foi encontrado.
+     * @return Retorna o objeto que foi encontrado.
      */
     public Comparable search(No atual, String palavra) {
         palavra = palavra.toUpperCase();
@@ -239,8 +242,6 @@ public class ControllerBusca implements Comparator {
         return sort;
     }
 
-
-
     /**
      * Salva a arvore em disco.
      *
@@ -252,7 +253,8 @@ public class ControllerBusca implements Comparator {
     }
 
     /**
-     *Ler a arvore de busca que está salva em disco.
+     * Ler a arvore de busca que está salva em disco.
+     *
      * @return @throws FileNotFoundException
      */
     public ArvorePalavra readTree() throws FileNotFoundException {
@@ -283,7 +285,8 @@ public class ControllerBusca implements Comparator {
     }
 
     /**
-     *Retorna uma fila com as palavras que estão salvas na arvore de busca.
+     * Retorna uma fila com as palavras que estão salvas na arvore de busca.
+     *
      * @return @throws java.lang.Exception
      */
     public Queue filaPalavras() throws Exception {

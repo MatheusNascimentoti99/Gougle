@@ -346,7 +346,7 @@ public class Interface extends Application {
 
                 if (fila != null) {
                     search.getSort().quickSort(fila, new Crescente());
-                    while (!fila.isEmpty()) {
+                    for (int i = 0; i < k && !fila.isEmpty(); i++) {
                         listaResul.getItems().add(((Palavra) fila.remove()).toString());
                     }
                 }
@@ -382,7 +382,7 @@ public class Interface extends Application {
                 }
                 if (fila != null) {
                     search.getSort().quickSort(fila, new Decrescente());
-                    while (!fila.isEmpty()) {
+                    for (int i = 0; i < k && !fila.isEmpty(); i++){
                         listaResul.getItems().add(((Palavra) fila.remove()).toString());
                     }
                 }

@@ -28,7 +28,7 @@ public class ControllerFile {
      * @return Retorna o objeto que está salvo no arquivo binario indicado.
      * @throws FileNotFoundException Exceção caso a arquivo ou local não exista.
      */
-    protected Object readDate(String local) throws FileNotFoundException {
+    public Object readDate(String local) throws FileNotFoundException {
         Object dado = null;
         try {
 
@@ -52,7 +52,7 @@ public class ControllerFile {
      * @param local Local onde o arquivo será salvo.
      * @throws Exception Exceção ao gravar o arquivo.
      */
-    protected void save(Object dados, String local) throws Exception {
+    public void save(Object dados, String local) throws Exception {
         try {
             FileOutputStream arquivoGrav;
             arquivoGrav = new FileOutputStream(local);
