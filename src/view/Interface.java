@@ -7,7 +7,7 @@ package view;
 
 import controller.ControllerBusca;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -15,26 +15,22 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Pagina;
 import model.Palavra;
@@ -69,6 +65,7 @@ public class Interface extends Application {
         campoResul.setAlignment(Pos.CENTER);
         TextArea campo = new TextArea();
 
+        Button alterna = new Button("Inverter");
         Button pesquisar = new Button("Pesquisar");
         pesquisar.setTooltip(new Tooltip("Pesquisar páginas"));
         Button topPaginas = new Button("Top-K Páginas");
@@ -102,7 +99,7 @@ public class Interface extends Application {
         Separator separadorHorizontal = new Separator(); // 7
 
         partePesquisa.setAlignment(Pos.CENTER);
-        positionBotoes.getChildren().addAll(pesquisar, topPaginas, topPalavras);
+        positionBotoes.getChildren().addAll(alterna,pesquisar, topPaginas, topPalavras);
         partePesquisa.getChildren().addAll(titulo, campoTexto, positionBotoes);
         partePesquisa.setTranslateY(10);
         subBox.setAlignment(Pos.CENTER); // 2
@@ -111,8 +108,11 @@ public class Interface extends Application {
 
         palco.setTitle("Gougle FSA");
         palco.setScene(cena);
+        
 
         pesquisar.setOnMouseClicked((Event event) -> {
+
+            Palavra p = null;
             try {
                 search.getControlPages().atualize();
             } catch (Exception ex) {
@@ -122,7 +122,6 @@ public class Interface extends Application {
             positionBotoes.getChildren().remove(kEscolhas);
             positionBotoes.getChildren().remove(crescente);
             positionBotoes.getChildren().remove(decrescente);
-
             try {
                 search.getControlPages().atualize();
             } catch (Exception ex) {
@@ -130,161 +129,137 @@ public class Interface extends Application {
             }
             if (campoTexto.getText().length() > 0) {
                 listaResul.visibleProperty().set(true);
-                Palavra p = null;
+
                 try {
                     p = (Palavra) search.search(campoTexto.getText());
                 } catch (Exception ex) {
                     Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 if (p != null) {
-                    LinkedList temp = search.getControlPages().sort(p.getPaginas(), p);
-                    Iterator it = temp.iterator();
-                    while (it.hasNext()) {
-                        Pagina pag = (Pagina) it.next();
-                        ToggleButton pagina = new ToggleButton(pag.getNome());
-                        pagina.setPrefWidth(listaResul.getWidth());
-                        listaResul.getItems().add(pagina);
-                        pagina.setOnMouseClicked(new EventHandler() {
-
-                            @Override
-                            public void handle(Event event) {
-                                try {
-                                    search.getControlPages().atualize();
-                                } catch (Exception ex) {
-                                    Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-
-                                int i = 0;
-                                int index = -1;
-                                try {
-                                    for (Object pagina1 : search.getControlPages().getPaginas()) {
-                                        if (pagina.getText().equals(((Pagina) pagina1).getNome())) {
-                                            index = i;
-                                            break;
-                                        }
-                                        i++;
-
-                                    }
-                                    System.out.println(pagina);
-                                    if (index == -1) {
-                                        throw new FileNotFoundException();
-                                    }
-                                } catch (FileNotFoundException ex) {
-                                    Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                                try {
-                                    search.getControlPages().showFile(index);
-                                } catch (Exception ex) {
-                                    Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-
-                            }
-                        });
-                    }
+                    resulOrdemBusca(campoTexto, search, listaResul, p, search);
                 } else {
-                    try {
-                        if (search.addPalavra(campoTexto.getText()) == true) {
-                            p = (Palavra) search.search(campoTexto.getText());
-                            if (p != null) {
+                    resulOrdemBuscaArq(campoTexto, search, listaResul, p, search);
 
-                                LinkedList temp = search.getControlPages().sort(p.getPaginas(), search);
-                                Iterator it = temp.iterator();
-                                while (it.hasNext()) {
-                                    Pagina pag = (Pagina) it.next();
-                                    ToggleButton pagina = new ToggleButton(pag.getNome());
-                                    pagina.setPrefWidth(listaResul.getWidth());
-                                    listaResul.getItems().add(pagina);
-                                    pagina.setOnMouseClicked(new EventHandler() {
-
-                                        @Override
-                                        public void handle(Event event) {
-                                            try {
-                                                search.getControlPages().atualize();
-                                            } catch (Exception ex) {
-                                                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
-                                            }
-
-                                            int i = 0;
-                                            int index = -1;
-                                            try {
-                                                for (Object pagina1 : search.getControlPages().getPaginas()) {
-                                                    if (pagina.getText().equals(((Pagina) pagina1).getNome())) {
-                                                        index = i;
-                                                        break;
-                                                    }
-                                                    i++;
-
-                                                }
-                                                System.out.println(pagina);
-                                                if (index == -1) {
-                                                    throw new FileNotFoundException();
-                                                }
-                                            } catch (FileNotFoundException ex) {
-                                                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
-                                            }
-                                            try {
-                                                search.getControlPages().showFile(index);
-                                            } catch (Exception ex) {
-                                                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
-                                            }
-                                        }
-                                    });
-                                }
-                            }
-                        }
-                    } catch (Exception ex) {
-                        Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
-                    }
                 }
             }
-
         });
+        alternar(listaResul, alterna);
         botaoTopPag(topPaginas, listaResul, kEscolhas, crescente, decrescente, positionBotoes, search);
         botaoTopPala(topPalavras, listaResul, kEscolhas, crescente, decrescente, positionBotoes, search);
         palco.show();
 
     }
 
-    public static void botaoCresPag(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) throws Exception {
-        search.getControlPages().atualize();
-        crescente.setOnMouseClicked(new EventHandler() {
-            Label pagina;
+    private static void resulOrdemBusca(TextField campoTexto, ControllerBusca search, ListView listaResul, Palavra p, Comparator ordem) {
+        LinkedList temp = search.getControlPages().sort(p.getPaginas(), p);
+        Iterator it = temp.iterator();
+        while (it.hasNext()) {
+            Pagina pag = (Pagina) it.next();
+            ToggleButton pagina = new ToggleButton(pag.getNome());
+            pagina.setPrefWidth(listaResul.getWidth());
+            listaResul.getItems().add(pagina);
+            pagina.setOnMouseClicked((Event event) -> {
+                try {
+                    search.getControlPages().atualize();
+                } catch (Exception ex) {
+                    Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
-            @Override
-            public void handle(Event event) {
-                listaResul.getItems().clear();
-                int k;
+                int i = 0;
+                int index = -1;
                 try {
-                    k = Integer.parseInt(kEscolhas.getText());
-                } catch (NumberFormatException ex) {
-                    k = 0;
-                }
-                //O algoritmo de ordenação usa uma fila, com isso a ordem é invertida.
-                LinkedList cresc = null;
-                try {
-                    cresc = search.getControlPages().sort(search.getControlPages().getPaginas(), new Crescente());
-                } catch (FileNotFoundException exe) {
-                    pagina = new Label("Paginas não encontradas");
-                    listaResul.getItems().add(pagina);
-                }
-                if (cresc != null) {
-                    Iterator temp = cresc.iterator();
-                    for (int i = 0; i < k && temp.hasNext(); i++) {
-                        pagina = new Label((((Pagina) temp.next()).toString()));
-                        listaResul.getItems().add(pagina);
+                    for (Object pagina1 : search.getControlPages().getPaginas()) {
+                        if (pagina.getText().equals(((Pagina) pagina1).getNome())) {
+                            index = i;
+                            break;
+                        }
+                        i++;
+
                     }
+                    System.out.println(pagina);
+                    if (index == -1) {
+                        throw new FileNotFoundException();
+                    }
+
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                listaResul.visibleProperty().set(true);
+                try {
+                    search.getControlPages().showFile(index);
+                } catch (Exception ex) {
+                    Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+        }
+    }
 
+    public static void alternar(ListView listaResul, Button ordem) throws Exception {
+        ordem.setOnMouseClicked((Event event) -> {
+            ListView alternar = new ListView();
+            while (listaResul.getItems().size() > 0) {
+                alternar.getItems().add(listaResul.getItems().remove(listaResul.getItems().size()-1));
             }
-
+            listaResul.setItems(alternar.getItems());
         });
 
     }
 
-    public static void botaoDecresPag(ListView listaResul, Button decrescente, TextField kEscolhas, ControllerBusca search) throws Exception {
+    private static void resulOrdemBuscaArq(TextField campoTexto, ControllerBusca search, ListView listaResul, Palavra p, Comparator ordem) {
+        try {
+            if (search.addPalavra(campoTexto.getText()) == true) {
+                p = (Palavra) search.search(campoTexto.getText());
+                if (p != null) {
+
+                    LinkedList temp = search.getControlPages().sort(p.getPaginas(), ordem);
+                    Iterator it = temp.iterator();
+                    while (it.hasNext()) {
+                        Pagina pag = (Pagina) it.next();
+                        ToggleButton pagina = new ToggleButton(pag.getNome());
+                        pagina.setPrefWidth(listaResul.getWidth());
+                        listaResul.getItems().add(pagina);
+                        pagina.setOnMouseClicked((Event event) -> {
+                            try {
+                                search.getControlPages().atualize();
+                            } catch (Exception ex) {
+                                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                            int i = 0;
+                            int index = -1;
+                            try {
+                                for (Object pagina1 : search.getControlPages().getPaginas()) {
+                                    if (pagina.getText().equals(((Pagina) pagina1).getNome())) {
+                                        index = i;
+                                        break;
+                                    }
+                                    i++;
+
+                                }
+                                System.out.println(pagina);
+                                if (index == -1) {
+                                    throw new FileNotFoundException();
+                                }
+                            } catch (FileNotFoundException ex) {
+                                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            try {
+                                search.getControlPages().showFile(index);
+                            } catch (Exception ex) {
+                                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        });
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public static void botaoOrdemPag(ListView listaResul, Button botaoOrdem, TextField kEscolhas, ControllerBusca search, Comparator ordem) throws Exception {
         search.getControlPages().atualize();
-        decrescente.setOnMouseClicked(new EventHandler() {
+        botaoOrdem.setOnMouseClicked(new EventHandler() {
             Label pagina;
 
             @Override
@@ -299,7 +274,7 @@ public class Interface extends Application {
                 //O algoritmo de ordenação usa uma fila, com isso a ordem é invertida.
                 LinkedList decres = null;
                 try {
-                    decres = search.getControlPages().sort(search.getControlPages().getPaginas(), new Decrescente());
+                    decres = search.getControlPages().sort(search.getControlPages().getPaginas(), ordem);
                 } catch (FileNotFoundException exe) {
                     pagina = new Label("Paginas não encontradas");
                     listaResul.getItems().add(pagina);
@@ -314,7 +289,6 @@ public class Interface extends Application {
                 listaResul.visibleProperty().set(true);
 
             }
-
         });
 
     }
@@ -382,7 +356,7 @@ public class Interface extends Application {
                 }
                 if (fila != null) {
                     search.getSort().quickSort(fila, new Decrescente());
-                    for (int i = 0; i < k && !fila.isEmpty(); i++){
+                    for (int i = 0; i < k && !fila.isEmpty(); i++) {
                         listaResul.getItems().add(((Palavra) fila.remove()).toString());
                     }
                 }
@@ -396,16 +370,6 @@ public class Interface extends Application {
     public static void botaoTopPag(Button topPaginas, ListView listaResul, TextField kEscolhas, Button crescente, Button decrescente, HBox positionBotoes, ControllerBusca search) throws Exception {
         search.getControlPages().atualize();
         topPaginas.setOnMouseClicked((Event event) -> {
-            try {
-                botaoCresPag(listaResul, crescente, kEscolhas, search);
-            } catch (Exception ex) {
-                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                botaoDecresPag(listaResul, decrescente, kEscolhas, search);
-            } catch (Exception ex) {
-                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
-            }
             listaResul.getItems().clear();
             listaResul.visibleProperty().set(false);
             kEscolhas.visibleProperty().set(true);

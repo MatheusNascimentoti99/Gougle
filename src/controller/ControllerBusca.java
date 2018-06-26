@@ -279,7 +279,7 @@ public class ControllerBusca implements Comparator {
         } else if (o1 instanceof Palavra && o2 instanceof Palavra) {
             Palavra p1 = (Palavra) o1;
             Palavra p2 = (Palavra) o2;
-            return -p1.compareTo(p2);
+            return p1.compareTo(p2);
         }
         return 0;
     }
