@@ -22,13 +22,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -58,9 +55,9 @@ public class Interface extends Application {
         ControllerBusca search = new ControllerBusca();
         search.getControlPages().atualize();
         VBox partePesquisa = new VBox(20); // 1
-        VBox subBox = new VBox(15);
+        VBox raiz = new VBox(15);
         HBox positionBotoes = new HBox(5);
-        Scene cena = new Scene(subBox, 800, 400);
+        Scene cena = new Scene(raiz, 800, 400);
         HBox campoResul = new HBox(5);
         campoResul.setAlignment(Pos.CENTER);
         TextArea campo = new TextArea();
@@ -87,7 +84,7 @@ public class Interface extends Application {
 
         ListView listaResul = new ListView();
         listaResul.visibleProperty().set(false);
-        listaResul.setPrefWidth(subBox.getWidth());
+        listaResul.setPrefWidth(raiz.getWidth());
         listaResul.setTooltip(new Tooltip("Resultados de pesquisas"));
         Label titulo = new Label("Gougle FSA"); // 3
         titulo.setScaleX(3);
@@ -96,15 +93,13 @@ public class Interface extends Application {
         TextField campoTexto = new TextField(); // 5
         campoTexto.setTooltip(new Tooltip(
                 "Digite uma palavra"));
-        Separator separadorHorizontal = new Separator(); // 7
-
         partePesquisa.setAlignment(Pos.CENTER);
         positionBotoes.getChildren().addAll(alterna,pesquisar, topPaginas, topPalavras);
         partePesquisa.getChildren().addAll(titulo, campoTexto, positionBotoes);
         partePesquisa.setTranslateY(10);
-        subBox.setAlignment(Pos.CENTER); // 2
+        raiz.setAlignment(Pos.CENTER); // 2
         campoResul.getChildren().addAll(listaResul);
-        subBox.getChildren().addAll(partePesquisa, separadorHorizontal, campoResul);
+        raiz.getChildren().addAll(partePesquisa, campoResul);
 
         palco.setTitle("Gougle FSA");
         palco.setScene(cena);
