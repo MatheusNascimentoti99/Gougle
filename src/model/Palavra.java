@@ -106,7 +106,7 @@ public class Palavra implements Comparable, Comparator, Serializable{
     }
 
     @Override
-    public int compare(Object o1, Object o2) {
+    public  int compare(Object o1, Object o2) {
             Pagina p1 = (Pagina) o1;
             Pagina p2 = (Pagina) o2;
             return -p1.compareTo(p2);

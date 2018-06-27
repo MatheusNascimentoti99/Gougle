@@ -48,6 +48,9 @@ public class Pagina implements Comparable, Serializable {
     public int getRelevancia() {
         return relevancia;
     }
+    public void setRelevancia(int relevancia){
+        this.relevancia = relevancia;
+    }
 
     /**
      * Quantidade de vezes que a página foi visitada.

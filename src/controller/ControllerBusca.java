@@ -46,6 +46,54 @@ public class ControllerBusca implements Comparator {
         comparador = new Crescente();
     }
 
+    public LinkedList foundPages(String linhaPesquisa) throws Exception {
+        String[] textoSeparado;
+        LinkedList paginas = new LinkedList();
+        boolean existe = false;
+        Palavra p = null;
+        textoSeparado = linhaPesquisa.split(" ");
+        for (String palavra : textoSeparado) {              //Remove as posiveis pontuação que podem atrapalhar na identificação de uma palavra.
+            palavra = palavra.toUpperCase();
+            palavra = palavra.replace(" ", "");
+            palavra = palavra.replace(".", "");
+            palavra = palavra.replace("/", "");
+            palavra = palavra.replace("-", "");
+            palavra = palavra.replace("\\", "");
+            palavra = palavra.replace("(", "");
+            palavra = palavra.replace(")", "");
+            palavra = palavra.replace(",", "");
+            palavra = palavra.replace("{", "");
+            palavra = palavra.replace("}", "");
+            palavra = palavra.replace("[", "");
+            palavra = palavra.replace("]", "");
+            palavra = palavra.replace("!", "");
+            palavra = palavra.replace("?", "");
+            palavra = palavra.replace("\"", "");
+            palavra = palavra.replace("\'", "");
+            p = (Palavra) search(palavra);
+
+            if (p == null) {
+                addPalavra(palavra);
+                p = (Palavra) search(palavra);
+            }
+            if (p != null) {
+
+                System.out.println(p.getPalavra());
+                for (int i = 0; i < p.getPaginas().size() - 1; i++) {
+                    if (paginas.contains(p.getPaginas().get(i))) {
+                        int index = paginas.indexOf(p.getPaginas().get(i));
+                        Pagina pag = (Pagina) paginas.get(index);
+                        pag.setRelevancia(pag.getRelevancia() + ((Pagina) p.getPaginas().get(i)).getRelevancia());
+                        paginas.add(index, pag);
+                    } else {
+                        paginas.add(p.getPaginas().get(i));
+                    }
+                }
+            }
+        }
+        return paginas;
+    }
+
     /**
      * Método que realiza busca das palavras e atualiza a arvore de busca.
      *
@@ -68,6 +116,8 @@ public class ControllerBusca implements Comparator {
                 this.addPalavra(palavra);
                 p = (Palavra) search(buscaRapida.getRaiz(), palavra);
                 p.setSearch(tempBuscas);
+                buscaRapida.inserir(p);
+                
             }
             flag = therePages(p.getPaginas(), p);
             p.moreSearch();
@@ -168,7 +218,6 @@ public class ControllerBusca implements Comparator {
      * @return Retorna o objeto que foi encontrado.
      */
     public Comparable search(No atual, String palavra) {
-        palavra = palavra.toUpperCase();
         Comparable aux = null;
         if (atual != null) {
 

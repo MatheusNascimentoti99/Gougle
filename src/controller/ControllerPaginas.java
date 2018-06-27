@@ -262,6 +262,8 @@ public class ControllerPaginas {
             palavra = palavra.replace("]", "");
             palavra = palavra.replace("!", "");
             palavra = palavra.replace("?", "");
+            palavra = palavra.replace("\"", "");
+            palavra = palavra.replace("\'", "");
             Palavra nova = new Palavra(palavra, pagina);
             palavraBuscada = palavraBuscada.toUpperCase();
             if (palavraBuscada.compareTo(palavra) == 0) {
