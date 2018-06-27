@@ -5,7 +5,9 @@
  */
 package controller;
 
+import java.io.File;
 import java.util.LinkedList;
+import model.Pagina;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,21 +20,23 @@ import static org.junit.Assert.*;
  * @author Matheus Nascimento
  */
 public class ControllerPaginasTest {
-    ControllerPaginas controlPages;
 
-    
- 
-    
+    ControllerPaginas controlPages;
+    Pagina p1, p2, p3;
+
     @Before
     public void setUp() {
         controlPages = new ControllerPaginas();
+        p1 = new Pagina("teste1.txt", 123456);
+        p2 = new Pagina("teste2.txt", 987654);
+        p3 = new Pagina("teste3.txt", 654123);
     }
-    
+
     @After
     public void tearDown() {
+        File listPages = new File("resources\\ListPages.date");
+        listPages.delete();
     }
-
-
 
     @Test
     public void testGetFiles() {
@@ -46,35 +50,72 @@ public class ControllerPaginasTest {
 
     @Test
     public void testGetPaginas() throws Exception {
-        assertEquals(false,controlPages.getPaginas().isEmpty());
+        assertEquals(false, controlPages.getPaginas().isEmpty());
     }
 
     @Test
     public void testReadListFiles() throws Exception {
+        controlPages.atualize();                            //Atualiza o arquivo que contém a lista de arquivos.
+        LinkedList files = new LinkedList();
+        assertFalse(controlPages.readListFiles().isEmpty());
+        assertFalse(controlPages.readListFiles().equals(files));
+        files = controlPages.readListFiles();
+        assertTrue(controlPages.readListFiles().equals(files));
+
     }
 
     @Test
     public void testSaveListFiles() throws Exception {
+        controlPages.atualize();
+        controlPages.saveListFiles();
+        File file = new File("resources\\ListPages.date");
+        assertTrue(file.exists());
+        LinkedList files = controlPages.readListFiles();
+        assertEquals(files, controlPages.readListFiles());
+
     }
 
     @Test
     public void testModificedFiles() throws Exception {
+        LinkedList paginas = new LinkedList();
+        paginas.add(p1);
+        assertEquals(true, controlPages.modificedFiles(paginas));          //Método só considera as páginas que estão no repositório.
+        File file = new File("resources\\Files.date");
+        file.delete();
+        assertEquals(false, controlPages.modificedFiles(paginas));
     }
 
     @Test
     public void testAtualize() throws Exception {
+        File file = new File("resources\\ListPages.date");
+        file.delete();
+        assertFalse(file.exists());
+        assertEquals(null, controlPages.readListFiles());
+        
+        controlPages.atualize();
+        assertTrue(file.exists());
+        LinkedList files = controlPages.readListFiles();
+        assertEquals(files, controlPages.readListFiles());
+        
     }
 
-    @Test
-    public void testReadFilesWords() throws Exception {
-    }
-
-    @Test
-    public void testReadFileWord() throws Exception {
-    }
 
     @Test
     public void testSort() {
+        LinkedList paginas = new LinkedList();
+        p1.setRelevancia(5);
+        p2.setRelevancia(3);
+        p3.setRelevancia(6);
+        
+        paginas.add(p1);
+        paginas.add(p2);
+        paginas.add(p3);
+        
+        assertTrue(p1.equals(paginas.getFirst()));
+        controlPages.sort(paginas, new ControllerBusca());
+        assertFalse(p1.equals(paginas.getFirst()));
+        assertTrue(p3.equals(paginas.getFirst()));
+        
     }
-    
+
 }
