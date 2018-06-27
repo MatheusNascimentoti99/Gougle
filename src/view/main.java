@@ -144,8 +144,6 @@ public class main {
         Scanner scanner = new Scanner(System.in);
         String palavraProcurada;
 
-        System.out.println(":)");
-        // Depois eu crio uma classe para cuidar disso mano
 
         System.out.println("Digite uma palavra a ser procurada");
         palavraProcurada = scanner.next();

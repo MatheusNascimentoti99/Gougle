@@ -46,11 +46,17 @@ public class ControllerBusca implements Comparator {
         comparador = new Crescente();
     }
 
+    /**
+     *
+     * @param linhaPesquisa Entreda do usuário
+     * @return retorna uma lista com o resultado de todas as buscas de palavras.
+     * @throws Exception
+     */
     public LinkedList foundPages(String linhaPesquisa) throws Exception {
         String[] textoSeparado;
         LinkedList paginas = new LinkedList();
         boolean existe = false;
-        Palavra p = null;
+        Palavra p;
         textoSeparado = linhaPesquisa.split(" ");
         for (String palavra : textoSeparado) {              //Remove as posiveis pontuação que podem atrapalhar na identificação de uma palavra.
             palavra = palavra.toUpperCase();
@@ -78,7 +84,6 @@ public class ControllerBusca implements Comparator {
             }
             if (p != null) {
 
-                System.out.println(p.getPalavra());
                 for (int i = 0; i < p.getPaginas().size() - 1; i++) {
                     if (paginas.contains(p.getPaginas().get(i))) {
                         int index = paginas.indexOf(p.getPaginas().get(i));
