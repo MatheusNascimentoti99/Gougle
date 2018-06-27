@@ -53,13 +53,6 @@ public class ControllerBuscaTest {
 
     }
 
-    @Test
-    public void testAtualizar() throws Exception {
-        File file = new File("resources\\Tree.date");
-        assertEquals(true, file.exists());
-        search.atualizar();
-        assertEquals(true, file.exists());
-    }
 
     @Test
     public void testGetBuscaRapida() {
@@ -107,16 +100,5 @@ public class ControllerBuscaTest {
         assertFalse(search.getSort().equals(sort));
     }
 
-    @Test
-    public void testSaveTree() throws Exception {
-    }
-
-    @Test
-    public void testReadTree() throws Exception {
-    }
-
-    @Test
-    public void testFilaPalavras() throws Exception {
-    }
 
 }
