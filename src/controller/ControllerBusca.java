@@ -79,17 +79,18 @@ public class ControllerBusca implements Comparator {
             p = (Palavra) search(palavra);
 
             if (p == null) {
-                addPalavra(palavra);
-                p = (Palavra) search(palavra);
+                if(addPalavra(palavra) == true)
+                    p = (Palavra) search(palavra);
             }
             if (p != null) {
 
-                for (int i = 0; i < p.getPaginas().size() - 1; i++) {
+                for (int i = 0; i < p.getPaginas().size(); i++) {
                     if (paginas.contains(p.getPaginas().get(i))) {
                         int index = paginas.indexOf(p.getPaginas().get(i));
                         Pagina pag = (Pagina) paginas.get(index);
+                        paginas.remove(index);
                         pag.setRelevancia(pag.getRelevancia() + ((Pagina) p.getPaginas().get(i)).getRelevancia());
-                        paginas.add(index, pag);
+                        paginas.add(pag);
                     } else {
                         paginas.add(p.getPaginas().get(i));
                     }
@@ -121,6 +122,7 @@ public class ControllerBusca implements Comparator {
                 this.addPalavra(palavra);
                 p = (Palavra) search(buscaRapida.getRaiz(), palavra);
                 p.setSearch(tempBuscas);
+                buscaRapida.remover(p);
                 buscaRapida.inserir(p);
                 
             }

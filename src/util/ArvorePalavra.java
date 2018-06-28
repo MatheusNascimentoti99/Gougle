@@ -32,6 +32,7 @@ public class ArvorePalavra extends Arvore{
             compara.getPaginas().add(nova.getPaginas().getFirst());
         }
     }
+     
      @Override
          public void inserirAVL(No aComparar, No aInserir) {
 
