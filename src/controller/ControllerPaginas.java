@@ -98,9 +98,11 @@ public class ControllerPaginas {
      * repositórioo.
      */
     public LinkedList getPaginas() throws FileNotFoundException {
+
         for (Object aux : getFiles()) {
             File file = (File) aux;
             Pagina temp = new Pagina(file.getName(), file.lastModified());
+
             if (!allPages.contains(temp)) {
                 allPages.add(temp);
             }
@@ -215,7 +217,8 @@ public class ControllerPaginas {
     }
 
     /**
-     *Método utilizado para busca uma palavra em um único arquivo. 
+     * Método utilizado para busca uma palavra em um único arquivo.
+     *
      * @param file Arquivo a qual a palavra será buscada.
      * @param palavraBuscada Parâmetro utilizado para informar qual a palavra
      * que está sendo buscada nos arquivos.
@@ -246,7 +249,7 @@ public class ControllerPaginas {
     private boolean getFileWord(String linha, Pagina pagina, String palavraBuscada, Arvore arvore) {
         String[] textoSeparado;
         boolean existe = false;
-        textoSeparado = linha.split(" ");                  
+        textoSeparado = linha.split(" ");
         for (String palavra : textoSeparado) {              //Remove as posiveis pontuação que podem atrapalhar na identificação de uma palavra.
             palavra = palavra.replace(" ", "");
             palavra = palavra.replace(".", "");
@@ -277,7 +280,7 @@ public class ControllerPaginas {
     /*
     Métodos passListToQueue e passQueueToList são utilizados para manipulação e ordenação das paginas.
     
-    */
+     */
     private Queue passListToQueue(LinkedList paginas, Queue fila) {
         while (!paginas.isEmpty()) {
             fila.add((Pagina) paginas.remove());
@@ -294,7 +297,8 @@ public class ControllerPaginas {
     }
 
     /**
-     *Método para ordenação de páginas.
+     * Método para ordenação de páginas.
+     *
      * @param paginas Lista de páginas a serem ordenadas.
      * @param ordem Critério a ser utilizado para ordenação.
      * @return Retorna uma lista com o conteúdo ordenado.
