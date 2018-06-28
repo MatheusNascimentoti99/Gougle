@@ -26,6 +26,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -51,6 +54,13 @@ public class Interface extends Application {
 
     }
 
+    private ImageView icone(String nome, double height, double width) {
+        ImageView icon = new ImageView(new Image(nome));
+        icon.setFitHeight(height);
+        icon.setFitWidth(width);
+        return icon;
+    }
+
     public void screenMain(Stage palco) throws FileNotFoundException, Exception {
         ControllerBusca search = new ControllerBusca();
         search.getControlPages().atualize();
@@ -61,8 +71,8 @@ public class Interface extends Application {
         HBox campoResul = new HBox(5);
         campoResul.setAlignment(Pos.CENTER);
         TextArea campo = new TextArea();
-
-        Button alterna = new Button("Inverter");
+        Button alterna = new Button();
+        alterna.setGraphic(icone("icon/UpDown.png", 15, 20));
         Button pesquisar = new Button("Pesquisar");
         pesquisar.setTooltip(new Tooltip("Pesquisar páginas"));
         Button topPaginas = new Button("Top-K Páginas");

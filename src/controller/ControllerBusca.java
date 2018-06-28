@@ -85,7 +85,7 @@ public class ControllerBusca implements Comparator {
             if (p != null) {
 
                 for (int i = 0; i < p.getPaginas().size(); i++) {
-                    if (paginas.contains(p.getPaginas().get(i))) {
+                    if (paginas.contains(p.getPaginas().get(i))) {                  //Pega a relevância de todas as páginas que as palavras pertencem.
                         int index = paginas.indexOf(p.getPaginas().get(i));
                         Pagina pag = (Pagina) paginas.get(index);
                         paginas.remove(index);
