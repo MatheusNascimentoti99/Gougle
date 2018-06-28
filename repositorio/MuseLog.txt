@@ -1,0 +1,22 @@
+Logging in build 2015.1.2.44 started at: Mon Oct 17 19:14:45 2016
+========================================
+[00:00:34.047] 19:15:23.735 | Error - IMS : ErrorCode=22 ErrorMessage=
+[00:01:05.672] 19:15:55.370 | quitWithUI:Quitting Application. Called by: 
+[00:01:05.672] 19:15:55.370 | Quitting Application after 0.8 minutes. Called by: 
+
+==========
+Logging ended at: Mon Oct 17 19:16:03 2016
+
+Logging in build 2015.1.2.44 started at: Wed Nov 02 09:19:48 2016
+========================================
+
+==========
+Logging ended at: Wed Nov 02 09:20:01 2016
+
+[00:00:29.594] 09:20:29.947 | Error - IMS : ErrorCode=22 ErrorMessage=
+[00:01:23.109] 09:21:23.513 | quitWithUI:Quitting Application. Called by: 
+[00:01:23.109] 09:21:23.517 | Quitting Application after 1.1 minutes. Called by: 
+
+==========
+Logging ended at: Wed Nov 02 09:21:29 2016
+

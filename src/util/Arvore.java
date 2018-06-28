@@ -3,6 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/*
+
+    Arvore  baseada na Arvore implementada por Rodrigo Vilar disponivel no GitHub: https://gist.github.com/rodrigovilar
+*/
 package util;
 
 import java.io.Serializable;
