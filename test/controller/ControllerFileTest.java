@@ -1,13 +1,10 @@
 package controller;
 
 
-import controller.ControllerFile;
 import java.io.File;
-import java.util.LinkedList;
 import model.Pagina;
 import model.Palavra;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 

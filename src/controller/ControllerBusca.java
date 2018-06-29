@@ -79,8 +79,9 @@ public class ControllerBusca implements Comparator {
             p = (Palavra) search(palavra);
 
             if (p == null) {
-                if(addPalavra(palavra) == true)
+                if (addPalavra(palavra) == true) {
                     p = (Palavra) search(palavra);
+                }
             }
             if (p != null) {
 
@@ -100,6 +101,75 @@ public class ControllerBusca implements Comparator {
         return paginas;
     }
 
+    private boolean modificedFiles() throws FileNotFoundException, Exception {
+        File pasta = new File("resources\\ModificedPasta.data");
+        Pagina pastaOld;
+        boolean change = false;
+        if (!pasta.exists()) {
+            savePasta();
+        } else {
+            pastaOld = readPasta();
+            if (pastaOld != null) {
+                File pastaRecent = new File("repositorio");
+                if (pastaOld.getChange() != pastaRecent.lastModified()) {
+                    savePasta();
+                    change = true;
+
+                }
+            }
+        }
+        return change;
+    }
+
+    
+    private void atualizarArvore() throws Exception {
+        Queue palavras = filaPalavras();
+        boolean allChange = false;
+        if (modificedFiles()) {                 //Se for modificado, então é reiniciado a árvore com a nova leitura das palavras que estavam dentro dela.
+            buscaRapida = new ArvorePalavra();
+            if (palavras != null) {
+                for (Object temp : palavras) {
+                    if (this.addPalavra(((Palavra) temp).getPalavra())) {
+                        Palavra p = (Palavra) search(buscaRapida.getRaiz(), ((Palavra) temp).getPalavra());
+                        p.setSearch(((Palavra) temp).getSearch());
+                        buscaRapida.remover(p);
+                        buscaRapida.inserir(p);
+                    }
+                }
+            }
+            allChange = true;
+        }
+        if (!allChange) {                       //Se o ditetório não foi alterado, então ira verificar a integridade de cada página                     
+            buscaRapida = new ArvorePalavra();
+            if (palavras != null) {
+                for (Object temp : palavras) {
+                    if (allFiles.modificedFiles((((Palavra) temp).getPaginas()))) {
+                        if (this.addPalavra(((Palavra) temp).getPalavra())) {
+                            Palavra p = (Palavra) search(buscaRapida.getRaiz(), ((Palavra) temp).getPalavra());
+                            p.setSearch(((Palavra) temp).getSearch());
+                            buscaRapida.remover(p);
+                            buscaRapida.inserir(p);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        saveTree();
+        atualizar();
+    }
+
+    private Pagina readPasta() throws FileNotFoundException {
+        return (Pagina) save.readDate("resources\\ModificedPasta.data");
+    }
+
+    private void savePasta() throws Exception {
+        File arq = new File("repositorio");
+        Pagina pasta = new Pagina("repositorio", arq.lastModified());
+
+        save.save(pasta, "resources\\ModificedPasta.data");
+    }
+
     /**
      * Método que realiza busca das palavras e atualiza a arvore de busca.
      *
@@ -108,36 +178,16 @@ public class ControllerBusca implements Comparator {
      * @throws IOException Abrir arquivo que contém a arvore salva.
      *
      */
-    public Comparable search(String palavra) throws IOException, Exception {
+    public Comparable search(String palavra) throws IOException, NullPointerException, Exception {
         atualizar();
         Palavra p;
-
+        atualizarArvore();
         p = (Palavra) search(buscaRapida.getRaiz(), palavra);
-
-        boolean flag = true;
         if (p != null) {
-            if (allFiles.modificedFiles(allFiles.readListPages())) {
-                int tempBuscas = p.getSearch();
-                buscaRapida.remover(p);
-                this.addPalavra(palavra);
-                p = (Palavra) search(buscaRapida.getRaiz(), palavra);
-                p.setSearch(tempBuscas);
-                buscaRapida.remover(p);
-                buscaRapida.inserir(p);
-                
-            }
-            flag = therePages(p.getPaginas(), p);
             p.moreSearch();
             p.setPaginas(allFiles.sort(p.getPaginas(), new Crescente()));
-
-        }
-
-        if (flag == false) {
             buscaRapida.remover(p);
-            allFiles.saveListPage();
-            saveTree();
-
-            return null;
+            buscaRapida.inserir(p);
         }
         saveTree();
         allFiles.saveListPage();
@@ -145,43 +195,7 @@ public class ControllerBusca implements Comparator {
         return p;
     }
 
-    /**
-     * Verifica se as páginas existem.
-     *
-     * @param paginas Lista de paginas a ser verificada
-     * @param palavra Verifica se a palavra ainda existe nas páginas.
-     * @return Retorna um booleando informando se a palavra existe ou não nas
-     * paginas.
-     * @throws IOException Realiza leitura de arquivos(Páginas).
-     * @throws Exception
-     */
-    public boolean therePages(LinkedList paginas, Palavra palavra) throws IOException, Exception {
-        boolean existe = false;
-        for (int i = 0; i < paginas.size(); i++) {
-            Pagina p = (Pagina) paginas.get(i);
-            int flag = changePagina(p);
-            switch (flag) {
-                case 0:
-                    existe = true;
-                    break;
-                case 1:
-                    paginas.remove(i);
-                    if (!existe) {
-                        existe = allFiles.readFileWord(file, palavra.getPalavra(), buscaRapida);
-                    } else {
-                        allFiles.readFileWord(file, palavra.getPalavra(), buscaRapida);
-                    }
-                    saveTree();
-                    break;
-
-                case -1:
-                    paginas.remove(i);
-            }
-        }
-
-        return existe;
-    }
-
+    
     /**
      * Método responsavel por atualizar as informações da Arvore de busca em
      * disco.
@@ -189,32 +203,12 @@ public class ControllerBusca implements Comparator {
      * @throws Exception Exceção ao ler/salvar.
      */
     public void atualizar() throws Exception {
-        File arq = new File("resources\\Tree.date");
+        File arq = new File("resources\\Tree.data");
         if (!arq.exists()) {
             this.saveTree();
         }
         buscaRapida = this.readTree();
         this.saveTree();
-    }
-
-    private int changePagina(Pagina oldPag) {                   //Método responsavel por verificar se o arquivo que a palavra pertence foi editada. 
-        LinkedList paginas = allFiles.getFiles();
-        Iterator it = paginas.iterator();
-        File pag = new File("repositorio\\" + oldPag.getNome());
-        if (!pag.exists()) {                                    //Verifica se a página ainda existe.
-            return -1;
-        }
-        while (it.hasNext()) {                                  //Perroce  a lista de páginas verificando se há diferenças.
-            File arq = (File) it.next();
-            if (arq.lastModified() == oldPag.getChange()) {       //Se não tiver alteração, então retorna 0.
-                return 0;
-            } else if (arq.getName().compareTo(oldPag.getNome()) == 0) {        //Se houver alteração, então retorna 1.
-                this.file = arq;
-                return 1;
-            }
-
-        }
-        return -1;                                              //Se não existir, então retorna -1.
     }
 
     /**
@@ -305,7 +299,7 @@ public class ControllerBusca implements Comparator {
      * binário.
      */
     public void saveTree() throws Exception {
-        save.save(buscaRapida, "resources\\Tree.date");
+        save.save(buscaRapida, "resources\\Tree.data");
     }
 
     /**
@@ -316,7 +310,7 @@ public class ControllerBusca implements Comparator {
     public ArvorePalavra readTree() throws FileNotFoundException {
         ArvorePalavra temp;
         try {
-            temp = (ArvorePalavra) save.readDate("resources\\Tree.date");
+            temp = (ArvorePalavra) save.readDate("resources\\Tree.data");
         } catch (FileNotFoundException e) {
             temp = null;
         }
