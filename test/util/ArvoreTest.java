@@ -11,8 +11,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author Usuário 01
+ * Classe de testes para a classe Arvore.
+ * @author Matheus Nascimento e Elvis Serafim
+ * @since 
  */
 public class ArvoreTest {
     
@@ -28,7 +29,7 @@ public class ArvoreTest {
     }
 
     /**
-     * Test of inserir method, of class Arvore.
+     * Teste do método de inserção da árvore AVL.
      */
     @Test
     public void testInserir() {
@@ -53,7 +54,7 @@ public class ArvoreTest {
     }
 
     /**
-     * Test of remover method, of class Arvore.
+     * Teste do método de remoção da árvore AVL.
      */
     @Test
     public void testRemover() {
@@ -75,7 +76,7 @@ public class ArvoreTest {
         
     }
     /**
-     * Test of isEmpty method, of class Arvore.
+     * Teste do método que verifica se a árvore está vazia.
      */
     @Test
     public void testIsEmpty() {

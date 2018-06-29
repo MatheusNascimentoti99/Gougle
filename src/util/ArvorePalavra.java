@@ -10,7 +10,7 @@ import model.Pagina;
 import model.Palavra;
 
 /**
- * A classe <b>ControllerBusca</b> é uma classe que herda da classe Árvore.
+ * A classe <b>ArvorePalavra</b> é uma classe que herda da classe Árvore.
  *
  * @author Matheus Nascimento e Elvis Serafim
  * @since Jul 2018

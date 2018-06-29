@@ -38,10 +38,13 @@ import util.Crescente;
 import util.Decrescente;
 
 /**
+ * A classe <b>Interface</b> classe onde está a interface gráfica do projeto.
  *
- * @author Matheus Nascimento
- */
-public class Interface extends Application {
+ * @author Matheus Nascimento e Elvis Serafim
+ * @since Jul 2018
+ * @version 1.0
+ **/
+ public class Interface extends Application {
 
     public static void main(String[] args) {
         launch();

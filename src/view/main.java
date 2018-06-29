@@ -18,8 +18,11 @@ import util.Crescente;
 import util.Decrescente;
 
 /**
+ * A classe <b>main</b> é a classe onde está a versão do projeto que pode ser utilizada com o console.
  *
- * @author Matheus Nascimento
+ * @author Matheus Nascimento e Elvis Serafim
+ * @since Jul 2018
+ * @version 1.0
  */
 public class main {
 
