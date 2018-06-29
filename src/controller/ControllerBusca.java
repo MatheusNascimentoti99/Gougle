@@ -98,6 +98,7 @@ public class ControllerBusca implements Comparator {
                 }
             }
         }
+        saveTree();
         return paginas;
     }
 
@@ -139,11 +140,11 @@ public class ControllerBusca implements Comparator {
             }
             allChange = true;
         }
-        if (!allChange) {                       //Se o ditetório não foi alterado, então ira verificar a integridade de cada página                     
+        if (!allChange){                       //Se o ditetório não foi alterado, então ira verificar a integridade de cada página                     
             buscaRapida = new ArvorePalavra();
             if (palavras != null) {
                 for (Object temp : palavras) {
-                    if (allFiles.modificedFiles((((Palavra) temp).getPaginas()))) {
+                    if (allFiles.modificedFiles((((Palavra) temp).getPaginas()))){
                         if (this.addPalavra(((Palavra) temp).getPalavra())) {
                             Palavra p = (Palavra) search(buscaRapida.getRaiz(), ((Palavra) temp).getPalavra());
                             p.setSearch(((Palavra) temp).getSearch());
