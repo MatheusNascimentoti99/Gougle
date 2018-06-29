@@ -122,7 +122,6 @@ public class ControllerBusca implements Comparator {
         return change;
     }
 
-    
     private void atualizarArvore() throws Exception {
         Queue palavras = filaPalavras();
         boolean allChange = false;
@@ -140,17 +139,19 @@ public class ControllerBusca implements Comparator {
             }
             allChange = true;
         }
-        if (!allChange){                       //Se o ditetório não foi alterado, então ira verificar a integridade de cada página                     
-            buscaRapida = new ArvorePalavra();
+        if (!allChange) {                       //Se o ditetório não foi alterado, então ira verificar a integridade de cada página                     
             if (palavras != null) {
                 for (Object temp : palavras) {
-                    if (allFiles.modificedFiles((((Palavra) temp).getPaginas()))){
-                        if (this.addPalavra(((Palavra) temp).getPalavra())) {
-                            Palavra p = (Palavra) search(buscaRapida.getRaiz(), ((Palavra) temp).getPalavra());
-                            p.setSearch(((Palavra) temp).getSearch());
-                            buscaRapida.remover(p);
-                            buscaRapida.inserir(p);
-                            break;
+                    for (int i = 0; i < ((Palavra) temp).getPaginas().size(); i++) {
+                        if (changePagina((Pagina) ((Palavra) temp).getPaginas().get(i)) != 0) {
+                            buscaRapida.remover((Palavra) temp);
+                            if (this.addPalavra(((Palavra) temp).getPalavra())) {
+                                Palavra p = (Palavra) search(buscaRapida.getRaiz(), ((Palavra) temp).getPalavra());
+                                p.setSearch(((Palavra) temp).getSearch());
+                                buscaRapida.remover(p);
+                                buscaRapida.inserir(p);
+                                break;
+                            }
                         }
                     }
                 }
@@ -158,6 +159,26 @@ public class ControllerBusca implements Comparator {
         }
         saveTree();
         atualizar();
+    }
+
+    private int changePagina(Pagina oldPag) {                   //Método responsavel por verificar se o arquivo que a palavra pertence foi editada. 
+        LinkedList paginas = allFiles.getFiles();
+        Iterator it = paginas.iterator();
+        File pag = new File("repositorio\\" + oldPag.getNome());
+        if (!pag.exists()) {                                    //Verifica se a página ainda existe.
+            return -1;
+        }
+        while (it.hasNext()) {                                  //Perroce  a lista de páginas verificando se há diferenças.
+            File arq = (File) it.next();
+            if (arq.lastModified() == oldPag.getChange()) {       //Se não tiver alteração, então retorna 0.
+                return 0;
+            } else if (arq.getName().compareTo(oldPag.getNome()) == 0) {        //Se houver alteração, então retorna 1.
+                this.file = arq;
+                return 1;
+            }
+
+        }
+        return -1;                                              //Se não existir, então retorna -1.
     }
 
     private Pagina readPasta() throws FileNotFoundException {
@@ -187,8 +208,6 @@ public class ControllerBusca implements Comparator {
         if (p != null) {
             p.moreSearch();
             p.setPaginas(allFiles.sort(p.getPaginas(), new Crescente()));
-            buscaRapida.remover(p);
-            buscaRapida.inserir(p);
         }
         saveTree();
         allFiles.saveListPage();
@@ -196,7 +215,6 @@ public class ControllerBusca implements Comparator {
         return p;
     }
 
-    
     /**
      * Método responsavel por atualizar as informações da Arvore de busca em
      * disco.

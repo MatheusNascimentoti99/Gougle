@@ -63,7 +63,7 @@ public class Pagina implements Comparable, Serializable {
 
     @Override
     public String toString() {
-        return "Página: " + nome + "    Visitas: " + visit;
+        return "Página: " + nome + "    Visitas: " + visit + "Relevância" + this.relevancia;
     }
 
     /**

@@ -136,14 +136,7 @@ public class ControllerPaginas {
      * @throws FileNotFoundException
      */
     public boolean modificedFiles(LinkedList paginas) throws FileNotFoundException {
-        LinkedList oldFiles = readListFiles();
         LinkedList recentFiles = getFiles();
-        if (oldFiles == null) {
-            return false;
-        } else if (oldFiles.size() != recentFiles.size()) {
-            return true;
-        }
-
         for (Object temp : paginas) {
             Pagina aux = (Pagina) temp;
             File file = new File(aux.getNome());

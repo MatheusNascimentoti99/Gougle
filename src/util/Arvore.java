@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/*
+ /*
 
     Arvore  baseada na Arvore implementada por Rodrigo Vilar disponivel no GitHub: https://gist.github.com/rodrigovilar
-*/
+ */
 package util;
 
 import java.io.Serializable;
@@ -101,29 +101,8 @@ public class Arvore implements Serializable {
             this.raiz = atual;
         }
     }
-
-    public Comparable remover(Palavra palavra) {
-        return removerAVL(this.raiz, palavra);
-    }
-
-    private Comparable removerAVL(No atual, Palavra palavra) {
-        Comparable removido = null;
-        if (atual != null) {
-
-            if (atual.getDate().compareTo(palavra) > 0) {
-                removerAVL(atual.getLeft(), palavra);
-
-            } else if (atual.getDate().compareTo(palavra) < 0) {
-                removerAVL(atual.getRight(), palavra);
-
-            } else if (atual.getDate().compareTo(palavra) == 0) {
-                removido = removerNoEncontrado(atual);
-            }
-        }
-        return removido;
-    }
-
     //Código retirado da aula 09 de Estrutura de Dados do Professora João Rocha.
+
     public Queue preOrder() {
         Queue fila = new LinkedList();
         Stack stack = new Stack();
@@ -141,43 +120,63 @@ public class Arvore implements Serializable {
         return fila;
     }
 
-    public Comparable removerNoEncontrado(No aRemover) {
-        No children;
-        Comparable temp = aRemover.getDate();
+    public void remover(Palavra palavra) {
+        removerAVL(this.raiz, palavra);
+    }
+
+    private void removerAVL(No atual, Palavra palavra) {
+        if (atual != null) {
+
+            if (atual.getDate().compareTo(palavra) > 0) {
+                removerAVL(atual.getLeft(), palavra);
+
+            } else if (atual.getDate().compareTo(palavra) < 0) {
+                removerAVL(atual.getRight(), palavra);
+
+            } else if (atual.getDate().compareTo(palavra) == 0) {
+                removerNoEncontrado(atual);
+            }
+        }
+    }
+
+    public void removerNoEncontrado(No aRemover) {
+        No r;
+
         if (aRemover.getLeft() == null || aRemover.getRight() == null) {
 
             if (aRemover.getPai() == null) {
                 this.raiz = null;
-                return temp;
+                aRemover = null;
+                return;
             }
-            children = aRemover;
+            r = aRemover;
 
         } else {
-            children = sucessor(aRemover);
+            r = sucessor(aRemover);
         }
 
-        No remov;
-        if (children.getLeft() != null) {
-            remov = children.getLeft();
+        No p;
+        if (r.getLeft() != null) {
+            p = r.getLeft();
         } else {
-            remov = children.getRight();
+            p = r.getRight();
         }
 
-        if (remov != null) {
-            remov.setPai(children.getPai());
+        if (p != null) {
+            p.setPai(r.getPai());
         }
 
-        if (children.getPai() == null) {
-            this.raiz = remov;
+        if (r.getPai() == null) {
+            this.raiz = p;
         } else {
-            if (children == children.getPai().getLeft()) {
-                children.getPai().setLeft(remov);
+            if (r == r.getPai().getLeft()) {
+                r.getPai().setLeft(p);
             } else {
-                children.getPai().setRight(remov);
+                r.getPai().setRight(p);
             }
-            verificarBalanceamento(children.getPai());
+            verificarBalanceamento(r.getPai());
         }
-        return temp;
+        r = null;
     }
 
     public No rotacaoEsquerda(No inicial) {
@@ -250,20 +249,20 @@ public class Arvore implements Serializable {
         return rotacaoEsquerda(inicial);
     }
 
-    public No sucessor(No aux) {
-        if (aux.getRight() != null) {
-            No r = aux.getRight();
-            while (r.getLeft() != null) {
+    public No sucessor(No q) {
+        if (q.getRight()!= null) {
+            No r = q.getRight();
+            while (r.getLeft()!= null) {
                 r = r.getLeft();
             }
             return r;
         } else {
-            No suscessor = aux.getPai();
-            while (suscessor != null && aux == suscessor.getRight()) {
-                aux = suscessor;
-                suscessor = aux.getPai();
+            No p = q.getPai();
+            while (p != null && q == p.getRight()) {
+                q = p;
+                p = q.getPai();
             }
-            return suscessor;
+            return p;
         }
     }
 

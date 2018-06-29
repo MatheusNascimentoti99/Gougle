@@ -157,7 +157,7 @@ public class Interface extends Application {
         Iterator it = temp.iterator();
         while (it.hasNext()) {
             Pagina pag = (Pagina) it.next();
-            ToggleButton pagina = new ToggleButton(pag.getNome());
+            ToggleButton pagina = new ToggleButton(pag.toString());
             pagina.setPrefWidth(listaResul.getWidth());
             listaResul.getItems().add(pagina);
             pagina.setOnMouseClicked((Event event) -> {
