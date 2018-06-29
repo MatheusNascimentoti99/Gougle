@@ -75,41 +75,6 @@ public class ArvoreTest {
         
     }
     /**
-     * Test of rotacaoEsquerda method, of class Arvore.
-     */
-    @Test
-    public void testRotacaoEsquerda() {
-    }
-
-    /**
-     * Test of rotacaoDireita method, of class Arvore.
-     */
-    @Test
-    public void testRotacaoDireita() {
-    }
-
-    /**
-     * Test of duplaRotacaoEsquerdaDireita method, of class Arvore.
-     */
-    @Test
-    public void testDuplaRotacaoEsquerdaDireita() {
-    }
-
-    /**
-     * Test of duplaRotacaoDireitaEsquerda method, of class Arvore.
-     */
-    @Test
-    public void testDuplaRotacaoDireitaEsquerda() {
-    }
-
-    /**
-     * Test of sucessor method, of class Arvore.
-     */
-    @Test
-    public void testSucessor() {
-    }
-
-    /**
      * Test of isEmpty method, of class Arvore.
      */
     @Test
