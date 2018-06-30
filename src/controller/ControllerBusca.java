@@ -51,7 +51,7 @@ public class ControllerBusca implements Comparator, Runnable {
 
     /**
      *
-     * @param linhaPesquisa Entreda do usu√°rio
+     * @param linhaPesquisa Entreda do usu·rio
      * @return retorna uma lista com o resultado de todas as buscas de palavras.
      * @throws Exception
      */
@@ -61,7 +61,7 @@ public class ControllerBusca implements Comparator, Runnable {
         boolean existe = false;
         Palavra p;
         textoSeparado = linhaPesquisa.split(" ");
-        for (String palavra : textoSeparado) {              //Remove as posiveis pontua√ß√£o que podem atrapalhar na identifica√ß√£o de uma palavra.
+        for (String palavra : textoSeparado) {              //Remove as posiveis pontuaÁ„o que podem atrapalhar na identificaÁ„o de uma palavra.
             palavra = palavra.toUpperCase();
             palavra = ControllerPaginas.semAcento(palavra);
             palavra = palavra.replace(" ", "");
@@ -90,7 +90,7 @@ public class ControllerBusca implements Comparator, Runnable {
             if (p != null) {
 
                 for (int i = 0; i < p.getPaginas().size(); i++) {
-                    if (paginas.contains(p.getPaginas().get(i))) {                  //Pega a relev√¢ncia de todas as p√°ginas que as palavras pertencem.
+                    if (paginas.contains(p.getPaginas().get(i))) {                  //Pega a relev‚ncia de todas as p·ginas que as palavras pertencem.
                         int index = paginas.indexOf(p.getPaginas().get(i));
                         Pagina pag = (Pagina) paginas.get(index);
                         paginas.remove(index);
@@ -129,7 +129,7 @@ public class ControllerBusca implements Comparator, Runnable {
     public void atualizarArvore() throws Exception {
         Queue palavras = filaPalavras();
         boolean allChange = false;
-        if (modificedFiles()) {                 //Se for modificado, ent√£o √© reiniciado a √°rvore com a nova leitura das palavras que estavam dentro dela.
+        if (modificedFiles()) {                 //Se for modificado, ent„o È reiniciado a ·rvore com a nova leitura das palavras que estavam dentro dela.
             buscaRapida = new Arvore();
             if (palavras != null) {
                 for (Object temp : palavras) {
@@ -143,7 +143,7 @@ public class ControllerBusca implements Comparator, Runnable {
             }
             allChange = true;
         }
-        if (!allChange) {                       //Se o ditet√≥rio n√£o foi alterado, ent√£o ira verificar a integridade de cada p√°gina                     
+        if (!allChange) {                       //Se o ditetÛrio n„o foi alterado, ent„o ira verificar a integridade de cada p·gina                     
             if (palavras != null) {
                 for (Object temp : palavras) {
                     for (int i = 0; i < ((Palavra) temp).getPaginas().size(); i++) {
@@ -151,9 +151,11 @@ public class ControllerBusca implements Comparator, Runnable {
                             buscaRapida.remover((Palavra) temp);
                             if (this.addPalavra(((Palavra) temp).getPalavra())) {
                                 Palavra p = (Palavra) search(buscaRapida.getRaiz(), ((Palavra) temp).getPalavra());
+                               if(p!= null){ 
                                 p.setSearch(((Palavra) temp).getSearch());
                                 buscaRapida.remover(p);
                                 buscaRapida.inserir(p);
+                               }
                             }
                         }
                     }
@@ -164,20 +166,20 @@ public class ControllerBusca implements Comparator, Runnable {
         atualizar();
     }
 
-    private int changePagina(Pagina pagina) {                   //M√©todo responsavel por verificar se o arquivo que a palavra pertence foi editada. 
+    private int changePagina(Pagina pagina) {                   //MÈtodo responsavel por verificar se o arquivo que a palavra pertence foi editada. 
         LinkedList paginas = allFiles.getFiles();
         Iterator it = paginas.iterator();
         File pag = new File("repositorio\\" + pagina.getNome());
-        if (!pag.exists()) {                                    //Verifica se a p√°gina ainda existe.
+        if (!pag.exists()) {                                    //Verifica se a p·gina ainda existe.
             return -1;
         }
-        while (it.hasNext()) {                                  //Perroce  a lista de p√°ginas verificando se h√° diferen√ßas.
+        while (it.hasNext()) {                                  //Perroce  a lista de p·ginas verificando se h· diferenÁas.
             File arq = (File) it.next();
-            if (arq.lastModified() == pagina.getChange()) {       //Se n√£o tiver altera√ß√£o, ent√£o retorna 0.
+            if (arq.lastModified() == pagina.getChange()) {       //Se n„o tiver alteraÁ„o, ent„o retorna 0.
                 return 0;
             }
         }
-        return -1;                                              //Se n√£o existir, ent√£o retorna -1.
+        return -1;                                              //Se n„o existir, ent„o retorna -1.
     }
 
     private Pagina readPasta() throws FileNotFoundException {
@@ -192,11 +194,11 @@ public class ControllerBusca implements Comparator, Runnable {
     }
 
     /**
-     * M√©todo que realiza busca das palavras e atualiza a arvore de busca.
+     * MÈtodo que realiza busca das palavras e atualiza a arvore de busca.
      *
      * @param palavra Palavra a ser procurada na arvore.
-     * @return Retorna um objeto comparavel que cont√©m a mesma palavra.
-     * @throws IOException Abrir arquivo que cont√©m a arvore salva.
+     * @return Retorna um objeto comparavel que contÈm a mesma palavra.
+     * @throws IOException Abrir arquivo que contÈm a arvore salva.
      *
      */
     public Comparable search(String palavra) throws IOException, NullPointerException, Exception {
@@ -215,10 +217,10 @@ public class ControllerBusca implements Comparator, Runnable {
     }
 
     /**
-     * M√©todo responsavel por atualizar as informa√ß√µes da Arvore de busca em
+     * MÈtodo responsavel por atualizar as informaÁıes da Arvore de busca em
      * disco.
      *
-     * @throws Exception Exce√ß√£o ao ler/salvar.
+     * @throws Exception ExceÁ„o ao ler/salvar.
      */
     public void atualizar() throws Exception {
         File arq = new File("resources\\Tree.data");
@@ -230,7 +232,7 @@ public class ControllerBusca implements Comparator, Runnable {
     }
 
     /**
-     * Algoritmo de busca bin√°ria para busca de palavras.
+     * Algoritmo de busca bin·ria para busca de palavras.
      *
      * @param atual No atual a ser comparado.
      * @param palavra Valor a ser buscado.
@@ -264,8 +266,8 @@ public class ControllerBusca implements Comparator, Runnable {
      *
      * @param palavra Adiciona uma nova palavra a arvore de busca.
      * @return Retorna um booleano informando se a palavra existe entre os
-     * arquivos ou n√£o.
-     * @throws IOException Poss√≠vel exce√ß√£o ao abrir arquivos para leitura.
+     * arquivos ou n„o.
+     * @throws IOException PossÌvel exceÁ„o ao abrir arquivos para leitura.
      * @throws Exception
      */
     public boolean addPalavra(String palavra) throws IOException, Exception {
@@ -278,25 +280,25 @@ public class ControllerBusca implements Comparator, Runnable {
     /**
      * Altera o valor da arvore de busca.
      *
-     * @param buscaRapida Valor para altera√ß√£o da arvore de busca.
+     * @param buscaRapida Valor para alteraÁ„o da arvore de busca.
      */
     public void setBuscaRapida(Arvore buscaRapida) {
         this.buscaRapida = buscaRapida;
     }
 
     /**
-     * Retorna o controlador de p√°ginas que √© √∫tilizado durante as buscas.
+     * Retorna o controlador de p·ginas que È ˙tilizado durante as buscas.
      *
-     * @return Retorna o controlador de p√°ginas
+     * @return Retorna o controlador de p·ginas
      */
     public ControllerPaginas getControlPages() {
         return allFiles;
     }
 
     /**
-     * Altera o controlador de p√°ginas
+     * Altera o controlador de p·ginas
      *
-     * @param controlPages Valor para altera√ß√£o do controlador de p√°ginas.
+     * @param controlPages Valor para alteraÁ„o do controlador de p·ginas.
      */
     public void setControlPages(ControllerPaginas controlPages) {
         this.allFiles = controlPages;
@@ -313,15 +315,15 @@ public class ControllerBusca implements Comparator, Runnable {
     /**
      * Salva a arvore em disco.
      *
-     * @throws Exception Poss√≠vel exce√ß√£o ao salvar a arvore em um arquivo
-     * bin√°rio.
+     * @throws Exception PossÌvel exceÁ„o ao salvar a arvore em um arquivo
+     * bin·rio.
      */
     public void saveTree() throws Exception {
         ControllerFile.save(buscaRapida, "resources\\Tree.data");
     }
 
     /**
-     * Ler a arvore de busca que est√° salva em disco.
+     * Ler a arvore de busca que est· salva em disco.
      *
      * @return @throws FileNotFoundException
      */
@@ -353,7 +355,7 @@ public class ControllerBusca implements Comparator, Runnable {
     }
 
     /**
-     * Retorna uma fila com as palavras que est√£o salvas na arvore de busca.
+     * Retorna uma fila com as palavras que est„o salvas na arvore de busca.
      *
      * @return @throws java.lang.Exception
      */

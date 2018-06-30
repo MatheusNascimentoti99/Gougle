@@ -174,65 +174,61 @@ public class Arvore implements Serializable {
      * MÃ©todo que remove uma objeto Palavra da Ã¡rvore.
      * @param palavra Palavra a ser removida.
      */
-    public void remover(Palavra palavra) {
-        removerAVL(this.raiz, palavra);
+ public void remover(Comparable palavra) {
+        remover(this.raiz, palavra);
     }
 
-    private void removerAVL(No atual, Palavra palavra) {
-        if (atual != null) {
-
+    private void remover(No atual, Comparable palavra) {
+        if (raiz == null) {
+        } else {
             if (atual.getDate().compareTo(palavra) > 0) {
-                removerAVL(atual.getLeft(), palavra);
+                remover(atual.getLeft(), palavra);
 
             } else if (atual.getDate().compareTo(palavra) < 0) {
-                removerAVL(atual.getRight(), palavra);
+                remover(atual.getRight(), palavra);
 
-            } else if (atual.getDate().compareTo(palavra) == 0) {
+            } else if (atual.getDate().equals(palavra)) {
                 removerNoEncontrado(atual);
             }
         }
     }
 
-    public void removerNoEncontrado(No aRemover) {
-        No r;
-
-        if (aRemover.getLeft() == null || aRemover.getRight() == null) {
-
+    private void removerNoEncontrado(No aRemover) {
+        No aux;
+        //Verifica se o nó a ser removido é uma folha.
+        if (aRemover.getLeft()== null || aRemover.getRight()== null) {
             if (aRemover.getPai() == null) {
                 this.raiz = null;
-                aRemover = null;
                 return;
             }
-            r = aRemover;
-
+            aux = aRemover;
         } else {
-            r = sucessor(aRemover);
+            //Caso contrario ele irá procurar o proximo nó que poderá substituir aquela sub-árvore.
+            aux = sucessor(aRemover);
+            aRemover.setDate(aux.getDate());
+        }
+        No aux2;
+        if (aux.getLeft()!= null) {
+            aux2 = aux.getLeft();
+        } else {
+            aux2 = aux.getRight();
         }
 
-        No p;
-        if (r.getLeft() != null) {
-            p = r.getLeft();
-        } else {
-            p = r.getRight();
+        if (aux2 != null) {
+            aux2.setPai(aux.getPai());
         }
 
-        if (p != null) {
-            p.setPai(r.getPai());
-        }
-
-        if (r.getPai() == null) {
-            this.raiz = p;
+        if (aux.getPai() == null) {
+            this.raiz = aux2;
         } else {
-            if (r == r.getPai().getLeft()) {
-                r.getPai().setLeft(p);
+            if (aux == aux.getPai().getLeft()) {
+                aux.getPai().setLeft(aux2);
             } else {
-                r.getPai().setRight(p);
+                aux.getPai().setRight(aux2);
             }
-            verificarBalanceamento(r.getPai());
+            verificarBalanceamento(aux.getPai());
         }
-        r = null;
     }
-
     private No rotacaoEsquerda(No inicial) {
 
         No right = inicial.getRight();
