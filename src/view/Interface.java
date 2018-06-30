@@ -38,7 +38,7 @@ import util.Crescente;
 import util.Decrescente;
 
 /**
- * A classe <b>Interface</b> classe onde est√° a interface gr√°fica do projeto.
+ * A classe <b>Interface</b> classe onde est· a interface gr·fica do projeto.
  *
  * @author Matheus Nascimento e Elvis Serafim
  * @since Jul 2018
@@ -77,9 +77,9 @@ import util.Decrescente;
         Button alterna = new Button();
         alterna.setGraphic(icone("icon/UpDown.png", 15, 20));
         Button pesquisar = new Button("Pesquisar");
-        pesquisar.setTooltip(new Tooltip("Pesquisar p√°ginas"));
-        Button topPaginas = new Button("Top-K P√°ginas");
-        topPaginas.setTooltip(new Tooltip("P√°ginas mais ou menos pesquisadas"));
+        pesquisar.setTooltip(new Tooltip("Pesquisar paginas"));
+        Button topPaginas = new Button("Top-K P·ginas");
+        topPaginas.setTooltip(new Tooltip("Paginas mais ou menos pesquisadas"));
         Button topPalavras = new Button("Top-K Palavras");
         topPalavras.setTooltip(new Tooltip("Palavras mais ou menos pesquisadas"));
         TextField kEscolhas = new TextField();
@@ -165,6 +165,9 @@ import util.Decrescente;
     private static void resulOrdemBusca(TextField campoTexto, ControllerBusca search, ListView listaResul, LinkedList paginas, Comparator ordem) {
         LinkedList temp = search.getControlPages().sort(paginas, ordem);
         Iterator it = temp.iterator();
+        if(temp.isEmpty()){
+            listaResul.getItems().add(new Label("Sem resultados de busca"));
+        }
         while (it.hasNext()) {
             Pagina pag = (Pagina) it.next();
             ToggleButton pagina = new ToggleButton(pag.getNome());
@@ -188,7 +191,6 @@ import util.Decrescente;
                         i++;
 
                     }
-                    System.out.println(pagina);
                     if (index == -1) {
                         throw new FileNotFoundException();
                     }
@@ -231,12 +233,12 @@ import util.Decrescente;
                 } catch (NumberFormatException ex) {
                     k = 0;
                 }
-                //O algoritmo de ordena√ß√£o usa uma fila, com isso a ordem √© invertida.
+                //O algoritmo de ordenaÁ„o usa uma fila, com isso a ordem È invertida.
                 LinkedList listOrdem = null;
                 try {
                     listOrdem = search.getControlPages().sort(search.getControlPages().getPaginas(), ordem);
                 } catch (FileNotFoundException exe) {
-                    pagina = new Label("Paginas n√£o encontradas");
+                    pagina = new Label("Paginas n„o encontradas");
                     listaResul.getItems().add(pagina);
                 }
                 if (listOrdem != null) {
@@ -270,12 +272,12 @@ import util.Decrescente;
                 }
                 Queue fila = null;
                 try {
-                    //O algoritmo de ordena√ß√£o usa uma fila, com isso a ordem √© invertida.
+                    //O algoritmo de ordenaÁ„o usa uma fila, com isso a ordem È invertida.
                     fila = search.filaPalavras();
 
                 } catch (Exception ex) {
                     Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
-                    pagina = new Label("N√£o h√° palavras.");
+                    pagina = new Label("N„o h· palavras.");
                     listaResul.getItems().add(pagina);
                 }
 
@@ -308,11 +310,11 @@ import util.Decrescente;
                 }
                 Queue fila = null;
                 try {
-                    //O algoritmo de ordena√ß√£o usa uma fila, com isso a ordem √© invertida.
+                    //O algoritmo de ordenaÁ„o usa uma fila, com isso a ordem È invertida.
                     fila = search.filaPalavras();
                 } catch (Exception ex) {
                     Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
-                    pagina = new Label("Paginas n√£o encontradas");
+                    pagina = new Label("Paginas n„o encontradas");
                     listaResul.getItems().add(pagina);
                 }
                 if (fila != null) {

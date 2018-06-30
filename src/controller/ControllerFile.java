@@ -28,13 +28,13 @@ public class ControllerFile {
      * @return Retorna o objeto que está salvo no arquivo binario indicado.
      * @throws FileNotFoundException Exceção caso a arquivo ou local não exista.
      */
+
     public static Object readDate(String local) throws FileNotFoundException {
         Object dado = null;
         try {
 
             try (
                     FileInputStream arquivoLeitura = new FileInputStream(local); ObjectInputStream objLeitura = new ObjectInputStream(arquivoLeitura)) {
-
                 dado = objLeitura.readObject();
                 if(dado == null)
                    throw new FileNotFoundException();

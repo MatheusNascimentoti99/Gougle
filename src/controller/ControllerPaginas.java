@@ -11,10 +11,12 @@ import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.regex.Pattern;
 import model.Pagina;
 import model.Palavra;
 import util.Arvore;
@@ -52,7 +54,7 @@ public class ControllerPaginas {
 
     void saveListPage() throws Exception {
         getPaginas();
-        ControllerFile.save(allPages, pastaRecursos + "ListPages.date");
+        ControllerFile.save(allPages, pastaRecursos + "ListPages.data");
     }
 
     /**
@@ -64,7 +66,7 @@ public class ControllerPaginas {
     public LinkedList readListPages() throws FileNotFoundException {
         LinkedList temp;
         try {
-            temp = (LinkedList) ControllerFile.readDate("resources\\ListPages.date");
+            temp = (LinkedList) ControllerFile.readDate("resources\\ListPages.data");
         } catch (FileNotFoundException e) {
             temp = null;
         }
@@ -115,14 +117,14 @@ public class ControllerPaginas {
      * @throws FileNotFoundException Caso o arquivo não exista.
      */
     public LinkedList readListFiles() throws FileNotFoundException {
-        LinkedList lista = (LinkedList) ControllerFile.readDate(pastaRecursos + "Files.date");
+        LinkedList lista = (LinkedList) ControllerFile.readDate(pastaRecursos + "Files.data");
         return lista != null ? lista : null;
     }
 
     void saveListFiles() throws Exception {
-        File file = new File(pastaRecursos + "Files.date");
+        File file = new File(pastaRecursos + "Files.data");
         if (!file.exists()) {
-            ControllerFile.save(getFiles(), pastaRecursos + "Files.date");
+            ControllerFile.save(getFiles(), pastaRecursos + "Files.data");
         }
     }
 
@@ -154,7 +156,7 @@ public class ControllerPaginas {
      * index acessar um local da lista que não exista.
      */
     public void showFile(int index) throws FileNotFoundException, Exception {
-        File file = new File("resources\\ListPages.date");
+        File file = new File("resources\\ListPages.data");
         if (!file.exists()) {
             saveListPage();
         }
@@ -176,7 +178,7 @@ public class ControllerPaginas {
      * instanciar o File.
      */
     public void atualize() throws Exception {
-        File file = new File("resources\\ListPages.date");
+        File file = new File("resources\\ListPages.data");
         if (!file.exists()) {
             saveListPage();
         }
@@ -207,6 +209,11 @@ public class ControllerPaginas {
         return existe;
     }
 
+    public static String semAcento(String str) {
+        String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD); 
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(nfdNormalizedString).replaceAll("");
+    }
     /**
      * Método utilizado para busca uma palavra em um único arquivo.
      *
@@ -236,12 +243,14 @@ public class ControllerPaginas {
         return existe;
     }
 
+
     //Método que ler linha por linha de um arquivo.
     private boolean getFileWord(String linha, Pagina pagina, String palavraBuscada, Arvore arvore) {
         String[] textoSeparado;
         boolean existe = false;
         textoSeparado = linha.split(" ");
         for (String palavra : textoSeparado) {              //Remove as posiveis pontuação que podem atrapalhar na identificação de uma palavra.
+            palavra = semAcento(palavra);
             palavra = palavra.replace(" ", "");
             palavra = palavra.replace(".", "");
             palavra = palavra.replace("/", "");
