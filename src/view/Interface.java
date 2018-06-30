@@ -79,7 +79,7 @@ import util.Decrescente;
         Button pesquisar = new Button("Pesquisar");
         pesquisar.setTooltip(new Tooltip("Pesquisar paginas"));
         Button topPaginas = new Button("Top-K Páginas");
-        topPaginas.setTooltip(new Tooltip("Paginas mais ou menos pesquisadas"));
+        topPaginas.setTooltip(new Tooltip("Páginas mais ou menos pesquisadas"));
         Button topPalavras = new Button("Top-K Palavras");
         topPalavras.setTooltip(new Tooltip("Palavras mais ou menos pesquisadas"));
         TextField kEscolhas = new TextField();

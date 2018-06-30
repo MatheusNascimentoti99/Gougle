@@ -23,8 +23,8 @@ public class Pagina implements Comparable, Serializable {
 
     /**
      *
-     * @param nome Nome da página considerando também a entenção .txt.
-     * @param change long utilizado para verificação de mudanças no arquivo.
+     * @param nome Nome da p�gina considerando tamb�m a enten��o .txt.
+     * @param change long utilizado para verifica��o de mudan�as no arquivo.
      */
     public Pagina(String nome, long change) {
         this.nome = nome;
@@ -43,7 +43,7 @@ public class Pagina implements Comparable, Serializable {
 
     /**
      *
-     * @return Retorna a relevância da página.
+     * @return Retorna a relev�ncia da p�gina.
      */
     public int getRelevancia() {
         return relevancia;
@@ -53,9 +53,9 @@ public class Pagina implements Comparable, Serializable {
     }
 
     /**
-     * Quantidade de vezes que a página foi visitada.
+     * Quantidade de vezes que a p�gina foi visitada.
      *
-     * @return Retorna a quantidade de vezes que a página foi exibida.
+     * @return Retorna a quantidade de vezes que a p�gina foi exibida.
      */
     public int getVisit() {
         return visit;
@@ -63,7 +63,7 @@ public class Pagina implements Comparable, Serializable {
 
     @Override
     public String toString() {
-        return "Página: " + nome + "    Visitas: " + visit + "Relevância" + this.relevancia;
+        return "P�gina: " + nome + "    Visitas: " + visit;
     }
 
     /**
@@ -75,7 +75,7 @@ public class Pagina implements Comparable, Serializable {
 
     /**
      *
-     * @return Retorna o valor de modificação da página.
+     * @return Retorna o valor de modifica��es da p�gina.
      */
     public long getChange() {
         return change;
@@ -83,7 +83,7 @@ public class Pagina implements Comparable, Serializable {
 
     /**
      *
-     * @param change Alreta o valor de modificação da página
+     * @param change Alreta o valor de modificação da p�gina
      */
     public void setChange(long change) {
         this.change = change;
@@ -91,7 +91,7 @@ public class Pagina implements Comparable, Serializable {
 
     /**
      *
-     * @return Retorna o valor de relevância da página a uma determinada Palavra
+     * @return Retorna o valor de relev�cncia da p�gina a uma determinada Palavra
      * que ele pertence.
      */
     public int getRepeticao() {
@@ -99,7 +99,7 @@ public class Pagina implements Comparable, Serializable {
     }
 
     /**
-     * Incrementa mais 1 a cada vez que a palavra se repetir na página.
+     * Incrementa mais 1 a cada vez que a palavra se repetir na p�gina.
      */
     public void repetir() {
         this.relevancia = relevancia + 1;
@@ -107,7 +107,7 @@ public class Pagina implements Comparable, Serializable {
 
     /**
      *
-     * @return Retorna o nome da página
+     * @return Retorna o nome da p�gina
      */
     public String getNome() {
         return nome;

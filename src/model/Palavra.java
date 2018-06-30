@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
- *<b>Palavra</b> Classe utilizada para salvas as informaÃ§Ãµes de uma palavra, contendo o nome, paginas que a palavra existe e a quantidade de vezes pesquisada.
+ *<b>Palavra</b> Classe utilizada para salvas as informações de uma palavra, contendo o nome, paginas que a palavra existe e a quantidade de vezes pesquisada.
  * @author Matheus Nascimento e Elvis Serafim
  */
 public class Palavra implements Comparable, Comparator, Serializable{
@@ -23,7 +23,7 @@ public class Palavra implements Comparable, Comparator, Serializable{
     /**
      *
      * @param palavra Uma String informando o Palavra.
-     * @param pagina PÃ¡gina que existe a palavra.
+     * @param pagina Página que existe a palavra.
      */
     public Palavra(String palavra, Pagina pagina) {
         this.palavra = palavra;
@@ -53,7 +53,7 @@ public class Palavra implements Comparable, Comparator, Serializable{
     }
 
     /**
-     *Retorna um iterator para percorrer todas as pÃ¡ginas que a palavra pertence.
+     *Retorna um iterator para percorrer todas as páginas que a palavra pertence.
      * @return Retorna o iterator de paginas
      */
     public Iterator imprimirArquivos() {        
@@ -69,7 +69,7 @@ public class Palavra implements Comparable, Comparator, Serializable{
     }
 
     /**
-     *Lista de pÃ¡ginas que a palavra pertence.
+     *Lista de páginas que a palavra pertence.
      * @return Retorna as paginas que a palavra pertence.
      */
     public LinkedList getPaginas() {
@@ -78,7 +78,7 @@ public class Palavra implements Comparable, Comparator, Serializable{
 
     /**
      *
-     * @param paginas ParÃ¢mentro dado para alterar a lista de pÃ¡ginas.
+     * @param paginas Parâmentro dado para alterar a lista de páginas.
      */
     public void setPaginas(LinkedList paginas) {
         this.paginas = paginas;
