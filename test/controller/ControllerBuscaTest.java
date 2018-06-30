@@ -17,10 +17,13 @@ import static org.junit.Assert.*;
 import util.ArvorePalavra;
 import util.QuickSort;
 
-/**
- *
- * @author Matheus Nascimento
- */
+ /**
+  * Classe de Testes da classe ControllerBusca.
+  * 
+ * @author Matheus Nascimento e Elvis Serafim
+ * @since Jul 2018
+ * @version 1.0
+ **/
 public class ControllerBuscaTest {
 
     ControllerBusca search;

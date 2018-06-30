@@ -10,8 +10,11 @@ import model.Pagina;
 import model.Palavra;
 
 /**
+ * A classe <b>ArvorePalavra</b> é uma classe que herda da classe Árvore.
  *
- * @author Matheus Nascimento
+ * @author Matheus Nascimento e Elvis Serafim
+ * @since Jul 2018
+ * @version 1.0
  */
 public class ArvorePalavra extends Arvore{
     

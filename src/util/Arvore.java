@@ -17,26 +17,48 @@ import java.util.Stack;
 import model.Palavra;
 
 /**
+ * A classe <b>Arvore</b> é a classe para armazenar a estrutura de dado Árvore AVL.
  *
- * @author Matheus Nascimento
+ * @author Matheus Nascimento e Elvis Serafim
+ * @since Jul 2018
+ * @version 1.0
  */
 public class Arvore implements Serializable {
-
+    
     protected No raiz;
-
+    
+    /**
+     * Método que insere um objeto na Árvore AVL, passando como parâmetro para o método secundário, o nó com o
+     * objeto a ser inserido e a raiz da árvore.
+     * @param date Objeto Comparable
+     */
     public void inserir(Comparable date) {
         No n = new No(date);
         inserirAVL(this.raiz, n);
     }
 
+    /**
+     *Método que retorna a raiz da árvore AVL.
+     * @return No raiz da árvore.
+     */
     public No getRaiz() {
         return raiz;
     }
 
+    /**
+     * Método que designa um novo No raiz á árvore.
+     * @param raiz Nó a ser a raiz.
+     */
     public void setRaiz(No raiz) {
         this.raiz = raiz;
     }
 
+    /**
+     * Método secundário de inserção da árvore, onde é recebido como parâmetro 
+     * o nó da árvore e o nó com o objeto a ser inserido na árvore.
+     * @param aComparar Nó a ser comparado
+     * @param aInserir Nó a ser inserido na árvore.
+     */
     public void inserirAVL(No aComparar, No aInserir) {
 
         if (aComparar == null) {
@@ -72,6 +94,10 @@ public class Arvore implements Serializable {
 
     }
 
+    /**
+     *Método que verifica o balanceamento de um nó da árvore.
+     * @param atual Nó atual 
+     */
     public void verificarBalanceamento(No atual) {
         setBalanceamento(atual);
         int balanceamento = atual.getBalanceamento();
@@ -120,6 +146,10 @@ public class Arvore implements Serializable {
         return fila;
     }
 
+    /**
+     * Método que remove uma objeto Palavra da árvore.
+     * @param palavra Palavra a ser removida.
+     */
     public void remover(Palavra palavra) {
         removerAVL(this.raiz, palavra);
     }
@@ -179,7 +209,7 @@ public class Arvore implements Serializable {
         r = null;
     }
 
-    public No rotacaoEsquerda(No inicial) {
+    private No rotacaoEsquerda(No inicial) {
 
         No right = inicial.getRight();
         right.setPai(inicial.getPai());
@@ -209,7 +239,7 @@ public class Arvore implements Serializable {
         return right;
     }
 
-    public No rotacaoDireita(No inicial) {
+    private No rotacaoDireita(No inicial) {
 
         No left = inicial.getLeft();
         left.setPai(inicial.getPai());
@@ -239,12 +269,12 @@ public class Arvore implements Serializable {
         return left;
     }
 
-    public No duplaRotacaoEsquerdaDireita(No inicial) {
+    private No duplaRotacaoEsquerdaDireita(No inicial) {
         inicial.setLeft(rotacaoEsquerda(inicial.getLeft()));
         return rotacaoDireita(inicial);
     }
 
-    public No duplaRotacaoDireitaEsquerda(No inicial) {
+    private No duplaRotacaoDireitaEsquerda(No inicial) {
         inicial.setRight(rotacaoDireita(inicial.getRight()));
         return rotacaoEsquerda(inicial);
     }
@@ -289,6 +319,10 @@ public class Arvore implements Serializable {
         no.setBalanceamento(altura(no.getRight()) - altura(no.getLeft()));
     }
 
+    /**
+     * Método que verifica se a árvore está vazia, analisando se a raiz é null.
+     * @return boolean, true ou false.
+     */
     public boolean isEmpty() {
         return raiz == null;
     }

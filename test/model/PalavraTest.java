@@ -6,16 +6,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Testes de unidade para a classe {@link Foliao}
+ * Classe de Testes para a classe Palavra.
  */
 public class PalavraTest {
 
 	private Palavra p;
 	
-	
-	/**
-     * Este m�todo � executado antes de cada teste de unidade (testes a seguir), 
-     * e serve para inicializar objetos que s�o utilizados nos testes.
+     /**
+     * Este método é executado antes de cada teste de unidade (testes a seguir), 
+     * e serve para inicializar objetos que são utilizados nos testes.
      */
     @Before
     public void setUp() throws Exception {
@@ -23,10 +22,9 @@ public class PalavraTest {
     }
 
     /**
-     * Teste de unidade que verifica se os atributos de um foli�o s�o atribuidos e 
-     * modificados corretamente. Al�m disso, ele checa se o m�todo equals que 
-     * compara dois foli�es foi implementado corretamente.
-     */
+     * Teste de unidade que verifica se os atributos de uma Palavra são atribuidos e 
+     * modificados corretamente.
+     * **/
     @Test
     public void testBasic() {
         
