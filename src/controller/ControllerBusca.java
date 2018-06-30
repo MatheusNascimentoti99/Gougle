@@ -150,7 +150,6 @@ public class ControllerBusca implements Comparator {
                                 p.setSearch(((Palavra) temp).getSearch());
                                 buscaRapida.remover(p);
                                 buscaRapida.inserir(p);
-                                break;
                             }
                         }
                     }
