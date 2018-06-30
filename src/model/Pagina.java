@@ -119,4 +119,8 @@ public class Pagina implements Comparable, Serializable {
         return this.relevancia - outro.relevancia;
     }
 
+    public void setVisit(int visit) {
+        this.visit = visit;
+    }
+   
 }

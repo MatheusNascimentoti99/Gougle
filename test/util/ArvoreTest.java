@@ -12,9 +12,10 @@ import static org.junit.Assert.*;
 
 /**
  * Classe de testes para a classe Arvore.
- * @author Matheus Nascimento e Elvis Serafim
- * @since 
- */
+  * @author Matheus Nascimento e Elvis Serafim
+ * @since Jul 2018
+ * @version 1.0
+ **/
 public class ArvoreTest {
     
     private Arvore arvore;
@@ -87,5 +88,4 @@ public class ArvoreTest {
         arvore.remover(p);
         assertEquals(arvore.isEmpty(), true);
     }
-    
 }
