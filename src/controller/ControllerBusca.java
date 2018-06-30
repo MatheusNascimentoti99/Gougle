@@ -12,9 +12,11 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Pagina;
 import model.Palavra;
-import util.ArvorePalavra;
+import util.Arvore;
 import util.Crescente;
 import util.No;
 import util.QuickSort;
@@ -26,14 +28,16 @@ import util.QuickSort;
  * @since Jul 2018
  * @version 1.0
  */
-public class ControllerBusca implements Comparator {
+public class ControllerBusca implements Comparator, Runnable {
 
     private ControllerPaginas allFiles;
     private final ControllerFile save;
-    private ArvorePalavra buscaRapida;
+    private Arvore buscaRapida;
     private File file;
     private final QuickSort sort;
     private final Crescente comparador;
+
+
 
     /**
      *
@@ -41,9 +45,10 @@ public class ControllerBusca implements Comparator {
     public ControllerBusca() {
         allFiles = new ControllerPaginas();
         save = new ControllerFile();
-        buscaRapida = new ArvorePalavra();
+        buscaRapida = new Arvore();
         sort = new QuickSort();
         comparador = new Crescente();
+
     }
 
     /**
@@ -122,11 +127,11 @@ public class ControllerBusca implements Comparator {
         return change;
     }
 
-    private void atualizarArvore() throws Exception {
+    public void atualizarArvore() throws Exception {
         Queue palavras = filaPalavras();
         boolean allChange = false;
         if (modificedFiles()) {                 //Se for modificado, então é reiniciado a árvore com a nova leitura das palavras que estavam dentro dela.
-            buscaRapida = new ArvorePalavra();
+            buscaRapida = new Arvore();
             if (palavras != null) {
                 for (Object temp : palavras) {
                     if (this.addPalavra(((Palavra) temp).getPalavra())) {
@@ -160,22 +165,18 @@ public class ControllerBusca implements Comparator {
         atualizar();
     }
 
-    private int changePagina(Pagina oldPag) {                   //Método responsavel por verificar se o arquivo que a palavra pertence foi editada. 
+    private int changePagina(Pagina pagina) {                   //Método responsavel por verificar se o arquivo que a palavra pertence foi editada. 
         LinkedList paginas = allFiles.getFiles();
         Iterator it = paginas.iterator();
-        File pag = new File("repositorio\\" + oldPag.getNome());
+        File pag = new File("repositorio\\" + pagina.getNome());
         if (!pag.exists()) {                                    //Verifica se a página ainda existe.
             return -1;
         }
         while (it.hasNext()) {                                  //Perroce  a lista de páginas verificando se há diferenças.
             File arq = (File) it.next();
-            if (arq.lastModified() == oldPag.getChange()) {       //Se não tiver alteração, então retorna 0.
+            if (arq.lastModified() == pagina.getChange()) {       //Se não tiver alteração, então retorna 0.
                 return 0;
-            } else if (arq.getName().compareTo(oldPag.getNome()) == 0) {        //Se houver alteração, então retorna 1.
-                this.file = arq;
-                return 1;
             }
-
         }
         return -1;                                              //Se não existir, então retorna -1.
     }
@@ -200,9 +201,9 @@ public class ControllerBusca implements Comparator {
      *
      */
     public Comparable search(String palavra) throws IOException, NullPointerException, Exception {
-        atualizar();
+
         Palavra p;
-        atualizarArvore();
+
         p = (Palavra) search(buscaRapida.getRaiz(), palavra);
         if (p != null) {
             p.moreSearch();
@@ -255,7 +256,7 @@ public class ControllerBusca implements Comparator {
      *
      * @return Retorna a arvore de busca;
      */
-    public ArvorePalavra getBuscaRapida() {
+    public Arvore getBuscaRapida() {
         return buscaRapida;
     }
 
@@ -280,7 +281,7 @@ public class ControllerBusca implements Comparator {
      *
      * @param buscaRapida Valor para alteração da arvore de busca.
      */
-    public void setBuscaRapida(ArvorePalavra buscaRapida) {
+    public void setBuscaRapida(Arvore buscaRapida) {
         this.buscaRapida = buscaRapida;
     }
 
@@ -325,15 +326,15 @@ public class ControllerBusca implements Comparator {
      *
      * @return @throws FileNotFoundException
      */
-    public ArvorePalavra readTree() throws FileNotFoundException {
-        ArvorePalavra temp;
+    public Arvore readTree() throws FileNotFoundException {
+        Arvore temp;
         try {
-            temp = (ArvorePalavra) save.readDate("resources\\Tree.data");
+            temp = (Arvore) save.readDate("resources\\Tree.data");
         } catch (FileNotFoundException e) {
             temp = null;
         }
         if (temp == null) {
-            return new ArvorePalavra();
+            return new Arvore();
         }
         return temp;
     }
@@ -369,6 +370,17 @@ public class ControllerBusca implements Comparator {
 
         }
         return fila;
+
+    }
+
+    @Override
+    public void run() {
+        try {
+            atualizarArvore();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ControllerBusca.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 }

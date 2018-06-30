@@ -10,9 +10,11 @@
 package util;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
+import model.Pagina;
 
 import model.Palavra;
 
@@ -59,7 +61,25 @@ public class Arvore implements Serializable {
      * @param aComparar Nó a ser comparado
      * @param aInserir Nó a ser inserido na árvore.
      */
-    public void inserirAVL(No aComparar, No aInserir) {
+         private void fileEqual(No aComparar, No aInserir) {
+        boolean equal = false;
+        Palavra compara = (Palavra) aComparar.getDate();
+        Palavra nova = (Palavra) aInserir.getDate();
+        Iterator it = compara.getPaginas().iterator();
+        while (it.hasNext()) {
+            Pagina pagina = (Pagina) it.next();
+            if (pagina.getNome().equals(((Pagina) nova.getPaginas().getFirst()).getNome())) {
+                pagina.repetir();
+                equal = true;
+            }
+
+        }
+        if(equal == false){
+            compara.getPaginas().add(nova.getPaginas().getFirst());
+        }
+    }
+     
+         public void inserirAVL(No aComparar, No aInserir) {
 
         if (aComparar == null) {
             this.raiz = aInserir;
@@ -88,12 +108,16 @@ public class Arvore implements Serializable {
                     inserirAVL(aComparar.getRight(), aInserir);
                 }
 
+            } else {
+                if (aInserir.getDate().compareTo(aComparar.getDate()) == 0) {
+                    fileEqual(aComparar, aInserir);
+                       
+                    
+                }
             }
-
         }
 
     }
-
     /**
      *Método que verifica o balanceamento de um nó da árvore.
      * @param atual Nó atual 

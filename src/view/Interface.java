@@ -52,8 +52,8 @@ import util.Decrescente;
 
     @Override
     public void start(Stage palco) throws Exception {
-
         screenMain(palco);
+        
 
     }
 
@@ -119,7 +119,14 @@ import util.Decrescente;
         
 
         pesquisar.setOnMouseClicked((Event event) -> {
-
+            Thread thread = new Thread(search);
+            thread.start();
+            try {
+                thread.sleep(3 * 1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             LinkedList paginas = new LinkedList();
             try {
                 search.getControlPages().atualize();
@@ -137,7 +144,7 @@ import util.Decrescente;
             }
             if (campoTexto.getText().length() > 0) {
                 listaResul.visibleProperty().set(true);
-
+                
                 try {
                     paginas = search.foundPages(campoTexto.getText());
                 } catch (Exception ex) {
@@ -145,11 +152,11 @@ import util.Decrescente;
                 }
                 if (paginas != null) {
                     resulOrdemBusca(campoTexto, search, listaResul, paginas, search);
-                } 
+                }
             }
         });
         alternar(listaResul, alterna);
-        botaoTopPag(topPaginas, listaResul, kEscolhas, crescente, decrescente, positionBotoes, search);
+        Interface.botaoTopPag(topPaginas, listaResul, kEscolhas, crescente, decrescente, positionBotoes, search);
         botaoTopPala(topPalavras, listaResul, kEscolhas, crescente, decrescente, positionBotoes, search);
         palco.show();
 
@@ -213,8 +220,8 @@ import util.Decrescente;
     public static void botaoOrdemPag(ListView listaResul, Button botaoOrdem, TextField kEscolhas, ControllerBusca search, Comparator ordem) throws Exception {
         search.getControlPages().atualize();
         botaoOrdem.setOnMouseClicked(new EventHandler() {
+           
             Label pagina;
-
             @Override
             public void handle(Event event) {
                 listaResul.getItems().clear();
@@ -248,9 +255,10 @@ import util.Decrescente;
 
     public static void botaoCresPala(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) throws Exception {
         search.getControlPages().atualize();
+        
         crescente.setOnMouseClicked(new EventHandler() {
             Label pagina;
-
+               
             @Override
             public void handle(Event event) {
                 listaResul.getItems().clear();
@@ -323,6 +331,14 @@ import util.Decrescente;
     public static void botaoTopPag(Button topPaginas, ListView listaResul, TextField kEscolhas, Button crescente, Button decrescente, HBox positionBotoes, ControllerBusca search) throws Exception {
         search.getControlPages().atualize();
         topPaginas.setOnMouseClicked((Event event) -> {
+            Thread thread = new Thread(search);
+            thread.start();
+            try {
+                thread.sleep(3 * 1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             listaResul.getItems().clear();
             listaResul.visibleProperty().set(false);
             kEscolhas.visibleProperty().set(true);

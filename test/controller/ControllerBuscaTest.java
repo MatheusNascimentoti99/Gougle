@@ -14,7 +14,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import util.ArvorePalavra;
+import util.Arvore;
 import util.QuickSort;
 
  /**
@@ -58,7 +58,7 @@ public class ControllerBuscaTest {
 
     @Test
     public void testGetBuscaRapida() {
-        ArvorePalavra tree1 = new ArvorePalavra();
+        Arvore tree1 = new Arvore();
         assertFalse(search.getBuscaRapida().equals(tree1));
         search.setBuscaRapida(tree1);
         assertTrue(search.getBuscaRapida().equals(tree1));
@@ -74,7 +74,7 @@ public class ControllerBuscaTest {
 
     @Test
     public void testSetBuscaRapida() {
-        ArvorePalavra tree1 = new ArvorePalavra();
+        Arvore tree1 = new Arvore();
         assertFalse(search.getBuscaRapida().equals(tree1));
         search.setBuscaRapida(tree1);
         assertTrue(search.getBuscaRapida().equals(tree1));

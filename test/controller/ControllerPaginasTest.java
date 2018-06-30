@@ -9,9 +9,7 @@ import java.io.File;
 import java.util.LinkedList;
 import model.Pagina;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -83,9 +81,9 @@ public class ControllerPaginasTest {
         LinkedList paginas = new LinkedList();
         paginas.add(p1);
         assertEquals(true, controlPages.modificedFiles(paginas));          //Método só considera as páginas que estão no repositório.
-        File file = new File("resources\\Files.date");
-        file.delete();
-        assertEquals(false, controlPages.modificedFiles(paginas));
+        File file = new File("repositorio\\Files.txt");
+        ControllerFile.save(file, "repositorio");
+        assertEquals(true, controlPages.modificedFiles(paginas));
     }
 
     @Test
