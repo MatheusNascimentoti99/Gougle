@@ -31,12 +31,12 @@ public class ControllerBuscaTest {
     Palavra p1;
     Pagina pag1, pag2;
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
+
 
     @Before
     public void setUp() {
+        File tree = new File("resources\\Tree.data");
+        tree.delete();
         search = new ControllerBusca();
         paginas = new LinkedList();
         pag1 = new Pagina("teste1.txt", 123456);
@@ -46,11 +46,11 @@ public class ControllerBuscaTest {
 
     @After
     public void tearDown() throws Exception {
-        File file = new File("resources\\Tree.date");
+        File file = new File("resources\\Tree.data");
         file.delete();
-        File file2 = new File("resources\\Files.date");
+        File file2 = new File("resources\\Files.data");
         file2.delete();
-        File file3 = new File("resources\\ListPages.date");
+        File file3 = new File("resources\\ListPages.data");
         file3.delete();
 
     }

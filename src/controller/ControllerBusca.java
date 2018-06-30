@@ -31,7 +31,6 @@ import util.QuickSort;
 public class ControllerBusca implements Comparator, Runnable {
 
     private ControllerPaginas allFiles;
-    private final ControllerFile save;
     private Arvore buscaRapida;
     private File file;
     private final QuickSort sort;
@@ -44,7 +43,6 @@ public class ControllerBusca implements Comparator, Runnable {
      */
     public ControllerBusca() {
         allFiles = new ControllerPaginas();
-        save = new ControllerFile();
         buscaRapida = new Arvore();
         sort = new QuickSort();
         comparador = new Crescente();
@@ -182,14 +180,14 @@ public class ControllerBusca implements Comparator, Runnable {
     }
 
     private Pagina readPasta() throws FileNotFoundException {
-        return (Pagina) save.readDate("resources\\ModificedPasta.data");
+        return (Pagina) ControllerFile.readDate("resources\\ModificedPasta.data");
     }
 
     private void savePasta() throws Exception {
         File arq = new File("repositorio");
         Pagina pasta = new Pagina("repositorio", arq.lastModified());
 
-        save.save(pasta, "resources\\ModificedPasta.data");
+        ControllerFile.save(pasta, "resources\\ModificedPasta.data");
     }
 
     /**
@@ -318,7 +316,7 @@ public class ControllerBusca implements Comparator, Runnable {
      * binário.
      */
     public void saveTree() throws Exception {
-        save.save(buscaRapida, "resources\\Tree.data");
+        ControllerFile.save(buscaRapida, "resources\\Tree.data");
     }
 
     /**
@@ -329,7 +327,7 @@ public class ControllerBusca implements Comparator, Runnable {
     public Arvore readTree() throws FileNotFoundException {
         Arvore temp;
         try {
-            temp = (Arvore) save.readDate("resources\\Tree.data");
+            temp = (Arvore) ControllerFile.readDate("resources\\Tree.data");
         } catch (FileNotFoundException e) {
             temp = null;
         }

@@ -35,8 +35,10 @@ public class ControllerPaginasTest {
 
     @After
     public void tearDown() {
-        File listPages = new File("resources\\ListPages.date");
+        File listPages = new File("resources\\ListPages.data");
+        File listFiles = new File("resources\\Files.data");
         listPages.delete();
+        listFiles.delete();
     }
 
     @Test
@@ -90,9 +92,7 @@ public class ControllerPaginasTest {
     public void testAtualize() throws Exception {
         File file = new File("resources\\ListPages.date");
         file.delete();
-        assertFalse(file.exists());
-        assertEquals(null, controlPages.readListFiles());
-        
+        assertFalse(file.exists());        
         controlPages.atualize();
         assertTrue(file.exists());
         LinkedList files = controlPages.readListFiles();

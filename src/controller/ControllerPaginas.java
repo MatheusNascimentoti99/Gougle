@@ -29,7 +29,6 @@ import util.QuickSort;
  */
 public class ControllerPaginas {
 
-    private final ControllerFile save;
 
     /**
      * Constante que informa o diretorio que será salvo os recursos utilizados
@@ -48,13 +47,12 @@ public class ControllerPaginas {
      *
      */
     public ControllerPaginas() {
-        save = new ControllerFile();
         allPages = new LinkedList();
     }
 
     void saveListPage() throws Exception {
         getPaginas();
-        save.save(allPages, pastaRecursos + "ListPages.date");
+        ControllerFile.save(allPages, pastaRecursos + "ListPages.date");
     }
 
     /**
@@ -66,7 +64,7 @@ public class ControllerPaginas {
     public LinkedList readListPages() throws FileNotFoundException {
         LinkedList temp;
         try {
-            temp = (LinkedList) save.readDate("resources\\ListPages.date");
+            temp = (LinkedList) ControllerFile.readDate("resources\\ListPages.date");
         } catch (FileNotFoundException e) {
             temp = null;
         }
@@ -117,14 +115,14 @@ public class ControllerPaginas {
      * @throws FileNotFoundException Caso o arquivo não exista.
      */
     public LinkedList readListFiles() throws FileNotFoundException {
-        LinkedList lista = (LinkedList) save.readDate(pastaRecursos + "Files.date");
+        LinkedList lista = (LinkedList) ControllerFile.readDate(pastaRecursos + "Files.date");
         return lista != null ? lista : null;
     }
 
     void saveListFiles() throws Exception {
         File file = new File(pastaRecursos + "Files.date");
         if (!file.exists()) {
-            save.save(getFiles(), pastaRecursos + "Files.date");
+            ControllerFile.save(getFiles(), pastaRecursos + "Files.date");
         }
     }
 
