@@ -159,7 +159,7 @@ public class Arvore implements Serializable {
             this.raiz = atual;
         }
     }
-    //C√≥digo retirado da aula 09 de Estrutura de Dados do Professora Jo√£o Rocha.
+    //CÛdigo retirado da aula 09 de Estrutura de Dados do Professora Jo„o Rocha.
 
     public Queue preOrder() {
         Queue fila = new LinkedList();
@@ -179,7 +179,7 @@ public class Arvore implements Serializable {
     }
 
     /**
-     * M√©todo que remove uma objeto Palavra da √°rvore.
+     * MÈtodo que remove uma objeto Palavra da ·rvore.
      *
      * @param palavra Palavra a ser removida.
      */
@@ -202,6 +202,7 @@ public class Arvore implements Serializable {
         }
     }
 
+    //CÛdigo retirado da aula 09 de Estrutura de Dados do Professora Jo„o Rocha.
     private void remove(No e) {
         No n = e;
         No parent = n.getPai();

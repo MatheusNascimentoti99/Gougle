@@ -102,4 +102,24 @@ public class ControllerBuscaTest {
     }
 
 
+
+
+    @Test
+    public void testSearch() throws Exception {
+        search.getBuscaRapida().inserir(p1);
+        assertEquals(search.search("Palavra teste"), p1);
+        search.getBuscaRapida().remover(p1);
+        assertEquals(search.search("Palavra teste"), null);
+        
+    }
+
+    @Test
+    public void testAtualizar() throws Exception {
+    }
+
+
+
+ 
+
+
 }
