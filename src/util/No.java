@@ -18,7 +18,7 @@ import java.io.Serializable;
  * @version 1.0
  */
 public final class No implements Serializable{
-    private Comparable date;
+    private Comparable data;
     private No esquerda;
     private No direita;
     private No pai;
@@ -26,10 +26,10 @@ public final class No implements Serializable{
     
     /**
      *Construtor da classe No, onde é recebido como parâmetro, um objeto Comparable. 
-     * @param date Objeto Comparable a ser inserido em um objeto No.
+     * @param data Objeto Comparable a ser inserido em um objeto No.
      */
-    public No(Comparable date) {
-        this.date = date;
+    public No(Comparable data) {
+        this.data = data;
         setLeft(setRight(setPai(null)));
         setBalanceamento(0);
         
@@ -39,16 +39,16 @@ public final class No implements Serializable{
      *Método que retorna o objeto dentro do No.
      * @return Objeto Comparable.
      */
-    public Comparable getDate() {
-        return date;
+    public Comparable getData() {
+        return data;
     }
 
     /**
-     *Método que designa um novo objeto para o No.
-     * @param date Novo objeto a ser inserido no No.
+     *M�todo que designa um novo objeto para o No.
+     * @param data Novo objeto a ser inserido no No.
      */
-    public void setDate(Comparable date) {
-        this.date = date;
+    public void setData(Comparable data) {
+        this.data = data;
     }
 
     /**

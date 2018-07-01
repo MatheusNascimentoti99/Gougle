@@ -28,7 +28,6 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -117,7 +116,7 @@ import util.Decrescente;
         palco.setTitle("Gougle FSA");
         palco.setScene(cena);
         
-
+        
         pesquisar.setOnMouseClicked((Event event) -> {
             Thread thread = new Thread(search);
             thread.start();
@@ -161,6 +160,7 @@ import util.Decrescente;
         palco.show();
 
     }
+
 
     private static void resulOrdemBusca(TextField campoTexto, ControllerBusca search, ListView listaResul, LinkedList paginas, Comparator ordem) {
         LinkedList temp = search.getControlPages().sort(paginas, ordem);

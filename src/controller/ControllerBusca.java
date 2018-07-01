@@ -242,12 +242,12 @@ public class ControllerBusca implements Comparator, Runnable {
         Comparable aux = null;
         if (atual != null) {
 
-            if (((Palavra) atual.getDate()).getPalavra().compareTo(palavra) < 0) {
+            if (((Palavra) atual.getData()).getPalavra().compareTo(palavra) < 0) {
                 aux = search(atual.getRight(), palavra);
-            } else if (((Palavra) atual.getDate()).getPalavra().compareTo(palavra) > 0) {
+            } else if (((Palavra) atual.getData()).getPalavra().compareTo(palavra) > 0) {
                 aux = search(atual.getLeft(), palavra);
             } else {
-                return atual.getDate();
+                return atual.getData();
             }
         }
         return aux;

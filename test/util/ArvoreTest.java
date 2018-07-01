@@ -72,8 +72,18 @@ public class ArvoreTest {
         arvore.remover(p2);
         assertEquals(arvore.getRaiz().getLeft(), null);
         arvore.remover(p);
-        assertEquals(arvore.getRaiz(), null);
-        assertEquals(arvore.isEmpty(), true);
+        arvore.inserir(b);
+        arvore.inserir(b2);
+        arvore.inserir(b3);
+        
+        assertEquals(arvore.getRaiz().getData().compareTo(p), 1);
+        assertEquals(arvore.getRaiz().getData().compareTo(p2), 0);
+        assertEquals(arvore.getRaiz().getData().compareTo(p3), -1);
+        arvore.remover(b2);
+        assertEquals(arvore.getRaiz().getData().compareTo(p), 0);
+        assertEquals(arvore.getRaiz().getRight().getData().compareTo(p3), 0);
+//        assertEquals(arvore.getRaiz(), null);
+//        assertEquals(arvore.isEmpty(), true);
         
     }
     /**

@@ -19,19 +19,22 @@ import model.Pagina;
 import model.Palavra;
 
 /**
- * A classe <b>Arvore</b> é a classe para armazenar a estrutura de dado Árvore AVL.
+ * A classe <b>Arvore</b> é a classe para armazenar a estrutura de dado Árvore
+ * AVL.
  *
  * @author Matheus Nascimento e Elvis Serafim
  * @since Jul 2018
  * @version 1.0
  */
 public class Arvore implements Serializable {
-    
+
     protected No raiz;
-    
+
     /**
-     * Método que insere um objeto na Árvore AVL, passando como parâmetro para o método secundário, o nó com o
-     * objeto a ser inserido e a raiz da árvore.
+     * Método que insere um objeto na Árvore AVL, passando como parâmetro
+     * para o método secundário, o nó com o objeto a ser inserido e a raiz da
+     * árvore.
+     *
      * @param date Objeto Comparable
      */
     public void inserir(Comparable date) {
@@ -40,7 +43,8 @@ public class Arvore implements Serializable {
     }
 
     /**
-     *Método que retorna a raiz da árvore AVL.
+     * Método que retorna a raiz da árvore AVL.
+     *
      * @return No raiz da árvore.
      */
     public No getRaiz() {
@@ -49,6 +53,7 @@ public class Arvore implements Serializable {
 
     /**
      * Método que designa um novo No raiz á árvore.
+     *
      * @param raiz Nó a ser a raiz.
      */
     public void setRaiz(No raiz) {
@@ -56,15 +61,17 @@ public class Arvore implements Serializable {
     }
 
     /**
-     * Método secundário de inserção da árvore, onde é recebido como parâmetro 
-     * o nó da árvore e o nó com o objeto a ser inserido na árvore.
+     * Método secundário de inserção da árvore, onde é recebido como
+     * parâmetro o nó da árvore e o nó com o objeto a ser inserido na
+     * árvore.
+     *
      * @param aComparar Nó a ser comparado
      * @param aInserir Nó a ser inserido na árvore.
      */
-         private void fileEqual(No aComparar, No aInserir) {
+    private void fileEqual(No aComparar, No aInserir) {
         boolean equal = false;
-        Palavra compara = (Palavra) aComparar.getDate();
-        Palavra nova = (Palavra) aInserir.getDate();
+        Palavra compara = (Palavra) aComparar.getData();
+        Palavra nova = (Palavra) aInserir.getData();
         Iterator it = compara.getPaginas().iterator();
         while (it.hasNext()) {
             Pagina pagina = (Pagina) it.next();
@@ -74,19 +81,19 @@ public class Arvore implements Serializable {
             }
 
         }
-        if(equal == false){
+        if (equal == false) {
             compara.getPaginas().add(nova.getPaginas().getFirst());
         }
     }
-     
-         public void inserirAVL(No aComparar, No aInserir) {
+
+    public void inserirAVL(No aComparar, No aInserir) {
 
         if (aComparar == null) {
             this.raiz = aInserir;
 
         } else {
 
-            if (aInserir.getDate().compareTo(aComparar.getDate()) < 0) {
+            if (aInserir.getData().compareTo(aComparar.getData()) < 0) {
 
                 if (aComparar.getLeft() == null) {
                     aComparar.setLeft(aInserir);
@@ -97,7 +104,7 @@ public class Arvore implements Serializable {
                     inserirAVL(aComparar.getLeft(), aInserir);
                 }
 
-            } else if (aInserir.getDate().compareTo(aComparar.getDate()) > 0) {
+            } else if (aInserir.getData().compareTo(aComparar.getData()) > 0) {
 
                 if (aComparar.getRight() == null) {
                     aComparar.setRight(aInserir);
@@ -109,18 +116,19 @@ public class Arvore implements Serializable {
                 }
 
             } else {
-                if (aInserir.getDate().compareTo(aComparar.getDate()) == 0) {
+                if (aInserir.getData().compareTo(aComparar.getData()) == 0) {
                     fileEqual(aComparar, aInserir);
-                       
-                    
+
                 }
             }
         }
 
     }
+
     /**
-     *Método que verifica o balanceamento de um nó da árvore.
-     * @param atual Nó atual 
+     * Método que verifica o balanceamento de um nó da árvore.
+     *
+     * @param atual Nó atual
      */
     public void verificarBalanceamento(No atual) {
         setBalanceamento(atual);
@@ -159,7 +167,7 @@ public class Arvore implements Serializable {
         stack.push(raiz);
         while (!stack.isEmpty()) {
             No n = (No) stack.pop();
-            fila.add(n.getDate());
+            fila.add(n.getData());
             if (n.getRight() != null) {
                 stack.push(n.getRight());
             }
@@ -172,63 +180,56 @@ public class Arvore implements Serializable {
 
     /**
      * Método que remove uma objeto Palavra da árvore.
+     *
      * @param palavra Palavra a ser removida.
      */
- public void remover(Comparable palavra) {
+    public void remover(Comparable palavra) {
         remover(this.raiz, palavra);
     }
 
     private void remover(No atual, Comparable palavra) {
         if (raiz == null) {
         } else {
-            if (atual.getDate().compareTo(palavra) > 0) {
+            if (atual.getData().compareTo(palavra) > 0) {
                 remover(atual.getLeft(), palavra);
 
-            } else if (atual.getDate().compareTo(palavra) < 0) {
+            } else if (atual.getData().compareTo(palavra) < 0) {
                 remover(atual.getRight(), palavra);
 
-            } else if (atual.getDate().equals(palavra)) {
-                removerNoEncontrado(atual);
+            } else if (atual.getData().equals(palavra)) {
+                remove(atual);
             }
         }
     }
 
-    private void removerNoEncontrado(No aRemover) {
-        No aux;
-        //Verifica se o n� a ser removido � uma folha.
-        if (aRemover.getLeft()== null || aRemover.getRight()== null) {
-            if (aRemover.getPai() == null) {
-                this.raiz = null;
-                return;
-            }
-            aux = aRemover;
+    private void remove(No e) {
+        No n = e;
+        No parent = n.getPai();
+        if (n.getLeft() != null && n.getRight() != null) {
+            n.setData(n.getLeft().getData());
+            remove(n.getLeft());
+        } else if (n.getLeft() != null || n.getRight() != null) {
+            No c = n.getLeft() != null ? n.getLeft() : n.getRight();
+            replace(n, c);
         } else {
-            //Caso contrario ele ir� procurar o proximo n� que poder� substituir aquela sub-�rvore.
-            aux = sucessor(aRemover);
-            aRemover.setDate(aux.getDate());
+            replace(n, null);
         }
-        No aux2;
-        if (aux.getLeft()!= null) {
-            aux2 = aux.getLeft();
-        } else {
-            aux2 = aux.getRight();
-        }
+    }
 
-        if (aux2 != null) {
-            aux2.setPai(aux.getPai());
-        }
-
-        if (aux.getPai() == null) {
-            this.raiz = aux2;
+    private void replace(No n, No c) {
+        if (n == raiz) {
+            raiz = c;
         } else {
-            if (aux == aux.getPai().getLeft()) {
-                aux.getPai().setLeft(aux2);
+            if (n == n.getPai().getLeft()) {
+                n.getPai().setLeft(c);
             } else {
-                aux.getPai().setRight(aux2);
+                n.getPai().setRight(c);
             }
-            verificarBalanceamento(aux.getPai());
         }
     }
+
+
+
     private No rotacaoEsquerda(No inicial) {
 
         No right = inicial.getRight();
@@ -300,9 +301,9 @@ public class Arvore implements Serializable {
     }
 
     public No sucessor(No q) {
-        if (q.getRight()!= null) {
+        if (q.getRight() != null) {
             No r = q.getRight();
-            while (r.getLeft()!= null) {
+            while (r.getLeft() != null) {
                 r = r.getLeft();
             }
             return r;
@@ -340,7 +341,9 @@ public class Arvore implements Serializable {
     }
 
     /**
-     * Método que verifica se a árvore está vazia, analisando se a raiz é null.
+     * Método que verifica se a árvore está vazia, analisando se a raiz é
+     * null.
+     *
      * @return boolean, true ou false.
      */
     public boolean isEmpty() {

@@ -71,7 +71,7 @@ public class ControllerPaginasTest {
     public void testSaveListFiles() throws Exception {
         controlPages.atualize();
         controlPages.saveListFiles();
-        File file = new File("resources\\ListPages.date");
+        File file = new File("resources\\ListPages.data");
         assertTrue(file.exists());
         LinkedList files = controlPages.readListFiles();
         assertEquals(files, controlPages.readListFiles());
@@ -90,7 +90,7 @@ public class ControllerPaginasTest {
 
     @Test
     public void testAtualize() throws Exception {
-        File file = new File("resources\\ListPages.date");
+        File file = new File("resources\\ListPages.data");
         file.delete();
         assertFalse(file.exists());        
         controlPages.atualize();
