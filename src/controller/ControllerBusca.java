@@ -107,7 +107,7 @@ public class ControllerBusca implements Comparator, Runnable {
     }
 
     private boolean modificedFiles() throws FileNotFoundException, Exception {
-        File pasta = new File("resources\\ModificedPasta.data");
+        File pasta = new File("./resources/ModificedPasta.data");
         Pagina pastaOld;
         boolean change = false;
         if (!pasta.exists()) {
@@ -115,7 +115,7 @@ public class ControllerBusca implements Comparator, Runnable {
         } else {
             pastaOld = readPasta();
             if (pastaOld != null) {
-                File pastaRecent = new File("repositorio");
+                File pastaRecent = new File("./repositorio");
                 if (pastaOld.getChange() != pastaRecent.lastModified()) {
                     savePasta();
                     change = true;
@@ -169,7 +169,7 @@ public class ControllerBusca implements Comparator, Runnable {
     private int changePagina(Pagina pagina) {                   //Método responsavel por verificar se o arquivo que a palavra pertence foi editada. 
         LinkedList paginas = allFiles.getFiles();
         Iterator it = paginas.iterator();
-        File pag = new File("repositorio\\" + pagina.getNome());
+        File pag = new File("./repositorio/" + pagina.getNome());
         if (!pag.exists()) {                                    //Verifica se a página ainda existe.
             return -1;
         }
@@ -183,14 +183,14 @@ public class ControllerBusca implements Comparator, Runnable {
     }
 
     private Pagina readPasta() throws FileNotFoundException {
-        return (Pagina) ControllerFile.readDate("resources\\ModificedPasta.data");
+        return (Pagina) ControllerFile.readDate("./resources/ModificedPasta.data");
     }
 
     private void savePasta() throws Exception {
-        File arq = new File("repositorio");
-        Pagina pasta = new Pagina("repositorio", arq.lastModified());
+        File arq = new File("./repositorio");
+        Pagina pasta = new Pagina("./repositorio", arq.lastModified());
 
-        ControllerFile.save(pasta, "resources\\ModificedPasta.data");
+        ControllerFile.save(pasta, "./resources/ModificedPasta.data");
     }
 
     /**
@@ -223,7 +223,7 @@ public class ControllerBusca implements Comparator, Runnable {
      * @throws Exception Exceção ao ler/salvar.
      */
     public void atualizar() throws Exception {
-        File arq = new File("resources\\Tree.data");
+        File arq = new File("./resources/Tree.data");
         if (!arq.exists()) {
             this.saveTree();
         }
@@ -319,7 +319,7 @@ public class ControllerBusca implements Comparator, Runnable {
      * binário.
      */
     public void saveTree() throws Exception {
-        ControllerFile.save(buscaRapida, "resources\\Tree.data");
+        ControllerFile.save(buscaRapida, "./resources/Tree.data");
     }
 
     /**
@@ -330,7 +330,7 @@ public class ControllerBusca implements Comparator, Runnable {
     public Arvore readTree() throws FileNotFoundException {
         Arvore temp;
         try {
-            temp = (Arvore) ControllerFile.readDate("resources\\Tree.data");
+            temp = (Arvore) ControllerFile.readDate("./resources/Tree.data");
         } catch (FileNotFoundException e) {
             temp = null;
         }

@@ -36,13 +36,13 @@ public class ControllerPaginas {
      * Constante que informa o diretorio que ser√° salvo os recursos utilizados
      * no projeto.
      */
-    public final String pastaRecursos = "resources\\";
+    public final String pastaRecursos = "./resources/";
 
     /**
      * Constante que informa o diretorio que ser√° capturado as p√°ginas que
      * poder√£o ser pesquisadas.
      */
-    public final String repositorio = "repositorio\\";
+    public final String repositorio = "./repositorio/";
     private LinkedList allPages;
 
     /**
@@ -66,7 +66,7 @@ public class ControllerPaginas {
     public LinkedList readListPages() throws FileNotFoundException {
         LinkedList temp;
         try {
-            temp = (LinkedList) ControllerFile.readDate("resources\\ListPages.data");
+            temp = (LinkedList) ControllerFile.readDate("./resources/ListPages.data");
         } catch (FileNotFoundException e) {
             temp = null;
         }
@@ -83,11 +83,14 @@ public class ControllerPaginas {
      */
     public LinkedList getFiles() {
         FileFilter filter = (File pathname) -> pathname.getName().endsWith(".txt");
-        File dir = new File("repositorio");
+        File dir = new File("./repositorio");
         File[] files = dir.listFiles(filter);
         LinkedList temp = new LinkedList();
+        if(files != null){
         temp.addAll(Arrays.asList(files));
+        }
         return temp;
+        
     }
 
     /**
@@ -156,7 +159,7 @@ public class ControllerPaginas {
      * index acessar um local da lista que n√£o exista.
      */
     public void showFile(int index) throws FileNotFoundException, Exception {
-        File file = new File("resources\\ListPages.data");
+        File file = new File("./resources/ListPages.data");
         if (!file.exists()) {
             saveListPage();
         }
@@ -178,7 +181,7 @@ public class ControllerPaginas {
      * instanciar o File.
      */
     public void atualize() throws Exception {
-        File file = new File("resources\\ListPages.data");
+        File file = new File("./resources/ListPages.data");
         if (!file.exists()) {
             saveListPage();
         }
@@ -199,7 +202,7 @@ public class ControllerPaginas {
         boolean existe = false;
 
         FileFilter filter = (File pathname) -> pathname.getName().endsWith(".txt");
-        File dir = new File("repositorio");
+        File dir = new File("./repositorio");
         File[] files = dir.listFiles(filter);
         for (File file : files) {
             if (readFileWord(file, palavraBuscada, arvore)) {
@@ -297,11 +300,11 @@ public class ControllerPaginas {
     }
 
     /**
-     * M√©todo para ordena√ß√£o de p√°ginas.
+     * MÈtodo para ordenaÁ„o de p·ginas.
      *
-     * @param paginas Lista de p√°ginas a serem ordenadas.
-     * @param ordem Crit√©rio a ser utilizado para ordena√ß√£o.
-     * @return Retorna uma lista com o conte√∫do ordenado.
+     * @param paginas Lista de p·ginas a serem ordenadas.
+     * @param ordem CritÈrio a ser utilizado para ordenaÁ„o.
+     * @return Retorna uma lista com o conte˙do ordenado.
      */
     public LinkedList sort(LinkedList paginas, Comparator ordem) {
         Queue fila = new LinkedList();
