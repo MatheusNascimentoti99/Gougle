@@ -74,7 +74,7 @@ import util.Decrescente;
         campoResul.setAlignment(Pos.CENTER);
         TextArea campo = new TextArea();
         Button alterna = new Button();
-        alterna.setGraphic(icone("icon/UpDown.png", 15, 20));
+        alterna.setGraphic(icone("icon/UpDown.png", 15, 20));   //Se apresentar erros, por favor, comente essa linha.
         Button pesquisar = new Button("Pesquisar");
         pesquisar.setTooltip(new Tooltip("Pesquisar paginas"));
         Button topPaginas = new Button("Top-K Páginas");
