@@ -113,9 +113,6 @@ public class ControllerBuscaTest {
         
     }
 
-    @Test
-    public void testAtualizar() throws Exception {
-    }
 
 
 

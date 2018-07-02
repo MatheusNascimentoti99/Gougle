@@ -64,6 +64,7 @@ public class ControllerBusca implements Comparator, Runnable {
         for (String palavra : textoSeparado) {              //Remove as posiveis pontuação que podem atrapalhar na identificação de uma palavra.
             palavra = palavra.toUpperCase();
             palavra = ControllerPaginas.semAcento(palavra);
+            palavra = palavra.replace("#", "");
             palavra = palavra.replace(" ", "");
             palavra = palavra.replace(".", "");
             palavra = palavra.replace("/", "");

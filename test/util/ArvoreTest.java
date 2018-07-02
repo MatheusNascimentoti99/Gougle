@@ -70,8 +70,8 @@ public class ArvoreTest {
         arvore.remover(p3);
         assertEquals(arvore.getRaiz().getRight(), null);
         arvore.remover(p2);
-        assertEquals(arvore.getRaiz().getLeft(), null);
         arvore.remover(p);
+        
         arvore.inserir(b);
         arvore.inserir(b2);
         arvore.inserir(b3);
@@ -80,8 +80,8 @@ public class ArvoreTest {
         assertEquals(arvore.getRaiz().getData().compareTo(p2), 0);
         assertEquals(arvore.getRaiz().getData().compareTo(p3), -1);
         arvore.remover(b2);
-        assertEquals(arvore.getRaiz().getData().compareTo(p), 0);
-        assertEquals(arvore.getRaiz().getRight().getData().compareTo(p3), 0);
+        assertEquals(arvore.getRaiz().getData().compareTo(p3), 0);
+        assertEquals(arvore.getRaiz().getLeft().getData().compareTo(p), 0);
 //        assertEquals(arvore.getRaiz(), null);
 //        assertEquals(arvore.isEmpty(), true);
         

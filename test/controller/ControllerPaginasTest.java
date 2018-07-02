@@ -31,6 +31,10 @@ public class ControllerPaginasTest {
         p1 = new Pagina("teste1.txt", 123456);
         p2 = new Pagina("teste2.txt", 987654);
         p3 = new Pagina("teste3.txt", 654123);
+        File listPages = new File("resources\\ListPages.data");
+        File listFiles = new File("resources\\Files.data");
+        listPages.delete();
+        listFiles.delete();
     }
 
     @After
@@ -57,10 +61,11 @@ public class ControllerPaginasTest {
     }
 
     @Test
-    public void testReadListFiles() throws Exception {
-        controlPages.atualize();                            //Atualiza o arquivo que contém a lista de arquivos.
+    public void testReadListFiles() throws Exception {                        
         LinkedList files = new LinkedList();
-        assertFalse(controlPages.readListFiles().isEmpty());
+        assertEquals(controlPages.readListFiles(), null);
+        controlPages.saveListFiles();
+        assertFalse(controlPages.readListFiles() == null);
         assertFalse(controlPages.readListFiles().equals(files));
         files = controlPages.readListFiles();
         assertTrue(controlPages.readListFiles().equals(files));
