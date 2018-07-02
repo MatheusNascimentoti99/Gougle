@@ -19,7 +19,7 @@ import model.Pagina;
 import model.Palavra;
 
 /**
- * A classe <b>Arvore</b> √© a classe para armazenar a estrutura de dado √Årvore AVL.
+ * A classe <b>Arvore</b> √© a classe para armazenar a estrutura de dado ·rvore AVL.
  *
  * @author Matheus Nascimento e Elvis Serafim
  * @since Jul 2018
@@ -30,8 +30,8 @@ public class Arvore implements Serializable {
     protected No raiz;
     
     /**
-     * M√©todo que insere um objeto na √Årvore AVL, passando como par√¢metro para o m√©todo secund√°rio, o n√≥ com o
-     * objeto a ser inserido e a raiz da √°rvore.
+     * MÈtodo que insere um objeto na ·rvore AVL, passando como par‚metro para o mÈtodo secund·rio, o nÛ com o
+     * objeto a ser inserido e a raiz da ·rvore.
      * @param date Objeto Comparable
      */
     public void inserir(Comparable date) {
@@ -40,26 +40,26 @@ public class Arvore implements Serializable {
     }
 
     /**
-     *M√©todo que retorna a raiz da √°rvore AVL.
-     * @return No raiz da √°rvore.
+     *MÈtodo que retorna a raiz da ·rvore AVL.
+     * @return No raiz da ·rvore.
      */
     public No getRaiz() {
         return raiz;
     }
 
     /**
-     * M√©todo que designa um novo No raiz √° √°rvore.
-     * @param raiz N√≥ a ser a raiz.
+     * MÈtodo que designa um novo No raiz da ·rvore.
+     * @param raiz NÛ a ser a raiz.
      */
     public void setRaiz(No raiz) {
         this.raiz = raiz;
     }
 
     /**
-     * M√©todo secund√°rio de inser√ß√£o da √°rvore, onde √© recebido como par√¢metro 
-     * o n√≥ da √°rvore e o n√≥ com o objeto a ser inserido na √°rvore.
-     * @param aComparar N√≥ a ser comparado
-     * @param aInserir N√≥ a ser inserido na √°rvore.
+     * MÈtodo secund·rio de inserÁ„o da ·rvore, onde È recebido como par‚metro 
+     * o nÛ da ·rvore e o nÛ com o objeto a ser inserido na ·rvore.
+     * @param aComparar N· a ser comparado
+     * @param aInserir NÛ a ser inserido na ·rvore.
      */
          private void fileEqual(No aComparar, No aInserir) {
         boolean equal = false;
@@ -119,8 +119,8 @@ public class Arvore implements Serializable {
 
     }
     /**
-     *M√©todo que verifica o balanceamento de um n√≥ da √°rvore.
-     * @param atual N√≥ atual 
+     *MÈtodo que verifica o balanceamento de um nÛ da √°rvore.
+     * @param atual NÛ atual 
      */
     public void verificarBalanceamento(No atual) {
         setBalanceamento(atual);
@@ -151,7 +151,7 @@ public class Arvore implements Serializable {
             this.raiz = atual;
         }
     }
-    //C√≥digo retirado da aula 09 de Estrutura de Dados do Professora Jo√£o Rocha.
+    //CÛdigo retirado da aula 09 de Estrutura de Dados do Professora Jo„o Rocha.
 
     public Queue preOrder() {
         Queue fila = new LinkedList();
@@ -171,7 +171,7 @@ public class Arvore implements Serializable {
     }
 
     /**
-     * M√©todo que remove uma objeto Palavra da √°rvore.
+     * MÈtodo que remove uma objeto Palavra da ·rvore.
      * @param palavra Palavra a ser removida.
      */
  public void remover(Comparable palavra) {
@@ -193,6 +193,8 @@ public class Arvore implements Serializable {
         }
     }
 
+    
+    //cÛdigo baseado na implementaÁ„o de Rodrigo Vilar, usu·rio do GitHub: rodrigoVilar
     private void removerNoEncontrado(No aRemover) {
         No aux;
         //Verifica se o nÛ a ser removido È uma folha.
@@ -340,7 +342,7 @@ public class Arvore implements Serializable {
     }
 
     /**
-     * M√©todo que verifica se a √°rvore est√° vazia, analisando se a raiz √© null.
+     * MÈtodo que verifica se a ·rvore est· vazia, analisando se a raiz È null.
      * @return boolean, true ou false.
      */
     public boolean isEmpty() {

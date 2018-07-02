@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 
 /**
- * A classe <b>No</b> , √© respons√°vel por armazenar os dados para a inser√ß√£o na √°rvore.
+ * A classe <b>No</b> , È respons·vel por armazenar os dados para a inserÁ„o na ·rvore.
  *
  * @author Matheus Nascimento e Elvis Serafim
  * @since Jul 2018
@@ -25,7 +25,7 @@ public final class No implements Serializable{
     private int balanceamento;
     
     /**
-     *Construtor da classe No, onde √© recebido como par√¢metro, um objeto Comparable. 
+     *Construtor da classe No, onde È recebido como par‚metro, um objeto Comparable. 
      * @param data Objeto Comparable a ser inserido em um objeto No.
      */
     public No(Comparable data) {
@@ -36,7 +36,7 @@ public final class No implements Serializable{
     }
   
     /**
-     *M√©todo que retorna o objeto dentro do No.
+     *MÈtodo que retorna o objeto dentro do No.
      * @return Objeto Comparable.
      */
     public Comparable getData() {
@@ -52,7 +52,7 @@ public final class No implements Serializable{
     }
 
     /**
-     *M√©todo que retorna o valor do balaceamento do No.
+     *MÈtodo que retorna o valor do balaceamento do No.
      * @return int, valor atual do balaceamento.
      */
     public int getBalanceamento() {
@@ -60,7 +60,7 @@ public final class No implements Serializable{
     }
 
     /**
-     * M√©todo que designa um novo valor ao balaceamento do No.
+     * MÈtodo que designa um novo valor ao balaceamento do No.
      * @param balanceamento novo valor de balanceamento.
      */
     public void setBalanceamento(int balanceamento) {
@@ -68,7 +68,7 @@ public final class No implements Serializable{
     }
 
     /**
-     *M√©todo que retorna o pai do No.
+     *MÈtodo que retorna o pai do No.
      * @return No pai do No atual.
      */
     public No getPai() {
@@ -76,7 +76,7 @@ public final class No implements Serializable{
     }
 
     /**
-     * M√©todo que designa um novo pai para o No.
+     * MÈtodo que designa um novo pai para o No.
      * @param pai No a ser o No pai do No atual.
      * @return No pai.
      */
@@ -86,7 +86,7 @@ public final class No implements Serializable{
     }
 
     /**
-     *M√©todo que retorna o No filho da direita do No atual.
+     *MÈtodo que retorna o No filho da direita do No atual.
      * @return No filho.
      */
     public No getRight() {
@@ -94,8 +94,8 @@ public final class No implements Serializable{
     }
 
     /**
-     *M√©todo que designa um novo filho √° direita para o No atual.
-     * @param direita No a ser o filho √° direita do No atual.
+     *MÈtodo que designa um novo filho da direita para o No atual.
+     * @param direita No a ser o filho da direita do No atual.
      * @return No da direita.
      */
     public No setRight(No direita) {
@@ -104,7 +104,7 @@ public final class No implements Serializable{
     }
 
     /**
-     *M√©todo que retorna o No filho da esquerda do No atual.
+     *MÈtodo que retorna o No filho da esquerda do No atual.
      * @return No filho da esquerda.
      */
     public No getLeft() {
@@ -112,8 +112,8 @@ public final class No implements Serializable{
     }
 
     /**
-     * M√©todo que designa um novo filho √° esquerda para o No atual.
-     * @param esquerda No a ser o filho √° esquerda do No atual.
+     * MÈtodo que designa um novo filho da esquerda para o No atual.
+     * @param esquerda No a ser o filho da esquerda do No atual.
      */
     public void setLeft(No esquerda) {
         this.esquerda = esquerda;

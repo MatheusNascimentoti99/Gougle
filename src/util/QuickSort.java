@@ -10,8 +10,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * A classe <b>QuickSort</b> √© a classe para armazenar o algoritmo de ordena√ß√£o de mesmo nome,
- * para a ordena√ß√£o das p√°ginas e palavras.
+ * A classe <b>QuickSort</b> È a classe para armazenar o algoritmo de ordenaÁ„o de mesmo nome,
+ * para a ordenaÁ„o das p·ginas e palavras.
  *
  * @author Matheus Nascimento e Elvis Serafim
  * @since Jul 2018
@@ -20,7 +20,7 @@ import java.util.Queue;
 public class QuickSort {
 
     /**
-     * algoritmo de ordena√ß√£o quickSort.
+     * algoritmo de ordenaÁ„o quickSort.
      * @param fila Fila a ser ordenada.
      * @param compare Objeto a ser comparado.
      * @throws NullPointerException

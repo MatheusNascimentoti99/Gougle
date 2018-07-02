@@ -10,7 +10,7 @@ import model.Pagina;
 import model.Palavra;
 
 /**
- * A classe <b>Crescente</b> , √© respons√°vel pela ordena√ß√£o dos objetos P√°ginas e Palavras, de forma decrescente.
+ * A classe <b>Crescente</b> , È respons·vel pela ordenaÁ„o dos objetos P·ginas e Palavras, de forma decrescente.
  *
  * @author Matheus Nascimento e Elvis Serafim
  * @since Jul 2018

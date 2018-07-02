@@ -23,7 +23,7 @@ import util.Arvore;
 import util.QuickSort;
 
 /**
- * A classe <b>ControllerPaginas</b> faz o gerenciamento das P√°ginas.
+ * A classe <b>ControllerPaginas</b> faz o gerenciamento das P·ginas.
  *
  * @author Matheus Nascimento e Elvis Serafim
  * @since Jul 2018
@@ -33,14 +33,14 @@ public class ControllerPaginas {
 
 
     /**
-     * Constante que informa o diretorio que ser√° salvo os recursos utilizados
+     * Constante que informa o diretorio que ser· salvo os recursos utilizados
      * no projeto.
      */
     public final String pastaRecursos = "./resources/";
 
     /**
-     * Constante que informa o diretorio que ser√° capturado as p√°ginas que
-     * poder√£o ser pesquisadas.
+     * Constante que informa o diretorio que ser· capturado as p·ginas que
+     * poder„o ser pesquisadas.
      */
     public final String repositorio = "./repositorio/";
     private LinkedList allPages;
@@ -60,8 +60,8 @@ public class ControllerPaginas {
     /**
      * Pega a lista desatualizada de arquivos.
      *
-     * @return Retorna a "antiga" lista de p√°ginas.
-     * @throws FileNotFoundException Exce√ß√£o caso o arquivo n√£o exista.
+     * @return Retorna a "antiga" lista de p·ginas.
+     * @throws FileNotFoundException ExceÁ„o caso o arquivo n„o exista.
      */
     public LinkedList readListPages() throws FileNotFoundException {
         LinkedList temp;
@@ -77,9 +77,9 @@ public class ControllerPaginas {
     }
 
     /**
-     * Pega a atual lista de arquivos no reposit√≥rio.
+     * Pega a atual lista de arquivos no repositÛrio.
      *
-     * @return Retorna a lista de arquivos no reposit√≥rio.
+     * @return Retorna a lista de arquivos no repositÛrio.
      */
     public LinkedList getFiles() {
         FileFilter filter = (File pathname) -> pathname.getName().endsWith(".txt");
@@ -94,11 +94,11 @@ public class ControllerPaginas {
     }
 
     /**
-     * M√©todo para pegar lista de p√°ginas.
+     * MÈtodo para pegar lista de p·ginas.
      *
-     * @return Retorna a lista com todas as p√°ginas instanciadas.
-     * @throws FileNotFoundException Exce√ß√£o se n√£o houver arquivos no
-     * reposit√≥rioo.
+     * @return Retorna a lista com todas as p·ginas instanciadas.
+     * @throws FileNotFoundException ExceÁ„o se n„o houver arquivos no
+     * repositÛrio.
      */
     public LinkedList getPaginas() throws FileNotFoundException {
 
@@ -114,10 +114,10 @@ public class ControllerPaginas {
     }
 
     /**
-     * Ler e retorna a lista de arquivos gravada em um arquivo bin√°rio.
+     * Ler e retorna a lista de arquivos gravada em um arquivo bin·rio.
      *
      * @return Retorna uma lista de arquivos.
-     * @throws FileNotFoundException Caso o arquivo n√£o exista.
+     * @throws FileNotFoundException Caso o arquivo n„o exista.
      */
     public LinkedList readListFiles() throws FileNotFoundException {
         LinkedList lista = (LinkedList) ControllerFile.readDate(pastaRecursos + "Files.data");
@@ -133,9 +133,9 @@ public class ControllerPaginas {
 
     /**
      *
-     * @param paginas Paginas a serem verificadas se foram removidas ou n√£o.
+     * @param paginas Paginas a serem verificadas se foram removidas ou n„o.
      * @return Retorna um valor booleando informando se as paginas foram
-     * alteradas ou n√£o.
+     * alteradas ou n„o.
      * @throws FileNotFoundException
      */
     public boolean modificedFiles(LinkedList paginas) throws FileNotFoundException {
@@ -151,12 +151,12 @@ public class ControllerPaginas {
     }
 
     /**
-     * M√©todo utilizado para abrir p√°gina.
+     * MÈtodo utilizado para abrir p·gina.
      *
-     * @param index Indice no qual a p√°gina que ser√° exebida est√°.
-     * @throws FileNotFoundException Caso a lista de paginas n√£o exista.
-     * @throws Exception Outras exce√ß√£o, como problemas ao salvar o arquivo ou a
-     * index acessar um local da lista que n√£o exista.
+     * @param index Indice no qual a p·gina que ser· exebida est·.
+     * @throws FileNotFoundException Caso a lista de paginas n„o exista.
+     * @throws Exception Outras exceÁ„o, como problemas ao salvar o arquivo ou a
+     * index acessar um local da lista que n„o exista.
      */
     public void showFile(int index) throws FileNotFoundException, Exception {
         File file = new File("./resources/ListPages.data");
@@ -175,9 +175,9 @@ public class ControllerPaginas {
     }
 
     /**
-     * M√©todo utilizado para atualizar as informa√ß√µes da lista de p√°ginas.
+     * MÈtodo utilizado para atualizar as informaÁıes da lista de p·ginas.
      *
-     * @throws Exception Caso a lista de paginas n√£o exista ou haja problema ao
+     * @throws Exception Caso a lista de paginas n„o exista ou haja problema ao
      * instanciar o File.
      */
     public void atualize() throws Exception {
@@ -190,13 +190,13 @@ public class ControllerPaginas {
     }
 
     /**
-     * M√©todo utilizado para busca uma palavra entre os arquivos.
+     * MÈtodo utilizado para busca uma palavra entre os arquivos.
      *
-     * @param palavraBuscada Par√¢metro utilizado para informar qual a palavra
-     * que est√° sendo buscada nos arquivos.
-     * @param arvore Arvore a qual a palavra encontrada ser√° salva.
-     * @return Retorna um valor booleano informando se a palavra existe ou n√£o.
-     * @throws IOException Possiveis exce√ß√µes na grava√ß√£o e leitura de arquivos.
+     * @param palavraBuscada Par‚metro utilizado para informar qual a palavra
+     * que est· sendo buscada nos arquivos.
+     * @param arvore Arvore a qual a palavra encontrada ser· salva.
+     * @return Retorna um valor booleano informando se a palavra existe ou n„o.
+     * @throws IOException Possiveis exceÁıes na gravaÁ„o e leitura de arquivos.
      */
     public boolean readFilesWords(String palavraBuscada, Arvore arvore) throws IOException {
         boolean existe = false;
@@ -218,15 +218,15 @@ public class ControllerPaginas {
         return pattern.matcher(nfdNormalizedString).replaceAll("");
     }
     /**
-     * M√©todo utilizado para busca uma palavra em um √∫nico arquivo.
+     * MÈtodo utilizado para busca uma palavra em um ˙nico arquivo.
      *
-     * @param file Arquivo a qual a palavra ser√° buscada.
-     * @param palavraBuscada Par√¢metro utilizado para informar qual a palavra
-     * que est√° sendo buscada nos arquivos.
-     * @param arvore Arvore a qual a palavra encontrada ser√° salva.
-     * @return Retorna um valor booleano informando se a palavra existe ou n√£o.
-     * @throws java.io.FileNotFoundException Caso a arquivo n√£o exista.
-     * @throws IOException Possiveis exce√ß√µes na grava√ß√£o e leitura de arquivos.
+     * @param file Arquivo a qual a palavra ser· buscada.
+     * @param palavraBuscada Par‚metro utilizado para informar qual a palavra
+     * que est· sendo buscada nos arquivos.
+     * @param arvore Arvore a qual a palavra encontrada ser· salva.
+     * @return Retorna um valor booleano informando se a palavra existe ou n„o.
+     * @throws java.io.FileNotFoundException Caso a arquivo n„o exista.
+     * @throws IOException Possiveis exceÁıes na gravaÁ„o e leitura de arquivos.
      */
     public boolean readFileWord(File file, String palavraBuscada, Arvore arvore) throws FileNotFoundException, IOException {
         FileReader arq = new FileReader(repositorio + file.getName());
@@ -247,12 +247,12 @@ public class ControllerPaginas {
     }
 
 
-    //M√©todo que ler linha por linha de um arquivo.
+    //MÈtodo que ler linha por linha de um arquivo.
     private boolean getFileWord(String linha, Pagina pagina, String palavraBuscada, Arvore arvore) {
         String[] textoSeparado;
         boolean existe = false;
         textoSeparado = linha.split(" ");
-        for (String palavra : textoSeparado) {              //Remove as posiveis pontua√ß√£o que podem atrapalhar na identifica√ß√£o de uma palavra.
+        for (String palavra : textoSeparado) {              //Remove as posiveis pontuaÁ„o que podem atrapalhar na identificaÁ„o de uma palavra.
             palavra = semAcento(palavra);
             palavra = palavra.replace(" ", "");
             palavra = palavra.replace(".", "");
@@ -282,7 +282,7 @@ public class ControllerPaginas {
     }
 
     /*
-    M√©todos passListToQueue e passQueueToList s√£o utilizados para manipula√ß√£o e ordena√ß√£o das paginas.
+    MÈtodos passListToQueue e passQueueToList s„o utilizados para manipulaÁ„o e ordenaÁ„o das paginas.
     
      */
     private Queue passListToQueue(LinkedList paginas, Queue fila) {

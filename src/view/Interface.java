@@ -45,6 +45,10 @@ import util.Decrescente;
  **/
  public class Interface extends Application {
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         launch();
     }
@@ -62,6 +66,7 @@ import util.Decrescente;
         icon.setFitWidth(width);
         return icon;
     }
+
 
     public void screenMain(Stage palco) throws FileNotFoundException, Exception {
         ControllerBusca search = new ControllerBusca();
@@ -207,6 +212,12 @@ import util.Decrescente;
         }
     }
 
+    /**
+     *
+     * @param listaResul
+     * @param ordem
+     * @throws Exception
+     */
     public static void alternar(ListView listaResul, Button ordem) throws Exception {
         ordem.setOnMouseClicked((Event event) -> {
             ListView alternar = new ListView();
@@ -219,7 +230,7 @@ import util.Decrescente;
     }
 
 
-    public static void botaoOrdemPag(ListView listaResul, Button botaoOrdem, TextField kEscolhas, ControllerBusca search, Comparator ordem) throws Exception {
+    private static void botaoOrdemPag(ListView listaResul, Button botaoOrdem, TextField kEscolhas, ControllerBusca search, Comparator ordem) throws Exception {
         search.getControlPages().atualize();
         botaoOrdem.setOnMouseClicked(new EventHandler() {
            
@@ -255,7 +266,7 @@ import util.Decrescente;
 
     }
 
-    public static void botaoCresPala(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) throws Exception {
+    private static void botaoCresPala(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) throws Exception {
         search.getControlPages().atualize();
         
         crescente.setOnMouseClicked(new EventHandler() {
@@ -294,7 +305,8 @@ import util.Decrescente;
         });
     }
 
-    public static void botaoDecresPala(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) throws Exception {
+
+    private static void botaoDecresPala(ListView listaResul, Button crescente, TextField kEscolhas, ControllerBusca search) throws Exception {
         search.getControlPages().atualize();
         crescente.setOnMouseClicked(new EventHandler() {
             Label pagina;
@@ -330,7 +342,8 @@ import util.Decrescente;
         });
     }
 
-    public static void botaoTopPag(Button topPaginas, ListView listaResul, TextField kEscolhas, Button crescente, Button decrescente, HBox positionBotoes, ControllerBusca search) throws Exception {
+
+    private static void botaoTopPag(Button topPaginas, ListView listaResul, TextField kEscolhas, Button crescente, Button decrescente, HBox positionBotoes, ControllerBusca search) throws Exception {
         search.getControlPages().atualize();
         topPaginas.setOnMouseClicked((Event event) -> {
             Thread thread = new Thread(search);
@@ -365,7 +378,8 @@ import util.Decrescente;
         
     }
 
-    public static void botaoTopPala(Button topPalavras, ListView listaResul, TextField kEscolhas, Button crescente, Button decrescente, HBox positionBotoes, ControllerBusca search) throws Exception {
+
+    private static void botaoTopPala(Button topPalavras, ListView listaResul, TextField kEscolhas, Button crescente, Button decrescente, HBox positionBotoes, ControllerBusca search) throws Exception {
         search.getControlPages().atualize();
         topPalavras.setOnMouseClicked((Event event) -> {
             

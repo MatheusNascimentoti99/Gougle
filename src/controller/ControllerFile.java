@@ -14,7 +14,7 @@ import java.io.ObjectOutputStream;
 
 
 /**
- * A classe <b>ControllerFile</b> faz o gerenciamento de leitura e grava√ß√£o de arquivos.
+ * A classe <b>ControllerFile</b> faz o gerenciamento de leitura e gravaÁ„o de arquivos.
  *
  * @author Matheus Nascimento e Elvis Serafim
  * @since Jul 2018
@@ -23,10 +23,10 @@ import java.io.ObjectOutputStream;
 public class ControllerFile {
 
     /**
-     *Ler arquivo bin√°rio.
-     * @param local Par√¢metro utilizado para indicar o diretorio e o nome do arquivo binario a ser lido.
-     * @return Retorna o objeto que est√° salvo no arquivo binario indicado.
-     * @throws FileNotFoundException Exce√ß√£o caso a arquivo ou local n√£o exista.
+     *Ler arquivo bin·rio.
+     * @param local Par‚metro utilizado para indicar o diretorio e o nome do arquivo binario a ser lido.
+     * @return Retorna o objeto que est· salvo no arquivo binario indicado.
+     * @throws FileNotFoundException ExceÁ„o caso a arquivo ou local n„o exista.
      */
 
     public static Object readDate(String local) throws FileNotFoundException {
@@ -47,10 +47,10 @@ public class ControllerFile {
     }
 
     /**
-     *Salva um arquivo bin√°rio em disco.
+     *Salva um arquivo bin·rio em disco.
      * @param dados O dado a ser gravado em disco.
-     * @param local Local onde o arquivo ser√° salvo.
-     * @throws Exception Exce√ß√£o ao gravar o arquivo.
+     * @param local Local onde o arquivo ser· salvo.
+     * @throws Exception ExceÁ„o ao gravar o arquivo.
      */
     public static void save(Object dados, String local) throws Exception {
         try {
